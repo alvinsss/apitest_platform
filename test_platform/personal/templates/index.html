@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <!-- 浏览器兼容性 -->
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% load static %}
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
 
-    <title>接口测试平台</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block base %}
 <div style="height: 800px;background-image: url(https://img.zcool.cn/community/017b1b59634020a8012193a32be31b.png@2o.png)">
     <div class="container" style="width: 300px;border-top-width: 400px;padding-top: 300px">
         <form class="form-signin" action="/index/" method="post">
@@ -33,6 +21,4 @@
     </div> <!-- /container -->
 </div>
 
-
-</body>
-</html>
+{% endblock %}

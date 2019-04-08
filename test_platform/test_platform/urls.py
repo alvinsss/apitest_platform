@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from personal.views import  qatest
+from personal import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/',qatest),
+    # http://127.0.0.1:8000/test/?name=alvin
+    path('test/', views.qatest),
+    path('index/', views.index),
 ]

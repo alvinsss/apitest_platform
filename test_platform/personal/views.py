@@ -7,7 +7,9 @@ V(视图) -Controller
 """
 from django.shortcuts import render
 from django.http import  HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def test(request):
@@ -38,4 +40,12 @@ def index(request):
 		if user is None:
 			return render(request, "index.html", {"error": "用户名或密码错误"})
 		else:
-			return HttpResponse("登录成功")
+			auth.login(request, user)  # 记录用户的登录状态
+			# return render(request,"manage.html")
+			return HttpResponseRedirect("/manage/")
+
+
+# 管理页面
+@login_required
+def manage(request):
+	return render(request, "manage.html")

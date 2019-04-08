@@ -7,6 +7,7 @@ V(视图) -Controller
 """
 from django.shortcuts import render
 from django.http import  HttpResponse
+from django.contrib import auth
 # Create your views here.
 
 def test(request):
@@ -32,7 +33,9 @@ def index(request):
 		print(username, password)
 		if username == "" or password == "":
 			return render(request, "index.html", {"error": "用户名或密码不能为空"})
-		if username == "admin" and password == "123456":
-			return HttpResponse("登录成功")
-		else:
+		user = auth.authenticate(username=username, password=password)
+		print(user)
+		if user is None:
 			return render(request, "index.html", {"error": "用户名或密码错误"})
+		else:
+			return HttpResponse("登录成功")

@@ -23,6 +23,7 @@ urlpatterns = [
     path('test/', views.qatest),
     path('index/', views.index),
     path('manage/', views.manage),
+    path('logout/', views.logout),
     path('accounts/login/', views.index),
 
 ]

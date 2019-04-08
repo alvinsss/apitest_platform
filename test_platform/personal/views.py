@@ -49,3 +49,9 @@ def index(request):
 @login_required
 def manage(request):
 	return render(request, "manage.html")
+
+
+# 用户的退出操作
+def logout(request):
+	auth.logout(request)
+	return HttpResponseRedirect("/index/")

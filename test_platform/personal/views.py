@@ -42,13 +42,13 @@ def index(request):
 		else:
 			auth.login(request, user)  # 记录用户的登录状态
 			# return render(request,"manage.html")
-			return HttpResponseRedirect("/manage/")
+			return HttpResponseRedirect("/project/")
 
 
 # 管理页面
 @login_required
-def manage(request):
-	return render(request, "manage.html")
+def project_manage(request):
+	return render(request, "project.html")
 
 
 # 用户的退出操作
@@ -57,3 +57,9 @@ def logout(request):
 	auth.logout(request)
 	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")
+
+
+# 模块管理
+@login_required
+def module_manage(request):
+	return render(request, "module.html")

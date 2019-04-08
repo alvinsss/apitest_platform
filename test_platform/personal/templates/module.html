@@ -1,29 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon">
-    <title>Dashboard Template for Bootstrap</title>
-    <!-- Bootstrap core CSS -->
-    {% load static %}
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static "css/dashboard.css" %}">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static "css/ie10-viewport-bug-workaround.css" %}">
-    <!-- Custom styles for this template -->
-
-</head>
-
-<body>
-
+{% extends "base.html" %}
+{% block base %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -54,9 +30,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">项目管理 <span class="sr-only">(current)</span></a></li>
-                {#            <li><a href="#">项目管理</a></li>#}
-                <li><a href="#">模块管理</a></li>
+                <li><a href="/project/">项目管理</a></li>
+                <li class="active"><a href="/module/">模块管理 <span class="sr-only">(current)</span></a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="">用例管理</a></li>
@@ -97,16 +72,4 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="{% static "js/bootstrap.min.js" %}"></script>
-<script src="{% static "js/jquery.min.js" %}"></script>
-<script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
-<script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
-<script src="{% static "js/holder.min.js" %}"></script>
-
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-</body>
-</html>
+{% endblock %}

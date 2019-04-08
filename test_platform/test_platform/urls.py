@@ -22,7 +22,10 @@ urlpatterns = [
     # http://127.0.0.1:8000/test/?name=alvin
     path('test/', views.qatest),
     path('index/', views.index),
-    path('manage/', views.manage),
+
+    path('project/', views.project_manage),
+    path('module/', views.module_manage),
+
     path('logout/', views.logout),
     path('accounts/login/', views.index),
 

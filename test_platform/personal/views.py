@@ -52,6 +52,8 @@ def manage(request):
 
 
 # 用户的退出操作
+@login_required
 def logout(request):
 	auth.logout(request)
+	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")

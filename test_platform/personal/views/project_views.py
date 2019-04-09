@@ -45,13 +45,15 @@ def add_project(request):
 
 
 @login_required
-def edit_project(request):
+def edit_project(request, pid):
 	"""
 	编辑项目
 	:param request:
 	:return:
 	"""
 	if request.method == "GET":
+		print("编辑的id:", pid)
+
 		name = request.POST.get("name", "")
 		describe = request.POST.get("describe", "")
 		status = request.POST.get("status", "")

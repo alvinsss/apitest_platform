@@ -135,5 +135,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-# personal应用的
+#  UserProfile 覆盖了 django 内置的 user 表
 # AUTH_USER_MODEL="personal.UserProfile"

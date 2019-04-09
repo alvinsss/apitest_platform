@@ -10,6 +10,8 @@ from django.http import  HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+
+from personal.models.project import Project
 # Create your views here.
 
 def test(request):
@@ -48,7 +50,8 @@ def index(request):
 # 管理页面
 @login_required
 def project_manage(request):
-	return render(request, "project.html")
+	project_all = Project.objects.all()
+	return render(request, "project.html", {"projects": project_all})
 
 
 # 用户的退出操作

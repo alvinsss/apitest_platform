@@ -5,9 +5,9 @@ from personal.models.module import Module
 
 
 class ProjectAdmin(object):
-	list_display = ['name', 'describe', 'status', 'create_time']
-	search_fields = ['name', 'describe', 'status']
-	list_filter = ['name', 'describe', 'status', 'create_time']
+	list_display = ['name', 'describe', 'status', 'create_time', 'update_time']
+	search_fields = ['name', 'describe', 'status', 'update_time']
+	list_filter = ['name', 'describe', 'status', 'create_time', 'update_time']
 
 
 xadmin.site.register(Project, ProjectAdmin)

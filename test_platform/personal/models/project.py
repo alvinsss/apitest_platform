@@ -3,10 +3,10 @@ from django.db import models
 
 
 class Project(models.Model):
-	name = models.CharField(max_length=40, null=False)
-	describe = models.TextField(default="")
-	status = models.BooleanField(default=1)
-	create_time = models.DateTimeField(auto_now_add=True)
+	name = models.CharField("项目名称", max_length=40, null=False)
+	describe = models.TextField("描述", default="")
+	status = models.BooleanField("状态", default=1)
+	create_time = models.DateTimeField("创建时间", auto_now_add=True)
 
 	class Meta:
 		verbose_name = '项目信息'

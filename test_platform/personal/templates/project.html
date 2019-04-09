@@ -57,26 +57,33 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
 
-                        {% for project in projects %}
-                            {{ project.name }}<br>
-                        {% endfor %}
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Header</th>
-                            <th>Header</th>
-                            <th>Header</th>
-                            <th>Header</th>
+                            <th>id</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
                         </tr>
                         </thead>
+
                         <tbody>
+                        {% for project in projects %}
                         <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
+                            <td>{{ project.id }}</td>
+                            <td>{{ project.name }}</td>
+                            <td>{{ project.describe }}</td>
+                            <td>
+                                {% if project.status == True %}
+                                    <span>开启</span>
+                                {% else %}
+                                    <span>关闭</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ project.create_time | date:"Y-m-d H:i:s" }}</td>
                         </tr>
+                        {% endfor %}
+
                         </tbody>
 
                     </table>

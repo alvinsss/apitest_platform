@@ -36,6 +36,8 @@ urlpatterns = [
     # """项目管理"""
     path('project/', project_views.project_manage),
     path('project/add_project/', project_views.add_project),
+    path('project/edit_project/', project_views.edit_project),
+
     # """模块管理"""
     path('module/', module_views.module_manage),
 

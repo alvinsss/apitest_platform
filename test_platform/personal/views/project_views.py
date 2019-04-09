@@ -42,3 +42,24 @@ def add_project(request):
 			              {"type": "add", "name_error": "项目名称不能为空！"})
 		Project.objects.create(name=name, describe=describe, status=status)
 		return HttpResponseRedirect("/project/")
+
+
+@login_required
+def edit_project(request):
+	"""
+	编辑项目
+	:param request:
+	:return:
+	"""
+	if request.method == "GET":
+		name = request.POST.get("name", "")
+		describe = request.POST.get("describe", "")
+		status = request.POST.get("status", "")
+		print(name, describe, status)
+		if name == "":
+			return render(request, "project.html",
+			              {"type": "add", "name_error": "项目名称不能为空！"})
+		Project.objects.create(name=name, describe=describe, status=status)
+		return HttpResponseRedirect("/project/")
+	else:
+		return render(request, "project.html", {"type": "edit"})

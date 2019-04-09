@@ -46,23 +46,9 @@ def index(request):
 			# return render(request,"manage.html")
 			return HttpResponseRedirect("/project/")
 
-
-# 管理页面
-@login_required
-def project_manage(request):
-	project_all = Project.objects.all()
-	return render(request, "project.html", {"projects": project_all})
-
-
 # 用户的退出操作
 @login_required
 def logout(request):
 	auth.logout(request)
 	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")
-
-
-# 模块管理
-@login_required
-def module_manage(request):
-	return render(request, "module.html")

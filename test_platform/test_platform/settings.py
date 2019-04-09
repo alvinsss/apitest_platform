@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+sys.path.insert(1, os.path.join(BASE_DIR, 'exta_apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'test_platform',
     'personal',
+    'xadmin',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -74,13 +76,22 @@ WSGI_APPLICATION = 'test_platform.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'devtest_platform.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "apitestserver",
+        'HOST': "127.0.0.1",
+        'PORT': 3306,
+        'USER': "qa",
+        'PASSWORD': "qatest",
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'devtest_platform.sqlite3'),
+#     }
+# }
 
 
 # Password validation

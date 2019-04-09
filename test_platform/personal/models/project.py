@@ -10,5 +10,3 @@ class Project(models.Model):
 	status = models.BooleanField(default=1)
 	create_time = models.DateTimeField(auto_now_add=True)
 
-
-cla

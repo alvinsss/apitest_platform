@@ -15,13 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from personal import views
+import xadmin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
     # http://127.0.0.1:8000/test/?name=alvin
     path('test/', views.qatest),
     path('index/', views.index),
+    path('', views.index),
 
     path('project/', views.project_manage),
     path('module/', views.module_manage),

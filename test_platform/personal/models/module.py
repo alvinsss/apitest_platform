@@ -11,4 +11,3 @@ class Module(models.Model):
 	create_time = models.DateTimeField(auto_now_add=True)
 
 
-cla

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'personal',
     'xadmin',
     'crispy_forms',
+    'captcha',
+    # https://django-simple-captcha.readthedocs.io/en/latest/usage.html
 ]
 
 MIDDLEWARE = [
@@ -84,6 +86,9 @@ DATABASES = {
         'PORT': 3306,
         'USER': "qa",
         'PASSWORD': "qatest",
+        # 'OPTIONS': {
+        #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        # },
     }
 }
 # DATABASES = {
@@ -130,3 +135,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+# personal应用的
+# AUTH_USER_MODEL="personal.UserProfile"

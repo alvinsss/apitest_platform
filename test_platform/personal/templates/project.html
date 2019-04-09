@@ -54,6 +54,8 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+                <!--项目列表展示 -->
+                {% if type == "list" %}
                 <h4 class="sub-header">项目列表
                     <button type="button" class="btn btn-sm btn-primary"
                             style="float:right"
@@ -61,7 +63,6 @@
                     >创建项目
                     </button>
                 </h4>
-
                 <div class="table-responsive">
                     <table class="table table-striped">
 
@@ -96,6 +97,65 @@
 
                     </table>
                 </div>
+                {% endif %}
+
+                {% if type == "add" %}
+                    <h1>add</h1>
+                    <h4 class="sub-header">添加项目</h4>
+                    <form class="form-horizontal" method="post" action="/project/add_project/">
+                        <fieldset>
+                            <div id="legend" class="">
+                                <legend class="">项目信息增加</legend>
+                            </div>
+                            <div class="control-group">
+
+                                <!-- Text input-->
+                                <label class="control-label" for="input01">项目名</label>
+                                <div class="controls">
+                                    <input type="text" name="name" class="input-xlarge">
+                                    <span style="color: red">{{ name_error }}</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+
+                                <!-- Textarea -->
+                                <label class="control-label">描述</label>
+                                <div class="controls">
+                                    <div class="textarea">
+                                        <textarea type="" name="describe"> </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">状态</label>
+                                <div class="controls">
+
+                                    <!-- Inline Radios -->
+                                    <label class="radio inline">
+                                        <input type="radio" name="status" value="1" checked="checked" name="group">
+                                        可用
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" name="status" value="0" name="group">
+                                        禁止
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-success">提交</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                        {% csrf_token %}
+                    </form>
+
+                {% endif %}
+
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ from django.http import  HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-
+from personal.forms import LoginForm
 from personal.models.project import Project
 # Create your views here.
 
@@ -32,19 +32,23 @@ def index(request):
 	if request.method == "GET":
 		return render(request, "index.html")
 	else:
-		username = request.POST.get("username", "")
-		password = request.POST.get("password", "")
-		print(username, password)
-		if username == "" or password == "":
-			return render(request, "index.html", {"error": "用户名或密码不能为空"})
-		user = auth.authenticate(username=username, password=password)
-		print(user)
-		if user is None:
-			return render(request, "index.html", {"error": "用户名或密码错误"})
+		login_form = LoginForm(request.POST)
+		# 判断提交数据,密码至少6位长度
+		if login_form.is_valid():
+			username = request.POST.get("username", "")
+			password = request.POST.get("password", "")
+			print(username, password)
+			# if username == "" or password == "":
+			# 	return render(request, "index.html", {"msg": "用户名或密码不能为空"})
+			user = auth.authenticate(username=username, password=password)
+			print(user)
+			if user is None:
+				return render(request, "index.html", {"msg": "用户名或密码不正确"})
+			else:
+				auth.login(request, user)  # 记录用户的登录状态
+				return HttpResponseRedirect("/project/")
 		else:
-			auth.login(request, user)  # 记录用户的登录状态
-			# return render(request,"manage.html")
-			return HttpResponseRedirect("/project/")
+			return render(request, 'index.html', {'form_errors': login_form.errors})
 
 # 用户的退出操作
 @login_required

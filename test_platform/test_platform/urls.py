@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^captcha/', include('captcha.urls')),
     # http://127.0.0.1:8000/test/?name=alvin
     path('test/', login_views.qatest),
-    path('index/', login_views.index),
+    path('index/', login_views.index, name="index"),
     path('', login_views.index),
     path('logout/', login_views.logout),
     path('accounts/login/', login_views.index),
@@ -36,7 +36,7 @@ urlpatterns = [
     # """项目管理"""
     path('project/', project_views.project_manage),
     path('project/add_project/', project_views.project_manage),
-
+    # """模块管理"""
     path('module/', module_views.module_manage),
 
 ]

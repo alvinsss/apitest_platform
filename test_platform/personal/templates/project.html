@@ -74,7 +74,6 @@
                             <th>状态</th>
                             <th>创建时间</th>
                             <th style="padding-left: 13px">编辑</th>
-
                         </tr>
                         </thead>
 
@@ -98,29 +97,24 @@
                                 <a href="/project/delete_project/" style="margin-left: 12px">
                                     <i class="glyphicon glyphicon-trash"></i>
                                 </a>
-
                             </td>
-
                         </tr>
                         {% endfor %}
-
                         </tbody>
-
                     </table>
                 </div>
                 {% endif %}
 
+                <!--项目信息增加 -->
                 {% if type == "add" %}
-                    {#                    <h1>项目信息增加1</h1>#}
-                    {#                    <h4 class="sub-header">添加项目</h4>#}
+                    <div id="legend" class="">
+                        <legend class="">项目信息增加</legend>
+                    </div>
                     <form class="form-horizontal" method="post" action="/project/add_project/">
                         <fieldset>
-                            <div id="legend" class="">
-                                <legend class="">项目信息增加</legend>
-                            </div>
                             <div class="control-group">
 
-                                <!-- Text input-->
+                                <!- Text input-->
                                 <label class="control-label" for="input01">项目名</label>
                                 <div class="controls" style="height: 80px">
                                     <input type="text" name="name" class="input-xlarge">
@@ -167,58 +161,17 @@
                 {% endif %}
 
                 {% if type == "edit" %}
-                    <h1>add</h1>
                     <h4 class="sub-header">编辑项目</h4>
-                    <form class="form-horizontal" method="get" action="/project/edit_project/">
-                        <fieldset>
-                            <div id="legend" class="">
-                                <legend class="">项目信息增加</legend>
-                            </div>
-                            <div class="control-group">
-
-                                <!-- Text input-->
-                                <label class="control-label" for="input01">项目名</label>
-                                <div class="controls" style="height: 80px">
-                                    <input type="text" name="name" class="input-xlarge">
-                                    <span style="color: red">{{ name_error }}</span>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-
-                                <!-- Textarea -->
-                                <label class="control-label">描述</label>
-                                <div class="controls" style="height: 60px">
-                                    <div class="textarea">
-                                        <textarea type="" name="describe"> </textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label">状态</label>
-                                <div class="controls" style="height:37px ">
-
-                                    <!-- Inline Radios -->
-                                    <label class="radio inline" style="left:20px;float:left">
-                                        <input type="radio" name="status" value="1" checked="checked" name="group">
-                                        可用
-                                    </label>
-                                    <label class="radio inline" style="left:80px;float:left">
-                                        <input type="radio" name="status" value="0" name="group">
-                                        禁止
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls" style="height:40px ">
-                                    <button class="btn btn-success">提交</button>
-                                </div>
-                            </div>
-                        </fieldset>
+                    <form class="form-horizontal" method="post" action="/project/edit_project/{{ id }}/">
+                        {#                        <div class="control-group">#}
+                        {#                           <label  class="control-label" style="color: red" >名称</label>#}
+                        {#                            <div class="controls">#}
+                        {#                                {{ form.name }}#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {{ form.as_p }}
                         {% csrf_token %}
+                        <input type="submit" value="提交">
                     </form>
                 {% endif %}
 

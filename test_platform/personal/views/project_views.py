@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from personal.models.project import Project
-
+from personal.forms import ProjectForm
 
 # Create your views here.
 
@@ -52,16 +52,24 @@ def edit_project(request, pid):
 	:return:
 	"""
 	if request.method == "GET":
-		print("编辑的id:", pid)
-
-		name = request.POST.get("name", "")
-		describe = request.POST.get("describe", "")
-		status = request.POST.get("status", "")
-		print(name, describe, status)
-		if name == "":
-			return render(request, "project.html",
-			              {"type": "add", "name_error": "项目名称不能为空！"})
-		Project.objects.create(name=name, describe=describe, status=status)
+		if pid:
+			p = Project.objects.get(id=pid)
+			print("编辑的id:", pid, p.name)
+			# 把p对象的数据赋值给表单
+			form = ProjectForm(instance=p)
+			return render(request, "project.html", {"type": "edit",
+			                                        "form": form, "id": pid})
+	elif request.method == "POST":
+		form = ProjectForm(request.POST)
+		p = Project.objects.get(id=pid)
+		print("编辑post的id:", pid, p.name)
+		if form.is_valid():
+			name = form.cleaned_data['name']
+			describe = form.cleaned_data['describe']
+			status = form.cleaned_data['status']
+			p = Project.objects.get(id=pid)
+			p.name = name
+			p.describe = describe
+			p.status = status
+			p.save()
 		return HttpResponseRedirect("/project/")
-	else:
-		return render(request, "project.html", {"type": "edit"})

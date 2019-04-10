@@ -131,7 +131,7 @@ class ReversionPlugin(BaseAdminPlugin):
 		recoverlist_url = self.admin_view.model_admin_url('recoverlist')
 		nodes.append(mark_safe(
 			'<div class="btn-group"><a class="btn btn-default btn-sm" href="%s"><i class="fa fa-trash-o"></i> %s</a></div>' % (
-			recoverlist_url, _(u"Recover"))))
+				recoverlist_url, _(u"Recover"))))
 
 	def block_nav_toggles(self, context, nodes):
 		obj = getattr(
@@ -150,7 +150,7 @@ class ReversionPlugin(BaseAdminPlugin):
 				'revisionlist', quote(obj.pk))
 			nodes.append(mark_safe(
 				'<a href="%s" class="btn btn-default"><i class="fa fa-calendar"></i> <span>%s</span></a>' % (
-				revisionlist_url, _(u'History'))))
+					revisionlist_url, _(u'History'))))
 
 
 # action revision
@@ -389,9 +389,9 @@ class DiffField(Field):
 		html = ''
 		for field in self.fields:
 			html += (
-						'<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>' %
-						(_('Current: %s') % self.attrs.pop('orgdata', ''),
-						 render_field(field, form, form_style, context, template_pack=template_pack, attrs=self.attrs)))
+					'<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>' %
+					(_('Current: %s') % self.attrs.pop('orgdata', ''),
+					 render_field(field, form, form_style, context, template_pack=template_pack, attrs=self.attrs)))
 		return html
 
 
@@ -506,8 +506,8 @@ class InlineDiffField(Field):
 			if f.value_from_object(instance) != initial.get(field, None):
 				current_val = detail.get_field_result(f.name).val
 				html += (
-							'<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>'
-							% (_('Current: %s') % current_val, f_html))
+						'<div class="diff_field" rel="tooltip"><textarea class="org-data" style="display:none;">%s</textarea>%s</div>'
+						% (_('Current: %s') % current_val, f_html))
 			else:
 				html += f_html
 		return html

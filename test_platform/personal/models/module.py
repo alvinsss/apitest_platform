@@ -1,6 +1,7 @@
 from django.db import models
 from personal.models.project import Project
 
+
 # Create your models here.
 
 
@@ -11,7 +12,7 @@ class Module(models.Model):
 	create_time = models.DateTimeField("创建时间", auto_now_add=True)
 
 	class Meta:
-		verbose_name = '模块信息'
+		verbose_name = '模块管理'
 		verbose_name_plural = verbose_name
 
 	def __str__(self):

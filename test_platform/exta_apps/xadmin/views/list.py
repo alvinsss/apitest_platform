@@ -431,8 +431,9 @@ class ListAdminView(ModelAdminView):
 			return mark_safe(u'<span class="this-page">%d</span> ' % (i + 1))
 		else:
 			return mark_safe(u'<a href="%s"%s>%d</a> ' % (
-			escape(self.get_query_string({PAGE_VAR: i})), (i == self.paginator.num_pages - 1 and ' class="end"' or ''),
-			i + 1))
+				escape(self.get_query_string({PAGE_VAR: i})),
+				(i == self.paginator.num_pages - 1 and ' class="end"' or ''),
+				i + 1))
 
 	# Result List methods
 	@filter_hook
@@ -480,7 +481,7 @@ class ListAdminView(ModelAdminView):
 				o_list_asc.insert(0, j)
 				o_list_desc.insert(0, '-' + j)
 				o_list_toggle.append(param)
-				# o_list_remove - omit
+			# o_list_remove - omit
 			else:
 				param = make_qs_param(ot, j)
 				o_list_asc.append(param)

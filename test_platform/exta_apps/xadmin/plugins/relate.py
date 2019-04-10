@@ -101,7 +101,7 @@ class RelateMenuPlugin(BaseAdminPlugin):
 		ul_html = '<ul class="dropdown-menu" role="menu">%s</ul>' % ''.join(
 			links)
 		return '<div class="dropdown related_menu pull-right"><a title="%s" class="relate_menu dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-list"></i></a>%s</div>' % (
-		_('Related Objects'), ul_html)
+			_('Related Objects'), ul_html)
 
 	related_link.short_description = '&nbsp;'
 	related_link.allow_tags = True
@@ -149,7 +149,7 @@ class RelateObject(object):
 			to_model_name = force_text(self.to_model._meta.verbose_name)
 
 		return mark_safe(u"<span class='rel-brand'>%s <i class='fa fa-caret-right'></i></span> %s" % (
-		to_model_name, force_text(self.opts.verbose_name_plural)))
+			to_model_name, force_text(self.opts.verbose_name_plural)))
 
 
 class BaseRelateDisplayPlugin(BaseAdminPlugin):

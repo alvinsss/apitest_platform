@@ -1,27 +1,27 @@
-
 {% extends "base.html" %}
 {% block base %}
 
-<div style="height: 800px;background-image: url(https://img.zcool.cn/community/017b1b59634020a8012193a32be31b.png@2o.png)">
-    <div class="container" style="width: 300px;border-top-width: 400px;padding-top: 300px">
-        <form class="form-signin" action="/index/" method="post">
-            <h2 class="form-signin-heading" style="text-align:center;color: white;">接口测试平台</h2>
-            <label for="inputEmail" class="sr-only">账户:</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="账户" required autofocus>
-            <label for="inputPassword" class="sr-only">密码:</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
-            {#            <div style="color: red"> {{ msg }}</div>#}
-            <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
-                {% for key, error in form_errors.items %}
-                    {{ error }}
-                {% endfor %}
-                {% if not form_errors %} {{ msg }} {% endif %}
-            </div>
+    <div style="height: 800px;background-image: url(https://img.zcool.cn/community/017b1b59634020a8012193a32be31b.png@2o.png)">
+        <div class="container" style="width: 300px;border-top-width: 400px;padding-top: 300px">
+            <form class="form-signin" action="/index/" method="post">
+                <h2 class="form-signin-heading" style="text-align:center;color: white;">接口测试平台</h2>
+                <label for="inputEmail" class="sr-only">账户:</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="账户" required
+                       autofocus>
+                <label for="inputPassword" class="sr-only">密码:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
+                {#            <div style="color: red"> {{ msg }}</div>#}
+                <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
+                    {% for key, error in form_errors.items %}
+                        {{ error }}
+                    {% endfor %}
+                    {% if not form_errors %} {{ msg }} {% endif %}
+                </div>
 
-            {% csrf_token %}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        </form>
-    </div> <!-- /container -->
-</div>
+                {% csrf_token %}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+            </form>
+        </div> <!-- /container -->
+    </div>
 
 {% endblock %}

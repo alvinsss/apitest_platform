@@ -73,7 +73,7 @@ class ModelDetailPlugin(BaseAdminPlugin):
 				img = getattr(result.obj, field_name)
 				result.text = mark_safe(
 					'<a href="%s" target="_blank" title="%s" data-gallery="gallery"><img src="%s" class="field_img"/></a>' % (
-					img.url, result.label, img.url))
+						img.url, result.label, img.url))
 				self.include_image = True
 		return result
 

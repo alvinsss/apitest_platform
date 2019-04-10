@@ -1,4 +1,6 @@
 from django.db import models
+
+
 # Create your models here.
 
 
@@ -10,7 +12,7 @@ class Project(models.Model):
 	update_time = models.DateTimeField("更新时间", auto_now=True)
 
 	class Meta:
-		verbose_name = '项目信息'
+		verbose_name = '项目管理'
 		verbose_name_plural = verbose_name
 
 	def __str__(self):

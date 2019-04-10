@@ -35,7 +35,7 @@ class AdminDateWidget(forms.DateInput):
 		return mark_safe(
 			'<div class="input-group date bootstrap-datepicker"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>%s'
 			'<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>' % (
-			input_html, _(u'Today')))
+				input_html, _(u'Today')))
 
 
 class AdminTimeWidget(forms.TimeInput):
@@ -55,7 +55,7 @@ class AdminTimeWidget(forms.TimeInput):
 		return mark_safe(
 			'<div class="input-group time bootstrap-clockpicker"><span class="input-group-addon"><i class="fa fa-clock-o">'
 			'</i></span>%s<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>' % (
-			input_html, _(u'Now')))
+				input_html, _(u'Now')))
 
 
 class AdminSelectWidget(forms.Select):
@@ -87,7 +87,7 @@ class AdminSplitDateTime(forms.SplitDateTimeWidget):
 			'<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div>'
 			'<div class="input-group time bootstrap-clockpicker"><span class="input-group-addon"><i class="fa fa-clock-o">'
 			'</i></span>%s<span class="input-group-btn"><button class="btn btn-default" type="button">%s</button></span></div></div>' % (
-			input_html[0], _(u'Today'), input_html[1], _(u'Now')))
+				input_html[0], _(u'Today'), input_html[1], _(u'Now')))
 
 	def format_output(self, rendered_widgets):
 		return mark_safe(u'<div class="datetime clearfix">%s%s</div>' %

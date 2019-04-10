@@ -56,53 +56,53 @@
 
                 <!--项目列表展示 -->
                 {% if type == "list" %}
-                <h4 class="sub-header">项目列表
-                    <button type="button" class="btn btn-sm btn-primary"
-                            style="float:right"
-                            onclick="location.href='/project/add_project/'"
-                    >创建项目
-                    </button>
-                </h4>
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                    <h4 class="sub-header">项目列表
+                        <button type="button" class="btn btn-sm btn-primary"
+                                style="float:right"
+                                onclick="location.href='/project/add_project/'"
+                        >创建项目
+                        </button>
+                    </h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
 
-                        <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>名称</th>
-                            <th>描述</th>
-                            <th>状态</th>
-                            <th>创建时间</th>
-                            <th style="padding-left: 13px">编辑</th>
-                        </tr>
-                        </thead>
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>名称</th>
+                                <th>描述</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                                <th style="padding-left: 13px">编辑</th>
+                            </tr>
+                            </thead>
 
-                        <tbody>
-                        {% for project in projects %}
-                        <tr>
-                            <td>{{ project.id }}</td>
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.describe }}</td>
-                            <td>
-                                {% if project.status == True %}
-                                    <span>开启</span>
-                                {% else %}
-                                    <span>关闭</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ project.create_time | date:"Y-m-d H:i:s" }}</td>
-                            <td><a href="/project/edit_project/{{ project.id }}/">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                            </a>
-                                <a href="/project/delete_project/" style="margin-left: 12px">
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                            <tbody>
+                            {% for project in projects %}
+                                <tr>
+                                    <td>{{ project.id }}</td>
+                                    <td>{{ project.name }}</td>
+                                    <td>{{ project.describe }}</td>
+                                    <td>
+                                        {% if project.status == True %}
+                                            <span>开启</span>
+                                        {% else %}
+                                            <span>关闭</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ project.create_time | date:"Y-m-d H:i:s" }}</td>
+                                    <td><a href="/project/edit_project/{{ project.id }}/">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                        <a href="/project/delete_project/" style="margin-left: 12px">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% endif %}
 
                 <!--项目信息增加 -->

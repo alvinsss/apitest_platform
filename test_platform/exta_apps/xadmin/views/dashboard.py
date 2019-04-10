@@ -582,7 +582,7 @@ class Dashboard(CommAdminView):
 			'add_widget_url': self.get_admin_url(
 				'%s_%s_add' % (UserWidget._meta.app_label, UserWidget._meta.model_name)) +
 			                  "?user=%s&page_id=%s&_redirect=%s" % (
-			                  self.user.id, self.get_page_id(), urlquote(self.request.get_full_path()))
+				                  self.user.id, self.get_page_id(), urlquote(self.request.get_full_path()))
 		}
 		context = super(Dashboard, self).get_context()
 		context.update(new_context)

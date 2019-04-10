@@ -5,6 +5,7 @@
         {% for choice in choices %}
             <li{% if choice.selected %} class="active"{% endif %}>
                 <a href="
+
                         {% if choice.selected %}{{ choice.remove_query_string|iriencode }}{% else %}{{ choice.query_string|iriencode }}{% endif %}">
                     <input type="checkbox" {% if choice.selected %} checked="checked"{% endif %}>
                     {{ choice.display }}

@@ -6,12 +6,14 @@ T(模板) - view
 V(视图) -Controller
 """
 from django.shortcuts import render
-from django.http import  HttpResponse
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from personal.forms import LoginForm
 from personal.models.project import Project
+
+
 # Create your views here.
 
 def test(request):
@@ -20,6 +22,7 @@ def test(request):
 	for n in range(3):
 		info.append("qatest:" + name + "<br>")
 	return HttpResponse(info)
+
 
 def qatest(request):
 	input_name = request.GET.get("name", "")
@@ -49,6 +52,7 @@ def index(request):
 				return HttpResponseRedirect("/project/")
 		else:
 			return render(request, 'index.html', {'form_errors': login_form.errors})
+
 
 # 用户的退出操作
 @login_required

@@ -59,7 +59,7 @@
                     <h4 class="sub-header">模块列表
                         <button type="button" class="btn btn-sm btn-primary"
                                 style="float:right"
-                                onclick="location.href='/module/add_project/'"
+                                onclick="location.href='/module/add_module/'"
                         >创建模块
                         </button>
                     </h4>
@@ -99,53 +99,38 @@
                     </div>
                 {% endif %}
 
-                <!--项目信息增加 -->
+                <!--模块增加 -->
                 {% if type == "add" %}
                     <div id="legend" class="">
                         <legend class="">模块信息增加</legend>
                     </div>
-                    <form class="form-horizontal" method="post" action="/project/add_project/">
+                    <form class="form-horizontal" method="post" action="/module/add_module/">
                         <fieldset>
                             <div class="control-group">
-
-                                <!- Text input-->
-                                <label class="control-label" for="input01">项目名</label>
+                                <label class="control-label" for="input01">项目</label>
                                 <div class="controls" style="height: 80px">
-                                    <input type="text" name="name" class="input-xlarge">
+                                    {{ form.project }}
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="input01">名称</label>
+                                <div class="controls" style="height: 80px">
+                                    {{ form.name }}
                                     <span style="color: red">{{ name_error }}</span>
                                 </div>
                             </div>
 
                             <div class="control-group">
-
-                                <!-- Textarea -->
                                 <label class="control-label">描述</label>
-                                <div class="controls" style="height: 60px">
-                                    <div class="textarea">
-                                        <textarea type="" name="describe"> </textarea>
-                                    </div>
+                                <div class="controls" style="height: 80px">
+                                    {{ form.describe }}
+                                    <span style="color: red">{{ name_error }}</span>
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">状态</label>
-                                <div class="controls" style="height:37px ">
-
-                                    <!-- Inline Radios -->
-                                    <label class="radio inline" style="left:20px;float:left">
-                                        <input type="radio" name="status" value="1" checked="checked" name="group">
-                                        可用
-                                    </label>
-                                    <label class="radio inline" style="left:80px;float:left">
-                                        <input type="radio" name="status" value="0" name="group">
-                                        禁止
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <!-- Button -->
-                                <div class="controls" style="height:40px ">
+                                <div class="form-group" style="margin-top: 180px">
                                     <button class="btn btn-success">提交</button>
                                 </div>
                             </div>

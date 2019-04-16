@@ -6,7 +6,6 @@
 @time: 2019/04/09
 """
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from personal.models.project import Project
@@ -18,6 +17,7 @@ from personal.forms import ProjectForm
 # 管理页面
 @login_required
 def project_manage(request):
+	print("project_manage")
 	project_all = Project.objects.all()
 	return render(request, "project.html",
 	              {"projects": project_all

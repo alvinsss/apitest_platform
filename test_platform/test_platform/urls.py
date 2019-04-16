@@ -2,12 +2,11 @@
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls import url, include
+from django.urls import path, include
+from django.conf.urls import url
 import xadmin
 
 from personal.views import login_views
-from personal.views import project_views
 from personal.views import module_views
 from personal.views import qatest_views
 
@@ -23,10 +22,7 @@ urlpatterns = [
 	path('accounts/login/', login_views.index),
 
 	# """项目管理"""
-	path('project/', project_views.project_manage),
-	path('project/add_project/', project_views.add_project),
-	path('project/edit_project/<int:pid>/', project_views.edit_project),
-	path('project/delete_project/<int:pid>/', project_views.delete_project),
+	path('project', include('project.urls')),
 
 	# """模块管理"""
 	path('module/', module_views.module_manage),

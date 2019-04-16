@@ -14,6 +14,7 @@ from personal.forms import LoginForm
 from personal.models.project import Project
 
 
+
 # Create your views here.
 
 def test(request):
@@ -33,7 +34,8 @@ def qatest(request):
 
 def index(request):
 	if request.method == "GET":
-		return render(request, "index.html")
+		login_form = LoginForm(request.GET)
+		return render(request, "index.html", {'form_errors': login_form})
 	else:
 		login_form = LoginForm(request.POST)
 		# 判断提交数据,密码至少6位长度
@@ -46,7 +48,7 @@ def index(request):
 			user = auth.authenticate(username=username, password=password)
 			print(user)
 			if user is None:
-				return render(request, "index.html", {"msg": "用户名或密码不正确"})
+				return render(request, "index.html", {"msg": "用户名或密码不正确", 'form_errors': login_form})
 			else:
 				auth.login(request, user)  # 记录用户的登录状态
 				return HttpResponseRedirect("/project/")

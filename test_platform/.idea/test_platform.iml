@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test_platform" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/exta_apps" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/personal" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

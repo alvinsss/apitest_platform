@@ -10,6 +10,14 @@
                        autofocus>
                 <label for="inputPassword" class="sr-only">密码:</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
+
+
+                {% csrf_token %}
+                <div class="form-group marb8 captcha1 ">
+                    <label style="color: #fbed50" id="refresh_captcha"> 验&nbsp;&nbsp;证&nbsp;&nbsp;码</label>
+                    {{ form_errors.captcha }}
+                </div>
+                {#                <button type="button" onclick="refresh_captcha()">计算</button>#}
                 {#            <div style="color: red"> {{ msg }}</div>#}
                 <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
                     {% for key, error in form_errors.items %}
@@ -18,10 +26,23 @@
                     {% if not form_errors %} {{ msg }} {% endif %}
                 </div>
 
-                {% csrf_token %}
-                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+                <button class="btn btn-lg btn-primary btn-block"
+                        type="submit" style="margin-top: 20px">登录
+                </button>
             </form>
         </div> <!-- /container -->
     </div>
+
+    <script>
+        //刷新验证码
+        function refresh_captcha(event) {
+            $.get("/captcha/refresh/?" + Math.random(), function (result) {
+                $('#' + event.data.form_id + ' .captcha').attr("src", result.image_url);
+                $('#id_captcha_0').attr("value", result.key);
+            });
+            return false;
+        }
+    </script>
+
 
 {% endblock %}

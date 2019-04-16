@@ -30,18 +30,17 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active">
+                    <li>
                         <a href="/project/">
                             <i class="glyphicon glyphicon-th-large"></i>&nbsp&nbsp项目管理
                         </a>
                     </li>
                     {#            <li><a href="#">项目管理</a></li>#}
-                    <li><a href="/module/">
+                    <li class="active"><a href="/module/">
                         <i class="glyphicon glyphicon-th"></i>&nbsp&nbsp模块管理
                     </a>
                     </li>
                 </ul>
-
                 <ul class="nav nav-sidebar">
                     <li><a href="">用例管理</a></li>
                     <li><a href="">任务管理</a></li>
@@ -52,15 +51,16 @@
                     <li><a href="">Another nav item</a></li>
                 </ul>
             </div>
+
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-                <!--项目列表展示 -->
+                <!--模块列表展示 -->
                 {% if type == "list" %}
-                    <h4 class="sub-header">项目列表
+                    <h4 class="sub-header">模块列表
                         <button type="button" class="btn btn-sm btn-primary"
                                 style="float:right"
-                                onclick="location.href='/project/add_project/'"
-                        >创建项目
+                                onclick="location.href='/module/add_project/'"
+                        >创建模块
                         </button>
                     </h4>
                     <div class="table-responsive">
@@ -71,30 +71,24 @@
                                 <th>id</th>
                                 <th>名称</th>
                                 <th>描述</th>
-                                <th>状态</th>
+                                <th>项目</th>
                                 <th>创建时间</th>
                                 <th style="padding-left: 13px">编辑</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {% for project in projects %}
+                            {% for module in modules %}
                                 <tr>
-                                    <td>{{ project.id }}</td>
-                                    <td>{{ project.name }}</td>
-                                    <td>{{ project.describe }}</td>
-                                    <td>
-                                        {% if project.status == True %}
-                                            <span>开启</span>
-                                        {% else %}
-                                            <span>关闭</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ project.create_time | date:"Y-m-d H:i:s" }}</td>
-                                    <td><a href="/project/edit_project/{{ project.id }}/">
+                                    <td>{{ module.id }}</td>
+                                    <td>{{ module.name }}</td>
+                                    <td>{{ module.describe }}</td>
+                                    <td>{{ module.project }}</td>
+                                    <td>{{ module.create_time | date:"Y-m-d H:i:s" }}</td>
+                                    <td><a href="/module/edit_module/{{ module.id }}/">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
-                                        <a href="/project/delete_project/" style="margin-left: 12px">
+                                        <a href="/module/delete_module/{{ module.id }}" style="margin-left: 12px">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </a>
                                     </td>
@@ -108,7 +102,7 @@
                 <!--项目信息增加 -->
                 {% if type == "add" %}
                     <div id="legend" class="">
-                        <legend class="">项目信息增加</legend>
+                        <legend class="">模块信息增加</legend>
                     </div>
                     <form class="form-horizontal" method="post" action="/project/add_project/">
                         <fieldset>
@@ -161,7 +155,7 @@
                 {% endif %}
 
                 {% if type == "edit" %}
-                    <h4 class="sub-header">编辑项目</h4>
+                    <h4 class="sub-header">编辑模块</h4>
                     <form class="form-horizontal" method="post" action="/project/edit_project/{{ id }}/">
                         {#                        <div class="control-group">#}
                         {#                           <label  class="control-label" style="color: red" >名称</label>#}
@@ -176,6 +170,7 @@
                 {% endif %}
 
             </div>
+
         </div>
     </div>
 

@@ -7,12 +7,12 @@
 """
 from django import forms
 from personal.models import Project
-
+from captcha.fields import CaptchaField
 
 class LoginForm(forms.Form):
 	username = forms.CharField(required=True)
 	password = forms.CharField(required=True, min_length=6)
-
+	captcha = CaptchaField(error_messages={"invalid": "验证码错误,请F5刷新页面"})
 
 class ProjectForm(forms.ModelForm):
 	"""label与前端代码的label一致"""

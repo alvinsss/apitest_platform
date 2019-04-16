@@ -74,3 +74,24 @@ def edit_project(request, pid):
 			p.status = status
 			p.save()
 		return HttpResponseRedirect("/project/")
+
+
+@login_required
+def delete_project(request, pid):
+	"""
+	删除项目
+	:param request:
+	:return:
+	"""
+	print("delete_project", pid)
+	if request.method == "GET":
+		if pid:
+			try:
+				p = Project.objects.get(id=pid)
+			except Project.DoesNotExist:
+				return HttpResponseRedirect("/project")
+			else:
+				p.delete()
+				return HttpResponseRedirect("/project")
+	elif request.method == "POST":
+		return HttpResponseRedirect("/project/")

@@ -26,9 +26,11 @@ urlpatterns = [
 	path('project/', project_views.project_manage),
 	path('project/add_project/', project_views.add_project),
 	path('project/edit_project/<int:pid>/', project_views.edit_project),
+	path('project/delete_project/<int:pid>/', project_views.delete_project),
 
 	# """模块管理"""
 	path('module/', module_views.module_manage),
+
 	path('jsqa/', qatest_views.jsqa),
 	path('jsdemo/', qatest_views.demo),
 

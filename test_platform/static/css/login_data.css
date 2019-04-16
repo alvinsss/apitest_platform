@@ -1,0 +1,22 @@
+.form-group {
+    float: left;
+    width: 72px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 9px;
+    border-right: 1px solid #eaeaea;
+    text-align: center;
+}
+
+.marb8 {
+    margin-bottom: 80px;
+}
+
+.captcha1 > input {
+    width: 80px;
+}
+
+.captcha1 > img {
+    float: right;
+    margin-top: 5px;
+}

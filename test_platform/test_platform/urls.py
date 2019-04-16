@@ -6,27 +6,27 @@ from django.urls import path, include
 from django.conf.urls import url
 import xadmin
 
-from personal.views import login_views
-from personal.views import qatest_views
+from users import views
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	url(r'^xadmin/', xadmin.site.urls),
 	url(r'^captcha/', include('captcha.urls')),
+
+	# """用户管理"""
 	# http://127.0.0.1:8000/test/?name=alvin
-	path('test/', login_views.qatest),
-	path('index/', login_views.index, name="index"),
-	path('', login_views.index),
-	path('logout/', login_views.logout),
-	path('accounts/login/', login_views.index),
+	path('test/', views.qatest),
+	path('/index/', views.index, name="index"),
+	path('', views.index),
+	path('logout/', views.logout),
+	path('accounts/login/', views.index),
+	path('jsqa/', views.jsqa),
+	path('jsdemo/', views.demo),
 
 	# """项目管理"""
 	path('project', include('project.urls')),
 
 	# """模块管理"""
 	path('module', include('module.urls')),
-
-	path('jsqa/', qatest_views.jsqa),
-	path('jsdemo/', qatest_views.demo),
 
 ]

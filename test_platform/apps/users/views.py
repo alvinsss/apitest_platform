@@ -10,7 +10,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from personal.forms import LoginForm
+from users.forms import LoginForm
+
 
 # Create your views here.
 
@@ -59,3 +60,19 @@ def logout(request):
 	auth.logout(request)
 	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")
+
+
+def demo(request):
+	return render(request, "js_demo.html")
+
+
+def jsqa(request):
+	if request.method == "POST":
+		n1 = request.POST.get("num1")
+		print(n1)
+		n2 = request.POST.get("num2")
+		sum = int(n1) + int(n2)
+		return HttpResponse(sum)
+	else:
+		print("GET")
+		return HttpResponse({"status_code": "1001", "message": "请求方法错误！"})

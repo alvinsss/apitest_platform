@@ -11,9 +11,6 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from personal.forms import LoginForm
-from personal.models.project import Project
-
-
 
 # Create your views here.
 

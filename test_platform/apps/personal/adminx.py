@@ -1,7 +1,7 @@
 import xadmin
 # Register your models here.
-from personal.models.project import Project
-from personal.models.module import Module
+from project.models import Project
+from module.models import Module
 
 
 class ProjectAdmin(object):

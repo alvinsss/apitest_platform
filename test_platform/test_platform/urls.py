@@ -7,7 +7,6 @@ from django.conf.urls import url
 import xadmin
 
 from personal.views import login_views
-from personal.views import module_views
 from personal.views import qatest_views
 
 urlpatterns = [
@@ -25,10 +24,7 @@ urlpatterns = [
 	path('project', include('project.urls')),
 
 	# """模块管理"""
-	path('module/', module_views.module_manage),
-	path('module/add_module/', module_views.add_module),
-	path('module/edit_module/<int:mid>/', module_views.edit_module),
-	path('module/delete_module/<int:mid>/', module_views.delete_module),
+	path('module', include('module.urls')),
 
 	path('jsqa/', qatest_views.jsqa),
 	path('jsdemo/', qatest_views.demo),

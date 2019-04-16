@@ -8,8 +8,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from personal.models.project import Project
-from personal.forms import ProjectForm
+from project.models import Project
+from project.forms import ProjectForm
 
 
 # Create your views here.

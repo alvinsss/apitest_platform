@@ -29,4 +29,4 @@ class ProjectForm(forms.ModelForm):
 class ModuleForm(forms.ModelForm):
 	class Meta:
 		model = Module
-		fields = ['name', 'describe', 'project']
+		fields = ['project', 'name', 'describe']

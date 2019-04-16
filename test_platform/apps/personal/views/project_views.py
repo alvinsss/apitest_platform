@@ -58,8 +58,7 @@ def edit_project(request, pid):
 			print("编辑的id:", pid, p.name)
 			# 把p对象的数据赋值给表单
 			form = ProjectForm(instance=p)
-			return render(request, "project.html", {"type": "edit",
-			                                        "form": form, "id": pid})
+			return render(request, "project.html", {"type": "edit", "form": form, "id": pid})
 	elif request.method == "POST":
 		form = ProjectForm(request.POST)
 		p = Project.objects.get(id=pid)

@@ -163,12 +163,6 @@
                 {% if type == "edit" %}
                     <h4 class="sub-header">编辑项目</h4>
                     <form class="form-horizontal" method="post" action="/project/edit_project/{{ id }}/">
-                        {#                        <div class="control-group">#}
-                        {#                           <label  class="control-label" style="color: red" >名称</label>#}
-                        {#                            <div class="controls">#}
-                        {#                                {{ form.name }}#}
-                        {#                            </div>#}
-                        {#                        </div>#}
                         {{ form.as_p }}
                         {% csrf_token %}
                         <input type="submit" value="提交">

@@ -34,36 +34,35 @@ def module_manage(request):
 
 
 @login_required
-def edit_module(request):
+def edit_module(request, mid):
 	"""
-	编辑管理
+	编辑管理，GET展示
 	:param request:
 	:return:
 	"""
+	if request.method == "GET":
+		module = Module.objects.get(id=mid)
+		module_form = ModuleForm(instance=module)
+		print(module.id)
+		return render(request, "module.html",
+		              {"form": module_form, "id": module.id, "type": "edit"})
 
+	if request.method == "POST":
+		print("POST")
+		form = ModuleForm(request.POST)
+		if form.is_valid():
+			project = form.cleaned_data['project']
+			name = form.cleaned_data['name']
+			describe = form.cleaned_data['describe']
+			print(name, describe, project)
 
-# if request.method == "GET":
-# 	if pid:
-# 		p = Project.objects.get(id=mid)
-# 		print("编辑的id:", mid, p.name)
-# 		# 把p对象的数据赋值给表单
-# 		form = ProjectForm(instance=p)
-# 		return render(request, "project.html", {"type": "edit",
-# 		                                        "form": form, "id": pid})
-# elif request.method == "POST":
-# 	form = ProjectForm(request.POST)
-# 	p = Project.objects.get(id=pid)
-# 	print("编辑post的id:", pid, p.name)
-# 	if form.is_valid():
-# 		name = form.cleaned_data['name']
-# 		describe = form.cleaned_data['describe']
-# 		status = form.cleaned_data['status']
-# 		p = Project.objects.get(id=pid)
-# 		p.name = name
-# 		p.describe = describe
-# 		p.status = status
-# 		p.save()
-# 	return HttpResponseRedirect("/project/")
+			m = Module.objects.get(id=mid)
+			m.name = name
+			m.describe = describe
+			m.project = project
+			m.save()
+			return HttpResponseRedirect("/module/")
+
 
 
 @login_required()
@@ -87,5 +86,16 @@ def add_module(request):
 
 
 @login_required()
-def delete_module(request):
-	pass
+def delete_module(request, mid):
+	"""删除模块
+	"""
+	if request.method == "GET":
+		try:
+			module = Module.objects.get(id=mid)
+		except Module.DoesNotExist:
+			return HttpResponseRedirect("/module")
+		else:
+			module.delete()
+		return HttpResponseRedirect("/module")
+	else:
+		return HttpResponseRedirect("/module")

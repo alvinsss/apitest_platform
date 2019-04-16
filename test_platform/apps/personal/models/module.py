@@ -1,9 +1,6 @@
 from django.db import models
 from personal.models.project import Project
-
-
 # Create your models here.
-
 
 class Module(models.Model):
 	"""模块表"""

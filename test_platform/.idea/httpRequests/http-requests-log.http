@@ -1,0 +1,8 @@
+GET http://localhost:8080/resources
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-04-10T102022.404.html
+
+###
+

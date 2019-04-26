@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'users',
 	'project',
 	'module',
+	'testcase',
 	'xadmin',
 	'crispy_forms',
 	'captcha',

@@ -6,10 +6,12 @@ T(模板) - view
 V(视图) -Controller
 """
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+
 from users.forms import LoginForm
 
 
@@ -30,28 +32,24 @@ def qatest(request):
 	return render(request, "qatest.html", {"name": input_name})
 
 
+# 登录的首页
 def index(request):
 	if request.method == "GET":
-		login_form = LoginForm(request.GET)
-		return render(request, "index.html", {'form_errors': login_form})
+		return render(request, "index.html")
+
 	else:
-		login_form = LoginForm(request.POST)
-		# 判断提交数据,密码至少6位长度
-		if login_form.is_valid():
-			username = request.POST.get("username", "")
-			password = request.POST.get("password", "")
-			print(username, password)
-			# if username == "" or password == "":
-			# 	return render(request, "index.html", {"msg": "用户名或密码不能为空"})
-			user = auth.authenticate(username=username, password=password)
-			print(user)
-			if user is None:
-				return render(request, "index.html", {"msg": "用户名或密码不正确", 'form_errors': login_form})
-			else:
-				auth.login(request, user)  # 记录用户的登录状态
-				return HttpResponseRedirect("/project/")
+		username = request.POST.get("username", "")
+		password = request.POST.get("password", "")
+		if username == "" or password == "":
+			return render(request, "index.html", {"error": "用户名或密码为空"})
+		user = auth.authenticate(username=username, password=password)
+		print("user-->", user)
+		if user is None:
+			return render(request, "index.html", {
+				"error": "用户名或密码错误"})
 		else:
-			return render(request, 'index.html', {'form_errors': login_form.errors})
+			auth.login(request, user)  # 记录用户的登录状态
+			return HttpResponseRedirect("/project/")
 
 
 # 用户的退出操作
@@ -66,13 +64,25 @@ def demo(request):
 	return render(request, "js_demo.html")
 
 
+# 测试的接口
+@csrf_exempt
 def jsqa(request):
 	if request.method == "POST":
-		n1 = request.POST.get("num1")
-		print(n1)
-		n2 = request.POST.get("num2")
-		sum = int(n1) + int(n2)
-		return HttpResponse(sum)
+		n1 = request.POST.get("num1", "")
+		n2 = request.POST.get("num2", "")
+		if n1 == "" or n2 == "":
+			return JsonResponse({"status_code": 10011, "message": "参数不能为空"})
+		try:
+			n1 = int(n1)
+			n2 = int(n2)
+		except ValueError:
+			return JsonResponse({"status_code": 10012, "message": "参数类型错误"})
+
+		return JsonResponse({"status_code": 10200, "message": "成功", "data": n1 + n2})
 	else:
-		print("GET")
-		return HttpResponse({"status_code": "1001", "message": "请求方法错误！"})
+		return JsonResponse({"status_code": 10010, "message": "请求方法错误"})
+
+
+def debug(request):
+	print("debug")
+	pass

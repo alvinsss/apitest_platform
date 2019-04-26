@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <!-- 浏览器兼容性 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js</title>
+    {% load static %}
+    <script src="{% static "js/jquery.min.js" %}"></script>
+
+</head>
+
+<body>
+
+数字1: <input type="text" id="number1"> <br>
+数字2: <input type="text" id="number2"> <br>
+
+<button type="button" onclick="myfunction()">计算</button>
+<br>
+<textarea rows="3" cols="8" id="result"></textarea>
+
+<script type="text/javascript">
+    function myfunction() {
+        let number1 = document.querySelector("#number1").value;
+        let number2 = document.querySelector("#number2").value;
+        console.log("数字1", number1);
+        console.log("数字2", number2);
+        $.post("/jsqa/",
+            {num1: number1, num2: number2, csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()},
+            function (result) {
+                {#alert("结果" + result);#}
+                {#document.querySelector("#result").value = result;#}
+                if (result.status_code !== 10200) {
+                    document.querySelector("#result").value = result.message;
+                } else {
+                    document.querySelector("#result").value = result.data;
+                }
+            })
+    }
+</script>
+</body>
+</html>

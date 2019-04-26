@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>测试平台</title>
+    <!-- Bootstrap core CSS -->
+    {% load static %}
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/dashboard.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/login_data.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/ie10-viewport-bug-workaround.css" %}">
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
+    <script src="{% static "js/holder.min.js" %}"></script>
+    <script src="{% static "js/login_data.js" %}"></script>
+
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+</head>
+
+<body>
+{% block base %}
+
+{% endblock %}
+
+<div class="select2-container--admin-autocomplete" role="main" style="float:right;width: 60%">
+    <div class="page-header"></div>
+    <footer class="footer">
+        <p> &copy;Compay 2019 , Author;alvin</p>
+    </footer>
+</div>
+</body>
+</html>

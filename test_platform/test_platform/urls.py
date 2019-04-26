@@ -16,17 +16,18 @@ urlpatterns = [
 	# """用户管理"""
 	# http://127.0.0.1:8000/test/?name=alvin
 	path('test/', views.qatest),
-	path('/index/', views.index, name="index"),
+	path('index/', views.index, name="index"),
 	path('', views.index),
 	path('logout/', views.logout),
 	path('accounts/login/', views.index),
-	path('jsqa/', views.jsqa),
 	path('jsdemo/', views.demo),
-
+	path('jsqa/', views.jsqa),
 	# """项目管理"""
 	path('project', include('project.urls')),
-
 	# """模块管理"""
 	path('module', include('module.urls')),
+	# """用例管理，testcase是应用名称"""
+	path('testcase', include('testcase.urls')),
+	# path('testcase/debug', views.jsqa),
 
 ]

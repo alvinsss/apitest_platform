@@ -87,3 +87,28 @@ def str_toJson(str1):
 		return JsonResponse({"result": "header类型错误"})
 	# print("str_Json".format(),str_Json)
 	return str_Json
+
+
+@csrf_exempt
+def testcase_assert(request):
+	if request.method == "POST":
+		result_text = request.POST.get("result", "")
+		assert_text = request.POST.get("assert", "")
+		assert_type = request.POST.get("assert_type", "")
+		if result_text == "" or assert_text == "":
+			return JsonResponse({"result": "断言的文本不能为空！"})
+
+		if assert_type == "contains":
+			print("contains")
+			if assert_text not in result_text:
+				return JsonResponse({"result": "断言失败！"})
+			else:
+				return JsonResponse({"result": "断言成功！"})
+		elif assert_type == "mathches":
+			if assert_text != result_text:
+				return JsonResponse({"result": "断言失败！"})
+			else:
+				return JsonResponse({"result": "断言成功！"})
+
+	else:
+		return JsonResponse({"result": "请求方法错误！"})

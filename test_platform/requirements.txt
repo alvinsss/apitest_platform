@@ -1,0 +1,4 @@
+django
+django-simple-captcha
+httplib2
+PyMySQL

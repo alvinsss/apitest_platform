@@ -8,6 +8,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from project.models import Project
 from project.forms import ProjectForm
 
@@ -96,10 +97,12 @@ def delete_project(request, pid):
 		return HttpResponseRedirect("/project/")
 
 
+@csrf_exempt
 def get_project_list(request):
 	"""
 	接口：获取项目列表
 	"""
+	print("get_project_list")
 	if request.method == "GET":
 		projects = Project.objects.all()
 		project_list = []

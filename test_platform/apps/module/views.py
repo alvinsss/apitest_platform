@@ -7,9 +7,9 @@
 # -*- coding:utf-8
 
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from module.models import Module
 from module.forms import ModuleForm
 
@@ -97,3 +97,55 @@ def delete_module(request, mid):
 		return HttpResponseRedirect("/module")
 	else:
 		return HttpResponseRedirect("/module")
+
+
+@csrf_exempt
+def get_searchmodule_info(request):
+	print("get_searchmodule_info")
+	if request.method == "POST":
+		search_info = request.POST.get("search_info", "")
+		if search_info == "":
+			return JsonResponse({"status": 10102,
+			                     "message": "搜索内容不能空"})
+
+		modules = Module.objects.filter(name=search_info)
+
+		module_list = []
+		for mod in modules:
+			module_dict = {
+				"id": mod.id,
+				"name": mod.name,
+				"describe": mod.describe,
+				"create_time": mod.create_time,
+				"project_id": mod.project_id,
+			}
+			module_list.append(module_dict)
+		return JsonResponse({"status": 10200, "message": "请求成功",
+		                     "data": module_list})
+	else:
+		return JsonResponse({"status": 10101, "message": "请求方法错误"})
+
+
+@csrf_exempt
+def get_module_list(request):
+	"""
+	接口：根据项目id,返回对应的模块列表,用于js的调用
+	"""
+	if request.method == "POST":
+		pid = request.POST.get("pid", "")
+		if pid == "":
+			return JsonResponse({"status": 10102,
+			                     "message": "项目id不能空"})
+
+		modules = Module.objects.filter(project=pid)
+		module_list = []
+		for mod in modules:
+			module_dict = {
+				"id": mod.id,
+				"name": mod.name
+			}
+			module_list.append(module_dict)
+		return JsonResponse({"status": 10200, "message": "请求成功",
+		                     "data": module_list})
+	else:
+		return JsonResponse({"status": 10101, "message": "请求方法错误"})

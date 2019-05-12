@@ -15,8 +15,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="/logout/">logout</a></li>
+                    <li><a href="#">设置</a></li>
+                    <li><a href="/logout/">退出</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -60,10 +60,28 @@
 
                 <!--模块列表-->
                 {% if type == "debug" %}
-                    <h4 class="sub-header">postman
-                    </h4>
+                    <h4 class="sub-header">用例增加</h4>
+
+                    <div style="margin-top: 20px;">
+                        <label> <font size="3" color="black">项目：</font> </label>
+                        <select class="selectpicker" id="project_name">
+                            <option value="" style="display: none" disabled selected>请选择项目</option>
+                        </select>
+
+                        <label style="margin-left: 30px"> <font size="3" color=black>模块：</font></label>
+                        <select class="selectpicker" id="module_name">
+                            <option value="" style="display: none" disabled selected>请选择模块</option>
+                        </select>
+
+                    </div>
+
+                    <div class="input-group" style="top:20px">
+                        <span class="input-group-addon">用例名称</span>
+                        <input id="case_name" type="text" class="form-control">
+                    </div>
+
                     <!--<div class="table-responsive">-->
-                    <div class="input-group">
+                    <div class="input-group" style="margin-top:  35px">
                         <span class="input-group-addon">* URL</span>
                         <input id="req_url" type="text" class="form-control" placeholder="url" value="http://">
                     </div>
@@ -94,7 +112,7 @@
                     <div style="margin-top: 10px;">
                         <label>* 参数类型：</label>
                         <label class="radio-inline">
-                            <input type="radio" name="par_type" id="from" value="from" checked> form-data
+                            <input type="radio" name="par_type" id="form" value="form" checked> form-data
                         </label>
                         <label class="radio-inline">
                             <input type="radio" name="par_type" id="json" value="json"> JSON
@@ -131,31 +149,13 @@
                     <div style="margin-top: 30px;">
                         <button type="button" class="btn btn-primary" onclick="assertFun()">执行断言</button>
                         <br>
-                        <p>断言内容:</p>
-                        <textarea id="assert" class="form-control" rows="10" name=textarea></textarea>
-                    </div>
-
-
-                    <div style="margin-top: 30px;">
-                        <p>断言结果:
+                        <div style="margin-top:5px ">
+                            <textarea id="assert" class="form-control" rows="2" name=textarea
+                                      placeholder=请输入断言内容></textarea>
+                            <p style="margin-top: 5px;">断言结果:
                             <font color="#FF0000"><input type="text" id="assertresult"></input></font>
-                        </p>
-                    </div>
-
-
-
-
-                    <div style="margin-top: 20px;">
-                        <label>项目：</label>
-                        <select class="selectpicker" id="project_name">
-                        </select>
-
-                        <label>模块：</label>
-                        <select class="selectpicker" id="module_name">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Barbecue</option>
-                        </select>
+                            </p>
+                        </div>
                     </div>
 
                     <div style="float: right;">
@@ -164,6 +164,7 @@
                                 onclick="saveFun()">保存
                         </button>
                     </div>
+
                     <!--</div>-->
                 {% endif %}
 
@@ -176,8 +177,17 @@
     <script src="{% static "js/myCase.js" %}"></script>
 
     <script type="text/javascript">
+
         // 调用项目的初始化
-        PorjectInit("project_name")
+        ProjectInit("project_name")
+
+        //监听项目列表的变化
+        $("#project_name").change(function () {
+            let project_id = $(this).children('option:selected').val();
+            console.log("选择的项目id", project_id);
+            ModuleInit("module_name", project_id);
+        });
+
 
         function reqSendFun() {
             {#取数据#}
@@ -208,10 +218,8 @@
                 });
 
         };
-        //
-    </script>
 
-    <script type="text/javascript">
+        // 断言
         function assertFun() {
             var result_text = $("#result").val();
             var assert_text = $("#assert").val();
@@ -235,6 +243,63 @@
                     document.querySelector("#assertresult").value = data.result;
                 });
         }
+
+
+        //保存用例
+        function saveFun() {
+
+            //接口的基本数据
+            let url = $("#req_url").val();
+            let method = $('input[name="req_method"]:checked').val();
+            let header = $("#header").val();
+            let parameter_type = $('input[name="par_type"]:checked').val();
+            let parameter_body = $("#parameter").val();
+
+            // 断言的数据
+            var assert_type = $('input[name="assert_type"]:checked').val();
+            var assert_text = $("#assert").val();
+
+            // 保存的数据
+            let module_id = $('select[id="module_name"]').val();
+            let case_name = $("#case_name").val();
+
+            if (url === "") {
+                window.alert("URL不能为空！");
+                return;
+            } else if (assert_type == "" || assert_text === "") {
+                window.alert("断言的类型或参数不能为空！");
+                return;
+            } else if (case_name == "") {
+                window.alert("用例名称不能为空！");
+                return;
+            } else if (module_id == "") {
+                window.alert("所属模块不能为空！");
+                return;
+            }
+
+            window.alert("parameter:" + parameter);
+
+            $.post("/testcase/save_case",
+                {
+                    url: url,
+                    method: method,
+                    header: header,
+                    par_type: parameter_type,
+                    par_body: parameter_body,
+                    ass_type: assert_type,
+                    ass_text: assert_text,
+                    mid: module_id,
+                    name: case_name,
+                },
+                function (data) {
+                    console.log("返回的结果", data);
+                    window.alert(data.message);
+                });
+        };
+
+
     </script>
+
+
 
 {% endblock %}

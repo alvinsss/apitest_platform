@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from testcase.models import TestCase
 import requests
 import json
 
@@ -33,14 +34,14 @@ def debug(request):
 			if parameter == "" and header == "":
 				r = requests.get(url)
 			elif header == "":
-				payload = str_toJson(parameter)
+				payload = _str_toJson(parameter)
 				r = requests.get(url, params=payload)
 			elif parameter == "":
-				header = str_toJson(header)
+				header = _str_toJson(header)
 				r = requests.get(url, headers=header)
 			else:
-				header = str_toJson(header)
-				payload = str_toJson(parameter)
+				header = _str_toJson(header)
+				payload = _str_toJson(parameter)
 				r = requests.get(url, params=payload, headers=header)
 
 		if moethd == "post":
@@ -48,14 +49,14 @@ def debug(request):
 				# http://httpbin.org/post
 				# {'file': ('report.xls', open('apps.py', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}
 				if header == "":
-					payload = str_toJson(parameter)
+					payload = _str_toJson(parameter)
 					r = requests.post(url, data=payload)
 				elif parameter == "":
-					header = str_toJson(header)
+					header = _str_toJson(header)
 					r = requests.post(url, header=header)
 				else:
-					header = str_toJson(header)
-					payload = str_toJson(parameter)
+					header = _str_toJson(header)
+					payload = _str_toJson(parameter)
 					r = requests.post(url, data=payload, headers=header)
 
 			if type_ == "json":
@@ -63,14 +64,14 @@ def debug(request):
 				# {'Content-Type':'application/json'}
 				# {'some': 'data'}
 				if header == "":
-					payload = str_toJson(parameter)
+					payload = _str_toJson(parameter)
 					r = requests.post(url, json=payload)
 				elif parameter == "":
-					header = str_toJson(header)
+					header = _str_toJson(header)
 					r = requests.post(url, header=header)
 				else:
-					header = str_toJson(header)
-					payload = str_toJson(parameter)
+					header = _str_toJson(header)
+					payload = _str_toJson(parameter)
 					r = requests.post(url, json=payload, headers=header)
 
 		return JsonResponse({"result": r.text})
@@ -78,7 +79,7 @@ def debug(request):
 		return JsonResponse({"result": "请求方法错误"})
 
 
-def str_toJson(str1):
+def _str_toJson(str1):
 	# 单引换双引
 	str_re = str1.replace("\'", "\"")
 	try:
@@ -112,3 +113,76 @@ def testcase_assert(request):
 
 	else:
 		return JsonResponse({"result": "请求方法错误！"})
+
+
+@csrf_exempt
+def testcase_save(request):
+	"""
+	用例保存
+	"""
+	if request.method == "POST":
+		url = request.POST.get("url", "")
+		method = request.POST.get("method", "")
+		header = request.POST.get("header", "")
+		parameter_type = request.POST.get("par_type", "")
+		parameter_body = request.POST.get("par_body", "")
+		assert_type = request.POST.get("ass_type", "")
+		assert_text = request.POST.get("ass_text", "")
+		module_id = request.POST.get("mid", "")
+		name = request.POST.get("name", "")
+
+		# print("url", url)
+		# print("method", method)
+		# print("header", header)
+		# print("parameter_type", parameter_type)
+		# print("parameter_body", parameter_body)
+		# print("assert_type", assert_type)
+		# print("assert_text", assert_text)
+		# print("module_id", module_id)
+		# print("name", name)
+
+		if name == "":
+			return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
+
+		if module_id == "":
+			return JsonResponse({"status": 10103, "message": "所属的模块不能为空"})
+
+		if assert_type == "" or assert_text == "":
+			return JsonResponse({"status": 10102, "message": "断言的类型或文本不能为空"})
+
+		# ...
+		if method == "get":
+			module_number = 1
+		elif method == "post":
+			module_number = 2
+		elif method == "delete":
+			module_number = 3
+		elif method == "put":
+			module_number = 4
+		else:
+			return JsonResponse({"status": 10104, "message": "未知的请求方法"})
+
+		if parameter_type == "form":
+			parameter_number = 1
+		elif parameter_type == "json":
+			parameter_number = 2
+		else:
+			return JsonResponse({"status": 10104, "message": "未知的参数类型"})
+
+		if assert_type == "contains":
+			assert_number = 1
+		elif assert_type == "mathches":
+			assert_number = 2
+		else:
+			return JsonResponse({"status": 10104, "message": "未知的断言类型"})
+
+		ret = TestCase.objects.create(name=name, module_id=module_id,
+		                              url=url, method=module_number, header=header,
+		                              parameter_type=parameter_number, parameter_body=parameter_body,
+		                              assert_type=assert_number, assert_text=assert_text)
+		print(ret)
+
+		return JsonResponse({"status": 10200, "message": "创建成功！"})
+
+	else:
+		return JsonResponse({"status": 10100, "message": "请求方法错误"})

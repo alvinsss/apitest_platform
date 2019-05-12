@@ -13,5 +13,5 @@ urlpatterns = [
 	path('/', views.testcase_manage),
 	path('/debug', views.debug),
 	path('/tc_assert', views.testcase_assert),
-	# path('/add_project/', views.add_project),
+	path('/save_case', views.testcase_save),
 ]

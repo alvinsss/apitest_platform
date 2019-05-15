@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from testcase.models import TestCase
+from utils import  baserequestdecode
 import requests
 import json
+
 
 
 # Create your views here.
@@ -19,12 +21,14 @@ def debug(request):
 		header = request.POST.get("header", "")
 		type_ = request.POST.get("type", "")
 		parameter = request.POST.get("parameter", "")
+		encryption = request.POST.get("encryption","")
 		# csrfmiddlewaretoken=request.POST.get("csrfmiddlewaretoken", "")
 		print("url", url)
 		print("moethd", moethd)
 		print("header", header)
 		print("type_", type_)
 		print("parameter", parameter)
+		print("encryption", encryption)
 
 		# header = str_toJson(header)
 		# payload = str_toJson(parameter)
@@ -45,36 +49,50 @@ def debug(request):
 				r = requests.get(url, params=payload, headers=header)
 
 		if moethd == "post":
-			if type_ == "from":
+			if type_ == "from" and  encryption == "0":
 				# http://httpbin.org/post
 				# {'file': ('report.xls', open('apps.py', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}
 				if header == "":
 					payload = _str_toJson(parameter)
 					r = requests.post(url, data=payload)
+					res_text = r.text
+
 				elif parameter == "":
 					header = _str_toJson(header)
 					r = requests.post(url, header=header)
+					res_text = r.text
+
 				else:
 					header = _str_toJson(header)
 					payload = _str_toJson(parameter)
 					r = requests.post(url, data=payload, headers=header)
+					res_text = r.text
 
-			if type_ == "json":
+			if type_ == "json"  and encryption == "0" :
 				# http://httpbin.org/post
 				# {'Content-Type':'application/json'}
 				# {'some': 'data'}
 				if header == "":
 					payload = _str_toJson(parameter)
 					r = requests.post(url, json=payload)
+					res_text = r.text
 				elif parameter == "":
 					header = _str_toJson(header)
 					r = requests.post(url, header=header)
+					res_text = r.text
 				else:
 					header = _str_toJson(header)
 					payload = _str_toJson(parameter)
 					r = requests.post(url, json=payload, headers=header)
+					res_text = r.text
 
-		return JsonResponse({"result": r.text})
+			if type_ == "json" and encryption == "1":
+					header = _str_toJson( header )
+					r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
+					print("r:",r)
+					res_text = str(r)
+
+		return JsonResponse({"result": res_text})
 	else:
 		return JsonResponse({"result": "请求方法错误"})
 
@@ -130,16 +148,17 @@ def testcase_save(request):
 		assert_text = request.POST.get("ass_text", "")
 		module_id = request.POST.get("mid", "")
 		name = request.POST.get("name", "")
+		encryption = request.POST.get("encryption","")
 
-		# print("url", url)
-		# print("method", method)
-		# print("header", header)
-		# print("parameter_type", parameter_type)
-		# print("parameter_body", parameter_body)
-		# print("assert_type", assert_type)
-		# print("assert_text", assert_text)
-		# print("module_id", module_id)
-		# print("name", name)
+		print("url", url)
+		print("method", method)
+		print("header", header)
+		print("parameter_type", parameter_type)
+		print("parameter_body", parameter_body)
+		print("assert_type", assert_type)
+		print("assert_text", assert_text)
+		print("module_id", module_id)
+		print("encryption", encryption)
 
 		if name == "":
 			return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
@@ -169,6 +188,14 @@ def testcase_save(request):
 		else:
 			return JsonResponse({"status": 10104, "message": "未知的参数类型"})
 
+		if encryption == "1":
+			encryption = 1
+		elif encryption == "2":
+			encryption = 2
+		else:
+			return JsonResponse({"status": 10104, "message": "未知加密选项"})
+
+
 		if assert_type == "contains":
 			assert_number = 1
 		elif assert_type == "mathches":
@@ -179,7 +206,7 @@ def testcase_save(request):
 		ret = TestCase.objects.create(name=name, module_id=module_id,
 		                              url=url, method=module_number, header=header,
 		                              parameter_type=parameter_number, parameter_body=parameter_body,
-		                              assert_type=assert_number, assert_text=assert_text)
+		                              assert_type=assert_number, assert_text=assert_text,encryption=encryption )
 		print(ret)
 
 		return JsonResponse({"status": 10200, "message": "创建成功！"})

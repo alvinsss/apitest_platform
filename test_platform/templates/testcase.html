@@ -73,6 +73,13 @@
                             <option value="" style="display: none" disabled selected>请选择模块</option>
                         </select>
 
+                        <label style="margin-left: 30px"> <font size="3" color=black>是否加密：</font></label>
+                        <select class="selectpicker" id="encryption" name="encryption">
+                            <option value="" style="display: none" disabled selected>请选择</option>
+                            <option value="1"  > 加密</option>
+                            <option value="0"  > 不加密</option>
+                        </select>
+
                     </div>
 
                     <div class="input-group" style="top:20px">
@@ -194,6 +201,7 @@
             var url = $("#req_url").val();
             {#被选中的方法#}
             var moethd = $('input[name="req_method"]:checked').val();
+            var encryption = $('select[id="encryption"]').val();
             var header = $("#header").val();
             var type = $('input[name="par_type"]:checked').val();
             var parameter = $("#parameter").val();
@@ -206,6 +214,7 @@
             $.post("/testcase/debug",
                 {
                     url: url,
+                    encryption: encryption,
                     moethd: moethd,
                     header: header,
                     type: type,
@@ -249,6 +258,7 @@
         function saveFun() {
 
             //接口的基本数据
+            let encryption = $('select[id="encryption"]').val();
             let url = $("#req_url").val();
             let method = $('input[name="req_method"]:checked').val();
             let header = $("#header").val();
@@ -282,6 +292,7 @@
             $.post("/testcase/save_case",
                 {
                     url: url,
+                    encryption: encryption ,
                     method: method,
                     header: header,
                     par_type: parameter_type,

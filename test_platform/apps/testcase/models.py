@@ -11,6 +11,7 @@ class TestCase(models.Model):
 	url = models.TextField("URL", null=False)
 	# 1:GET, 2: POST, 3:DELETE, 4:PUT
 	method = models.IntegerField("请求方法", null=False)
+	encryption = models.IntegerField("是否加密",null=False)
 	header = models.TextField("请求头", null=False)
 	parameter_type = models.IntegerField("参数类型", null=False)  # 1：form-data 2: json
 	parameter_body = models.TextField("参数内容", null=False)

@@ -25,28 +25,30 @@ sys.path.insert(1, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = '*@#fk*9ay6j)@6@asfxug-azgjvcguh+ue7q-03fa@3r*&faj_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['*',]
 # Application definition
 
 INSTALLED_APPS = [
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'test_platform',
-	'users',
-	'project',
-	'module',
-	'testcase',
-	'xadmin',
-	'crispy_forms',
-	'captcha',
-	# https://django-simple-captcha.readthedocs.io/en/latest/usage.html
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'test_platform',
+    'users',
+    'project',
+    'module',
+    'testcase',
+    'xadmin',
+    'crispy_forms',
+    'captcha',
+    'mock',
+    # https://django-simple-captcha.readthedocs.io/en/latest/usage.html
 ]
 
 MIDDLEWARE = [

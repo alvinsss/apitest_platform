@@ -75,7 +75,7 @@
 
                         <label style="margin-left: 30px"> <font size="3" color=black>是否加密：</font></label>
                         <select class="selectpicker" id="encryption" name="encryption">
-                            <option value="" style="display: none" disabled selected>请选择</option>
+                            <option value="2" style="display: none" disabled selected>请选择</option>
                             <option value="1"  > 加密</option>
                             <option value="0"  > 不加密</option>
                         </select>
@@ -128,7 +128,8 @@
 
                     <div class="input-group">
                         <span class="input-group-addon">参数</span>
-                        <input id="parameter" type="text" class="form-control" value="{}">
+{#                        <input id="parameter" type="text" class="form-control" value="{}">#}
+                        <textarea id="parameter" type="text" class="form-control"  cols="5" laceholder=请输入参数内容></textarea>
                     </div>
                     <p style="color:#8B8989">说明：以字典的方式设置参数，如：{"id":1, "name":"名称"}</p>
 

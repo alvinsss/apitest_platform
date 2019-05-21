@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from testcase.models import TestCase
+from module.models import Module
 from utils import  baserequestdecode
 import requests
 import json
@@ -10,206 +11,232 @@ import json
 
 # Create your views here.
 def testcase_manage(request):
-	return render(request, "testcase.html", {"type": "debug"})
-
+    # 查询全部数据
+    case_list = TestCase.objects.all()
+    return render(request, "case_list.html", {"cases": case_list})
+    # return render(request, "case_list.html", {"type": "debug"})
 
 @csrf_exempt
-def debug(request):
-	if request.method == "POST":
-		url = request.POST.get("url", "")
-		moethd = request.POST.get("moethd", "")
-		header = request.POST.get("header", "")
-		type_ = request.POST.get("type", "")
-		parameter = request.POST.get("parameter", "")
-		encryption = request.POST.get("encryption","")
-		# csrfmiddlewaretoken=request.POST.get("csrfmiddlewaretoken", "")
-		print("url", url)
-		print("moethd", moethd)
-		print("header", header)
-		print("type_", type_)
-		print("parameter", parameter)
-		print("encryption", encryption)
+def testcase_debug(request):
+    """
+    测试用例的调试
+    """
+    if request.method == "POST":
+        url = request.POST.get("url", "")
+        method = request.POST.get("method", "")
+        header = request.POST.get("header", "")
+        type_ = request.POST.get("type", "")
+        parameter = request.POST.get("parameter", "")
+        encryption = request.POST.get("encryption","")
+        print("url", url)
+        print("method", method)
+        print("header", header)
+        print("type_", type_)
+        print("parameter", parameter)
+        print("encryption",encryption)
 
-		# header = str_toJson(header)
-		# payload = str_toJson(parameter)
-		payload = parameter
+        json_header = header.replace("\'", "\"")
+        try:
+            header = json.loads(json_header)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({"result": "header类型错误"})
 
-		if moethd == "get":
-			if parameter == "" and header == "":
-				r = requests.get(url)
-			elif header == "":
-				payload = _str_toJson(parameter)
-				r = requests.get(url, params=payload)
-			elif parameter == "":
-				header = _str_toJson(header)
-				r = requests.get(url, headers=header)
-			else:
-				header = _str_toJson(header)
-				payload = _str_toJson(parameter)
-				r = requests.get(url, params=payload, headers=header)
+        json_par = parameter.replace("\'", "\"")
+        try:
+            payload = json.loads(json_par)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({"result": "参数类型错误"})
 
-		if moethd == "post":
-			if type_ == "from" and  encryption == "0":
-				# http://httpbin.org/post
-				# {'file': ('report.xls', open('apps.py', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}
-				if header == "":
-					payload = _str_toJson(parameter)
-					r = requests.post(url, data=payload)
-					res_text = r.text
+        result_text = None
+        if method == "get":
+            if header == "":
+                r = requests.get(url, params=payload)
+                result_text = r.text
+            else:
+                r = requests.get(url, params=payload, headers=header)
+                result_text = r.text
 
-				elif parameter == "":
-					header = _str_toJson(header)
-					r = requests.post(url, header=header)
-					res_text = r.text
+        if method == "post":
+            if type_ == "form":
+                if header == "":
+                    r = requests.post(url, data=payload)
+                    result_text = r.text
+                else:
+                    r = requests.post(url, data=payload, headers=header)
+                    result_text = r.text
 
-				else:
-					header = _str_toJson(header)
-					payload = _str_toJson(parameter)
-					r = requests.post(url, data=payload, headers=header)
-					res_text = r.text
+            if type_ == "json":
+                if header == "":
+                    r = requests.post(url, json=payload)
+                    result_text = r.text
+                else:
+                    r = requests.post(url, json=payload, headers=header)
+                    result_text = r.text
 
-			if type_ == "json"  and encryption == "0" :
-				# http://httpbin.org/post
-				# {'Content-Type':'application/json'}
-				# {'some': 'data'}
-				if header == "":
-					payload = _str_toJson(parameter)
-					r = requests.post(url, json=payload)
-					res_text = r.text
-				elif parameter == "":
-					header = _str_toJson(header)
-					r = requests.post(url, header=header)
-					res_text = r.text
-				else:
-					header = _str_toJson(header)
-					payload = _str_toJson(parameter)
-					r = requests.post(url, json=payload, headers=header)
-					res_text = r.text
+            # 只做POST的json格式的加密处理
+            if type_ == "json" and encryption == "1":
+                print("encryption=1,type_=json")
+                # header = _str_toJson( header )
+                r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
+                result_text = json.dumps(r)
+                print("result_text",result_text)
 
-			if type_ == "json" and encryption == "1":
-					header = _str_toJson( header )
-					r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
-					print("r:",r)
-					res_text = str(r)
-
-		return JsonResponse({"result": res_text})
-	else:
-		return JsonResponse({"result": "请求方法错误"})
-
+        return JsonResponse({"result": result_text})
+    else:
+        return JsonResponse({"result": "请求方法错误"})
 
 def _str_toJson(str1):
-	# 单引换双引
-	str_re = str1.replace("\'", "\"")
-	try:
-		str_Json = json.loads(str_re)
-	except json.decoder.JSONDecodeError:
-		return JsonResponse({"result": "header类型错误"})
-	# print("str_Json".format(),str_Json)
-	return str_Json
+    # 单引换双引
+    str_re = str1.replace("\'", "\"")
+    try:
+        str_Json = json.loads(str_re)
+    except json.decoder.JSONDecodeError:
+        return JsonResponse({"result": "header类型错误"})
+    # print("str_Json".format(),str_Json)
+    return str_Json
 
 
 @csrf_exempt
 def testcase_assert(request):
-	if request.method == "POST":
-		result_text = request.POST.get("result", "")
-		assert_text = request.POST.get("assert", "")
-		assert_type = request.POST.get("assert_type", "")
-		if result_text == "" or assert_text == "":
-			return JsonResponse({"result": "断言的文本不能为空！"})
+    if request.method == "POST":
+        result_text = request.POST.get("result", "")
+        assert_text = request.POST.get("assert", "")
+        assert_type = request.POST.get("assert_type", "")
+        if result_text == "" or assert_text == "":
+            return JsonResponse({"result": "断言的文本不能为空！"})
 
-		if assert_type == "contains":
-			print("contains")
-			if assert_text not in result_text:
-				return JsonResponse({"result": "断言失败！"})
-			else:
-				return JsonResponse({"result": "断言成功！"})
-		elif assert_type == "mathches":
-			if assert_text != result_text:
-				return JsonResponse({"result": "断言失败！"})
-			else:
-				return JsonResponse({"result": "断言成功！"})
+        if assert_type == "contains":
+            print("contains")
+            if assert_text not in result_text:
+                return JsonResponse({"result": "断言失败！"})
+            else:
+                return JsonResponse({"result": "断言成功！"})
+        elif assert_type == "mathches":
+            if assert_text != result_text:
+                return JsonResponse({"result": "断言失败！"})
+            else:
+                return JsonResponse({"result": "断言成功！"})
 
-	else:
-		return JsonResponse({"result": "请求方法错误！"})
+    else:
+        return JsonResponse({"result": "请求方法错误！"})
 
 
 @csrf_exempt
 def testcase_save(request):
-	"""
-	用例保存
-	"""
-	if request.method == "POST":
-		url = request.POST.get("url", "")
-		method = request.POST.get("method", "")
-		header = request.POST.get("header", "")
-		parameter_type = request.POST.get("par_type", "")
-		parameter_body = request.POST.get("par_body", "")
-		assert_type = request.POST.get("ass_type", "")
-		assert_text = request.POST.get("ass_text", "")
-		module_id = request.POST.get("mid", "")
-		name = request.POST.get("name", "")
-		encryption = request.POST.get("encryption","")
+    """
+    用例保存
+    """
+    if request.method == "POST":
+        url = request.POST.get("url", "")
+        method = request.POST.get("method", "")
+        header = request.POST.get("header", "")
+        parameter_type = request.POST.get("par_type", "")
+        parameter_body = request.POST.get("par_body", "")
+        assert_type = request.POST.get("ass_type", "")
+        assert_text = request.POST.get("ass_text", "")
+        module_id = request.POST.get("mid", "")
+        name = request.POST.get("name", "")
+        encryption = request.POST.get("encryption","")
 
-		print("url", url)
-		print("method", method)
-		print("header", header)
-		print("parameter_type", parameter_type)
-		print("parameter_body", parameter_body)
-		print("assert_type", assert_type)
-		print("assert_text", assert_text)
-		print("module_id", module_id)
-		print("encryption", encryption)
+        print("url", url)
+        print("method", method)
+        print("header", header)
+        print("parameter_type", parameter_type)
+        print("parameter_body", parameter_body)
+        print("assert_type", assert_type)
+        print("assert_text", assert_text)
+        print("module_id", module_id)
+        print("encryption", encryption)
 
-		if name == "":
-			return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
+        if name == "":
+            return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
 
-		if module_id == "":
-			return JsonResponse({"status": 10103, "message": "所属的模块不能为空"})
+        if module_id == "":
+            return JsonResponse({"status": 10103, "message": "所属的模块不能为空"})
 
-		if assert_type == "" or assert_text == "":
-			return JsonResponse({"status": 10102, "message": "断言的类型或文本不能为空"})
+        if assert_type == "" or assert_text == "":
+            return JsonResponse({"status": 10102, "message": "断言的类型或文本不能为空"})
 
-		# ...
-		if method == "get":
-			module_number = 1
-		elif method == "post":
-			module_number = 2
-		elif method == "delete":
-			module_number = 3
-		elif method == "put":
-			module_number = 4
-		else:
-			return JsonResponse({"status": 10104, "message": "未知的请求方法"})
+        # ...
+        if method == "get":
+            module_number = 1
+        elif method == "post":
+            module_number = 2
+        elif method == "delete":
+            module_number = 3
+        elif method == "put":
+            module_number = 4
+        else:
+            return JsonResponse({"status": 10104, "message": "未知的请求方法"})
 
-		if parameter_type == "form":
-			parameter_number = 1
-		elif parameter_type == "json":
-			parameter_number = 2
-		else:
-			return JsonResponse({"status": 10104, "message": "未知的参数类型"})
+        if parameter_type == "form":
+            parameter_number = 1
+        elif parameter_type == "json":
+            parameter_number = 2
+        else:
+            return JsonResponse({"status": 10104, "message": "未知的参数类型"})
 
-		if encryption == "1":
-			encryption = 1
-		elif encryption == "2":
-			encryption = 2
-		else:
-			return JsonResponse({"status": 10104, "message": "未知加密选项"})
+        if encryption == "1":
+            encryption = 1
+        elif encryption == "0":
+            encryption = 0
+        else:
+            return JsonResponse({"status": 10104, "message": "未知加密选项"})
 
 
-		if assert_type == "contains":
-			assert_number = 1
-		elif assert_type == "mathches":
-			assert_number = 2
-		else:
-			return JsonResponse({"status": 10104, "message": "未知的断言类型"})
+        if assert_type == "contains":
+            assert_number = 1
+        elif assert_type == "mathches":
+            assert_number = 2
+        else:
+            return JsonResponse({"status": 10104, "message": "未知的断言类型"})
 
-		ret = TestCase.objects.create(name=name, module_id=module_id,
-		                              url=url, method=module_number, header=header,
-		                              parameter_type=parameter_number, parameter_body=parameter_body,
-		                              assert_type=assert_number, assert_text=assert_text,encryption=encryption )
-		print(ret)
+        ret = TestCase.objects.create(name=name, module_id=module_id,
+                                      url=url, method=module_number, header=header,
+                                      parameter_type=parameter_number, parameter_body=parameter_body,
+                                      assert_type=assert_number, assert_text=assert_text,encryption=encryption )
+        print(ret)
 
-		return JsonResponse({"status": 10200, "message": "创建成功！"})
+        return JsonResponse({"status": 10200, "message": "创建成功！"})
 
-	else:
-		return JsonResponse({"status": 10100, "message": "请求方法错误"})
+    else:
+        return JsonResponse({"status": 10100, "message": "请求方法错误"})
+
+
+def add_case(request):
+    return render(request, "case_add.html", )
+
+def edit_case(request, cid):
+    """编辑用例"""
+    print("编辑的用例id", cid)
+    return render(request, "case_edit.html",)
+
+@csrf_exempt
+def get_case_info(request):
+    """获取接口数据"""
+    if request.method == "POST":
+        cid = request.POST.get("cid", "")
+        case = TestCase.objects.get(id=cid)
+        module = Module.objects.get(id=case.module.id)
+        project_id = module.project.id;
+
+        case_dict = {
+            "id": case.id,
+            "encryption":case.encryption,
+            "url": case.url,
+            "name": case.name,
+            "method": case.method,
+            "header": case.header,
+            "parameter_type": case.parameter_type,
+            "parameter_body": case.parameter_body,
+            "assert_type": case.assert_type,
+            "assert_text": case.assert_text,
+            "module_id": case.module.id,
+            "project_id": project_id,
+        }
+        return JsonResponse({"status": 10200,
+                             "message": "请求成功",
+                             "data": case_dict})
+
+    else:
+        return JsonResponse({"status": 10100, "message": "请求方法错误"})

@@ -15,11 +15,11 @@ function clearOption(cmb) {
 
 
 // 获取项目列表
-var ProjectInit = function (_cmbProject) {
+var ProjectInit = function (_cmbProject, defaultId) {
     var cmbProject = document.getElementById(_cmbProject);
-    console.log(ProjectInit)
-
+    console.log("defaultId--->", defaultId);
     function getProjectListInfo() {
+        // 获取项目列表
         $.get("/project/get_project_list/", {}, function (resp) {
             if (resp.status == 10200) {
                 console.log(resp.data);
@@ -32,9 +32,9 @@ var ProjectInit = function (_cmbProject) {
             }
         });
     }
-
     // 调用getProjectListInfo函数
     getProjectListInfo();
+    //document.getElementById("sel")[2].selected = true;
 };
 
 
@@ -47,9 +47,8 @@ var ModuleInit = function (_cmbModule, pid) {
             "pid": pid
         }, function (resp) {
             if (resp.status == 10200) {
-                console.log(resp.data);
+                console.log("getModuleListInfo - >",resp.data);
                 let dataList = resp.data;
-                // 清除历史数据
                 clearOption(cmbModule);
                 for (let i = 0; i < dataList.length; i++) {
                     cmbAddOption(cmbModule, dataList[i]);
@@ -60,8 +59,119 @@ var ModuleInit = function (_cmbModule, pid) {
             }
         });
     }
-
     // 调用getModuleListInfo函数
     getModuleListInfo();
-
 };
+
+
+var SelectModule = function (mid) {
+
+        let options2 = document.querySelectorAll("#module_name > option");
+        console.log("SelectModule-options2", options2.length);
+        for (let i = 0; i < options2.length; i++) {
+            let v2 = options2[i].value;
+            if (v2 == mid) {
+                console.log("SelectModule->MID", mid);
+                console.log("所属模块的id---》", v2);
+                options2[i].selected = true;
+                let text = options2[i].text;
+                console.log("所属的模块名称---》", text);
+
+                document.querySelectorAll(".filter-option-inner-inner")[1].innerText = text;
+            }
+        }
+}
+
+//获取用例信息
+var TestCaseInit = function () {
+
+    var url = document.location;
+    var cid =  url.pathname.split("/")[3];
+
+    $.post("/testcase/get_case_info",
+    {
+        cid: cid,
+    },
+    function (resp, status) {
+        console.log("返回的结果", resp.data);
+        //url
+        document.querySelector("#req_url").value = resp.data.url;
+
+        // if (resp.data.encryption == 1){
+        //     options_encryption=document.querySelectorAll("#encryption > option")[1]
+        //     options_encryption.selected = true;
+        //     let text = options_encryption.text;
+        //     document.querySelectorAll(".filter-option-inner-inner")[2].innerText = text;
+        // }
+        // if (resp.data.encryption == 0){
+        //     options_encryption=document.querySelectorAll("#encryption > option")[0]
+        //     options_encryption.selected = true;
+        //     let text = options_encryption.text;
+        //     document.querySelectorAll(".filter-option-inner-inner")[0].innerText = text;
+        // }
+
+        options_en=document.querySelectorAll("#encryption > option")
+        for (let i=0 ; i<options_en.length;i++){
+            let v = options_en[i].value;
+            if (v == resp.data.encrypted){
+                console.log("是否加密->",v)
+                options_en[i].selected = true;
+                let text = options_en[i].text;
+                document.querySelectorAll(".filter-option-inner-inner")[2].innerText = text;
+            }
+        }
+
+        // 请求方法
+        if (resp.data.method == 1){
+            document.querySelector("#get").setAttribute("checked", "");
+        }
+        else if (resp.data.method == 2) {
+            document.querySelector("#post").setAttribute("checked", "");
+        }
+        //请求头
+        document.querySelector("#header").value = resp.data.header;
+
+        //请求参数类型
+        if (resp.data.parameter_type == 1) {
+            document.querySelector("#form").setAttribute("checked", "");
+        }
+        else if (resp.data.parameter_type == 2) {
+            document.querySelector("#json").setAttribute("checked", "");
+        }
+
+        //请求参数的值
+        document.querySelector("#parameter").value = resp.data.parameter_body;
+
+        //断言的类型
+        if (resp.data.assert_type == 1) {
+            document.querySelector("#contains").setAttribute("checked", "");
+        }
+        else if (resp.data.assert_type == 2) {
+            document.querySelector("#mathches").setAttribute("checked", "");
+        }
+
+        //断言的值
+        document.querySelector("#assert").value = resp.data.assert_text;
+
+        //用例的名称
+        document.querySelector("#case_name").value = resp.data.name;
+
+        let options = document.querySelectorAll("#project_name > option");
+        for (let i = 0; i < options.length; i++) {
+            let v = options[i].value;
+            if (v == resp.data.project_id){
+                console.log("所属的项目id---》", v);
+                options[i].selected = true;
+                let text = options[i].text;
+                console.log("所属的项目名称---》", text);
+                // document.querySelectorAll(".filter-option-inner-inner")[0].innerText = text;
+            }
+        }
+
+        ModuleInit("module_name", resp.data.project_id);
+
+        SelectModule(resp.data.module_id);
+
+    });
+
+}

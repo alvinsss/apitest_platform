@@ -29,5 +29,6 @@ urlpatterns = [
 	# """用例管理，testcase是应用名称"""
 	path('testcase', include('testcase.urls')),
 	# path('testcase/debug', views.jsqa),
+	path( 'malacca', include( 'mock.urls' ) ),
 
 ]

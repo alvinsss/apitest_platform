@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from testcase.models import TestCase
 from project.models import Project
@@ -177,6 +178,7 @@ def testcase_save(request):
         else:
             return JsonResponse({"status": 10104, "message": "未知的参数类型"})
 
+        # //1加密，0不加密
         if encryption == "1":
             encryption = 1
         elif encryption == "0":
@@ -211,6 +213,11 @@ def edit_case(request, cid):
     """编辑用例"""
     print("编辑的用例id", cid)
     return render(request, "case_edit.html",)
+
+def  delete_case(request,cid):
+     case = TestCase.objects.get(id=cid)
+     case.delete()
+     return HttpResponseRedirect("/testcase")
 
 @csrf_exempt
 def get_case_info(request):

@@ -184,7 +184,26 @@ var TestCaseInit = function () {
 
         //请求URL
         document.querySelector("#req_url").value = resp.data.url;
-        
+
+        //下拉选择处理是否加密
+         var optionsLength = document.getElementById('encryption').options.length;
+         var pt = document.getElementById('encryption');
+                     alert(result.encryption)
+         for(var i = 0; i < optionsLength; i++){
+             var option = parseInt(document.getElementById('encryption').options[i].value);
+             if(option == result.encryption) {
+                 pt.options[i].setAttribute("selected", "true");
+             }
+         }
+
+        // if(result.encryption === 0){
+        //     alert(result.encryption)
+        //     document.getElementById("encryption").options[1].selected = true
+        // }else if( result.encryption === 1 ){
+        //     alert(result.encryption)
+        //     document.getElementById("encryption").options[0].selected = true
+        // }
+
         //请求方法
         if (result.method == 1){
             document.querySelector("#get").setAttribute("checked", "");
@@ -244,9 +263,6 @@ var TestCaseInit = function () {
 
         // SelectModule(result.module_id);
     });
-
-    
-
 
     //SelectModule(result.module_id);
     

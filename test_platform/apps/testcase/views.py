@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from testcase.models import TestCase
 from project.models import Project
 from module.models import Module
@@ -11,11 +12,22 @@ import json
 
 
 
-# Create your views here.
 def testcase_manage(request):
     # 查询全部数据
+    """ 用例列表"""
     case_list = TestCase.objects.all()
-    return render(request, "case_list.html", {"cases": case_list})
+    p = Paginator(case_list, 5)
+
+    page = request.GET.get('page')
+    try:
+        contacts = p.page(page)
+    except PageNotAnInteger:
+        # 如果页数不是整型, 取第一页.
+        contacts = p.page(1)
+    except EmptyPage:
+        # 如果页数超出查询范围，取最后一页
+        contacts = p.page(p.num_pages)
+    return render(request, "case_list.html", {"cases": contacts})
     # return render(request, "case_list.html", {"type": "debug"})
 
 @csrf_exempt
@@ -100,6 +112,11 @@ def _str_toJson(str1):
 
 @csrf_exempt
 def testcase_assert(request):
+    '''
+    断言
+    :param request:
+    :return:
+    '''
     if request.method == "POST":
         result_text = request.POST.get("result", "")
         assert_text = request.POST.get("assert", "")
@@ -126,7 +143,7 @@ def testcase_assert(request):
 @csrf_exempt
 def testcase_save(request):
     """
-    用例保存
+    用例保存或修改case
     """
     if request.method == "POST":
         url = request.POST.get("url", "")
@@ -237,7 +254,7 @@ def  delete_case(request,cid):
 
 @csrf_exempt
 def get_case_info(request):
-    """获取接口数据"""
+    """获取case接口数据"""
     if request.method == "POST":
         cid = request.POST.get("cid", "")
         case = TestCase.objects.get(id=cid)

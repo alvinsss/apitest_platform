@@ -15,8 +15,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">设置</a></li>
-                    <li><a href="/logout/">退出</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="/logout/">logout</a></li>
                 </ul>
                 <form class="navbar-form navbar-right">
                     <input type="text" class="form-control" placeholder="Search...">
@@ -47,7 +47,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="/testtask/">
                             <i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理
                         </a>
                     </li>
@@ -71,7 +71,7 @@
                 <!--用例列表-->
                 <h4 class="sub-header">用例列表
                     <button type="button" class="btn btn-sm btn-primary" style="float: right;"
-                            onclick="location.href='/testcase/add_case/'">创建用例
+                            onclick="location.href='/testcase/add_case/'">创建
                     </button>
                 </h4>
                 <div class="table-responsive">
@@ -91,7 +91,7 @@
                             <tr>
                                 <td>{{ case.id }}</td>
                                 <td>{{ case.name }}</td>
-                                <td style="max-width: 390px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ case.url }}</td>
+                                <td>{{ case.url }}</td>
                                 {% if case.method == 1 %}
                                     <td>GET</td>
                                 {% endif %}
@@ -113,13 +113,7 @@
                     </table>
                 </div>
 
-
-            </div>
-        </div>
-    </div>
-
-
-               <!-- 分页器 -->
+                <!-- 分页器 -->
                 <div>
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -150,6 +144,5 @@
             </div>
         </div>
     </div>
-
 
 {% endblock %}

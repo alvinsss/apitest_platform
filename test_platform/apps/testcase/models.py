@@ -19,6 +19,8 @@ class TestCase(models.Model):
 	assert_type = models.IntegerField("断言类型", null=False)  # 1：包含contains 2: 匹配mathches
 	assert_text = models.TextField("结果", null=False)
 	create_time = models.DateTimeField("创建时间", auto_now_add=True)
+	encryption = models.IntegerField("是否加密", null=False)
+
 
 	class Meta:
 		verbose_name = '用例管理'

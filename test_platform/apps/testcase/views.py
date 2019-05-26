@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from testcase.models import TestCase
+from project.models import Project
 from module.models import Module
 from utils import  baserequestdecode
 import requests
@@ -237,6 +238,38 @@ def get_case_info(request):
         return JsonResponse({"status": 10200,
                              "message": "请求成功",
                              "data": case_dict})
+
+    else:
+        return JsonResponse({"status": 10100, "message": "请求方法错误"})
+
+@csrf_exempt
+def get_select_data(request):
+    """
+    获取 "项目>模块" 列表
+    :param request:
+    :return: 项目接口列表
+    """
+    if request.method == "GET":
+        project_list = Project.objects.all()
+        data_list = []
+        for project in project_list:
+            project_dict = {
+                "id": project.id,
+                "name": project.name
+            }
+
+            module_list = Module.objects.filter(project_id=project.id)
+            module_name = []
+            for module in module_list:
+                module_name.append({
+                    "id": module.id,
+                    "name": module.name,
+                })
+
+            project_dict["moduleList"] = module_name
+            data_list.append(project_dict)
+
+        return JsonResponse({"status": 10200, "message": "success", "data": data_list})
 
     else:
         return JsonResponse({"status": 10100, "message": "请求方法错误"})

@@ -147,7 +147,6 @@ var ModuleInit = function (_cmbModule, pid) {
             "pid": pid
         }, function (resp) {
             if (resp.status == 10200) {
-                console.log("6666666", resp.data);
                 let dataList = resp.data;
                 clearOption(cmbModule);
                 for (let i = 0; i < dataList.length; i++) {
@@ -179,6 +178,7 @@ var TestCaseInit = function () {
         cid: cid,
     },
     function (resp, status) {
+
         console.log("返回的结果", resp.data);
         var result = resp.data;
 
@@ -188,7 +188,6 @@ var TestCaseInit = function () {
         //下拉选择处理是否加密
          var optionsLength = document.getElementById('encryption').options.length;
          var pt = document.getElementById('encryption');
-                     alert(result.encryption)
          for(var i = 0; i < optionsLength; i++){
              var option = parseInt(document.getElementById('encryption').options[i].value);
              if(option == result.encryption) {

@@ -139,6 +139,7 @@ def testcase_save(request):
         module_id = request.POST.get("mid", "")
         name = request.POST.get("name", "")
         encryption = request.POST.get("encryption","")
+        cid = request.POST.get("cid","")
 
         print("url", url)
         print("method", method)
@@ -149,6 +150,7 @@ def testcase_save(request):
         print("assert_text", assert_text)
         print("module_id", module_id)
         print("encryption", encryption)
+        print("cid", cid)
 
         if name == "":
             return JsonResponse({"status": 10101, "message": "用例名称不能为空"})
@@ -161,13 +163,13 @@ def testcase_save(request):
 
         # ...
         if method == "get":
-            module_number = 1
+            method_number = 1
         elif method == "post":
-            module_number = 2
+            method_number = 2
         elif method == "delete":
-            module_number = 3
+            method_number = 3
         elif method == "put":
-            module_number = 4
+            method_number = 4
         else:
             return JsonResponse({"status": 10104, "message": "未知的请求方法"})
 
@@ -194,11 +196,25 @@ def testcase_save(request):
         else:
             return JsonResponse({"status": 10104, "message": "未知的断言类型"})
 
-        ret = TestCase.objects.create(name=name, module_id=module_id,
-                                      url=url, method=module_number, header=header,
-                                      parameter_type=parameter_number, parameter_body=parameter_body,
-                                      assert_type=assert_number, assert_text=assert_text,encryption=encryption )
-        print(ret)
+        # 根据cid判断是创建还是修改
+        if cid == "":
+            ret = TestCase.objects.create(name=name, module_id=module_id,
+                                          url=url, method=method_number, header=header,
+                                          parameter_type=parameter_number, parameter_body=parameter_body,
+                                          assert_type=assert_number, assert_text=assert_text,encryption = encryption)
+        else:
+            case = TestCase.objects.get(id=cid)
+            case.name = name
+            case.module_id = module_id
+            case.url = url
+            case.method = method_number
+            case.header = header
+            case.parameter_type = parameter_number
+            case.parameter_body = parameter_body
+            case.assert_type = assert_number
+            case.assert_text = assert_text
+            case.encryption = encryption
+            case.save()
 
         return JsonResponse({"status": 10200, "message": "创建成功！"})
 

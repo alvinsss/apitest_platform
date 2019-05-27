@@ -139,7 +139,9 @@
             <p style="color:#8B8989">说明：以字典的方式设置参数，如：{"id":1, "name":"名称"}</p>
 
             <div style="float: right;margin-right: 10px;">
-                <button type="button" class="btn btn-primary" onclick="sendFun()">发送</button>
+                <button type="button" class="btn btn-primary" onclick="sendFun()">发送调试</button>
+                <input id="sendreqcounts" type="text" placeholder="输入次数">
+                <button type="button" class="btn btn-primary" onclick="sendReqNFun()">请求多次</button>
             </div>
 
             <div style="margin-top: 30px;">
@@ -260,10 +262,57 @@
     function formatJsonFun() {
         var text = $("#result").val(); //获取json格式内容
         var resultJson = JSON.stringify(JSON.parse(text), null, 2);//将字符串转换成json对象
-        {#alert(resultJson)#}
         document.getElementById("result").value = "";
         document.getElementById("result").value = resultJson;
     };
+
+    //发送多次请求
+    function sendReqNFun() {
+        let url = $("#req_url").val();
+        let method = $('input[name="req_method"]:checked').val();
+        let header = $("#header").val();
+        let type = $('input[name="par_type"]:checked').val();
+        let sendreqcounts = $("#sendreqcounts").val();
+        let parameter = $("#parameter").val();
+        let encryption = $('select[id="encryption"]').val();
+        if (url === "")
+        {
+            window.alert("URL不能为空！");
+            return;
+        }
+
+        if (sendreqcounts === ""){
+            window.alert("次数不能为空！");
+            return;d
+        }
+        if (!(isPositiveInteger(sendreqcounts)) || sendreqcounts === "0" ){
+            alert("输入的不是正整数");
+            return;
+        }
+        if ( sendreqcounts > "500" ){
+            alert("不能输入大于500");
+            return;
+        }
+        function isPositiveInteger(s){//是否为正整数
+             var re = /^[0-9]+$/ ;
+                return re.test(s)
+        }
+        {#window.alert("parameter info :" + parameter);#}
+        $.post("/testcase/sendreqs",
+            {
+                url: url,
+                method: method,
+                header: header,
+                encryption:encryption,
+                type: type,
+                parameter: parameter,
+                sendreqcounts:sendreqcounts,
+            },
+            function (data, status) {
+                console.log("返回的结果", data.result);
+                document.querySelector("#result").value = data.result;
+            });
+    }
 
     //保存用例
     function saveFun() {

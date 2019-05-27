@@ -253,6 +253,167 @@ def  delete_case(request,cid):
      return HttpResponseRedirect("/testcase")
 
 @csrf_exempt
+def sendreqsnfun(request):
+    """
+    测试发送多次
+    """
+    if request.method == "POST":
+        url = request.POST.get("url", "")
+        method = request.POST.get("method", "")
+        header = request.POST.get("header", "")
+        type_ = request.POST.get("type", "")
+        parameter = request.POST.get("parameter", "")
+        encryption = request.POST.get("encryption","")
+        num = int(request.POST.get("sendreqcounts",""))
+        print("url", url)
+        print("method", method)
+        print("header", header)
+        print("type_", type_)
+        print("parameter", parameter)
+        print("num",num)
+
+        if ( num > 500 ):
+            return JsonResponse({"result": "请求次数不能大于500"})
+
+        json_header = header.replace("\'", "\"")
+        try:
+            header = json.loads(json_header)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({"result": "header类型错误"})
+
+        json_par = parameter.replace("\'", "\"")
+        try:
+            payload = json.loads(json_par)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({"result": "参数类型错误"})
+
+        result_text = None
+        if method == "get":
+            if header == "":
+                r = requests.get(url, params=payload)
+                reqtime_list = []
+                reqtotal_counts = num
+                reqtotal_time = 0
+                while num > 0:
+                    num = num - 1
+                    start_time = time.clock()
+                    result_text = r.text
+                    request_time = time.clock() - start_time
+                    reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                print( "reqtime_list", reqtime_list )
+                result_text = reqtime_list
+            else:
+                reqtime_list = []
+                reqtotal_counts = num
+                reqtotal_time = 0
+                while num > 0:
+                    num = num -1
+                    start_time = time.clock()
+                    r = requests.get(url, params=payload, headers=header)
+                    request_time = time.clock() - start_time
+                    reqtotal_time = round(request_time,4) + reqtotal_time
+                    reqtime_list.append(("第"+str((num+1))+"次请求"+str(round(request_time,4))))
+                response_avg = round((round(reqtotal_time,4)/reqtotal_counts),4)
+                reqtime_list.append(("平均响应时间："+str(response_avg)))
+                print("reqtime_list",reqtime_list)
+                result_text = reqtime_list
+
+
+        if method == "post":
+            if type_ == "form":
+                if header == "":
+                    reqtime_list = []
+                    reqtotal_counts = num
+                    reqtotal_time = 0
+                    while num > 0:
+                        num = num - 1
+                        start_time = time.clock()
+                        r = requests.post( url, data=payload )
+                        request_time = time.clock() - start_time
+                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                    print( "reqtime_list", reqtime_list )
+                    result_text = reqtime_list
+
+                else:
+                    reqtime_list = []
+                    reqtotal_counts = num
+                    reqtotal_time = 0
+                    while num > 0:
+                        num = num - 1
+                        start_time = time.clock()
+                        r = requests.post( url, data=payload, headers=header )
+                        request_time = time.clock() - start_time
+                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                    print( "reqtime_list", reqtime_list )
+                    result_text = reqtime_list
+
+            if type_ == "json":
+                if header == "":
+                    reqtime_list = []
+                    reqtotal_counts = num
+                    reqtotal_time = 0
+                    while num > 0:
+                        num = num - 1
+                        start_time = time.clock()
+                        r = requests.post( url, json=payload )
+                        request_time = time.clock() - start_time
+                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                    print( "reqtime_list", reqtime_list )
+                    result_text = reqtime_list
+                else:
+                    reqtime_list = []
+                    reqtotal_counts = num
+                    reqtotal_time = 0
+                    while num > 0:
+                        num = num - 1
+                        start_time = time.clock()
+                        r = requests.post( url, json=payload, headers=header )
+                        request_time = time.clock() - start_time
+                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                    print( "reqtime_list", reqtime_list )
+                    result_text = reqtime_list
+
+            # 只做POST的json格式的加密处理
+            if type_ == "json" and encryption == "1":
+                print("encryption=1,type_=json")
+                # header = _str_toJson( header )
+                reqtime_list = []
+                reqtotal_counts = num
+                reqtotal_time = 0
+                while num > 0:
+                    num = num - 1
+                    start_time = time.clock()
+                    r = baserequestdecode.endepost( url, parameter, key=None, postheaders=None, transBinData=False,
+                                                    body_type=None )
+                    request_time = time.clock() - start_time
+                    reqtotal_time = round( request_time, 4 ) + reqtotal_time
+                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
+                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
+                print( "reqtime_list", reqtime_list )
+                result_text = reqtime_list
+        return JsonResponse({"result": result_text})
+
+    else:
+        return JsonResponse({"result": "请求方法错误"})
+
+
+@csrf_exempt
 def get_case_info(request):
     """获取case接口数据"""
     if request.method == "POST":

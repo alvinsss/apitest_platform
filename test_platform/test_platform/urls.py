@@ -30,5 +30,7 @@ urlpatterns = [
 	path('testcase', include('testcase.urls')),
 	# path('testcase/debug', views.jsqa),
 	path( 'malacca', include( 'mock.urls' ) ),
+	# """任务管理"""
+	path( 'testtask', include( 'testtask.urls' ) ),
 
 ]

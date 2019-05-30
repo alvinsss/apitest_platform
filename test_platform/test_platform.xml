@@ -1,7 +1,7 @@
-<uwsgi>    
-   <socket>172.31.1.12:8000</socket><!-- 内部端口，自定义 -->
+<uwsgi>
+   <socket>127.0.0.1:18000</socket><!-- 内部端口，自定义 -->
    <chdir>/q/tools/python/wwwroot/test_platform/</chdir><!-- 项目路径 -->
    <module>test_platform.wsgi</module>
-   <processes>4</processes> <!-- 进程数 -->     
+   <processes>4</processes> <!-- 进程数 -->
    <daemonize>test_platform.log</daemonize><!-- 日志文件 -->
 </uwsgi>

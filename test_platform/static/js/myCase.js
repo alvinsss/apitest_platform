@@ -49,7 +49,7 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
 
     function getSelectData() {
         // 调用获取select数据列表
-        $.get("/testcase/get_select_data", {}, function (resp) {
+        $.get("/testcase/getselect_data", {}, function (resp) {
             if (resp.status === 10200) {
                 dataList = resp.data;
                 console.log("项目数据->",dataList)

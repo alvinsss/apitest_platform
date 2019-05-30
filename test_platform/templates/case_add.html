@@ -177,6 +177,8 @@
     <script src="{%static "js/jquery.min.js"%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "css/select2.min.css" %}">
     <script src="{%static "js/select2.min.js"%}"></script>
+        <script src="{%static "js/myCase.js"%}"></script>
+
 
 <script type="text/javascript">
 
@@ -188,8 +190,7 @@
     {#    let project_id = $(this).children('option:selected').val();#}
     {#    console.log("选择的项目id", project_id);#}
     {#    ModuleInit("module_name", project_id);#}
-
-        SelectInit();
+    SelectInit();
 
     //发送方法
     function sendFun() {

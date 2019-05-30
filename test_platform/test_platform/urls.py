@@ -20,6 +20,8 @@ urlpatterns = [
 	path('', views.index),
 	path('logout/', views.logout),
 	path('accounts/login/', views.index),
+	path( 'register/', views.register ),
+    path( 'registerfun/', views.registerfun ),
 	path('jsdemo/', views.demo),
 	path('jsqa/', views.jsqa),
 	# """项目管理"""

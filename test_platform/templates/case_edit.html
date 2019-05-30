@@ -144,6 +144,11 @@
                 <button type="button" class="btn btn-primary" onclick="sendReqNFun()">请求多次</button>
             </div>
 
+            <div>
+                <button type = "button" class="btn btn-primary" onclick="get_timestamp()">获取当前时间戳</button>
+                <input id="timestamp" type="text">
+            </div>
+
             <div style="margin-top: 30px;">
                 <p>返回结果：</p>
                 <div >
@@ -266,6 +271,13 @@
         document.getElementById("result").value = resultJson;
     };
 
+    //获取当前时间戳
+    function get_timestamp() {
+        var timestamp = (new Date()).getTime();
+        console.log(timestamp); //1495302061441
+        document.getElementById("timestamp").value = timestamp;
+    }
+    
     //发送多次请求
     function sendReqNFun() {
         let url = $("#req_url").val();

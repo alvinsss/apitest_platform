@@ -10,6 +10,7 @@ from utils import  baserequestdecode
 import requests
 import json
 import  time
+import re
 
 
 
@@ -273,6 +274,8 @@ def sendreqsnfun(request):
         print("parameter", parameter)
         print("num",num)
 
+
+
         if ( num > 500 ):
             return JsonResponse({"result": "请求次数不能大于500"})
 
@@ -300,9 +303,9 @@ def sendreqsnfun(request):
                     start_time = time.clock()
                     result_text = r.text
                     request_time = time.clock() - start_time
-                    reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                 reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                 print( "reqtime_list", reqtime_list )
                 result_text = reqtime_list
@@ -334,9 +337,9 @@ def sendreqsnfun(request):
                         start_time = time.clock()
                         r = requests.post( url, data=payload )
                         request_time = time.clock() - start_time
-                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                        reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                     reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                     print( "reqtime_list", reqtime_list )
                     result_text = reqtime_list
@@ -350,9 +353,9 @@ def sendreqsnfun(request):
                         start_time = time.clock()
                         r = requests.post( url, data=payload, headers=header )
                         request_time = time.clock() - start_time
-                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                        reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                     reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                     print( "reqtime_list", reqtime_list )
                     result_text = reqtime_list
@@ -367,9 +370,9 @@ def sendreqsnfun(request):
                         start_time = time.clock()
                         r = requests.post( url, json=payload )
                         request_time = time.clock() - start_time
-                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                        reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                     reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                     print( "reqtime_list", reqtime_list )
                     result_text = reqtime_list
@@ -382,9 +385,9 @@ def sendreqsnfun(request):
                         start_time = time.clock()
                         r = requests.post( url, json=payload, headers=header )
                         request_time = time.clock() - start_time
-                        reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                        reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                        reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                    response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                     reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                     print( "reqtime_list", reqtime_list )
                     result_text = reqtime_list
@@ -402,9 +405,9 @@ def sendreqsnfun(request):
                     r = baserequestdecode.endepost( url, parameter, key=None, postheaders=None, transBinData=False,
                                                     body_type=None )
                     request_time = time.clock() - start_time
-                    reqtotal_time = round( request_time, 4 ) + reqtotal_time
-                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 4 ) )) )
-                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 4 )
+                    reqtotal_time = round( request_time, 6 ) + reqtotal_time
+                    reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
+                response_avg = round( (round( reqtotal_time, 4 ) / reqtotal_counts), 6 )
                 reqtime_list.append( ("平均响应时间：" + str( response_avg )) )
                 print( "reqtime_list", reqtime_list )
                 result_text = reqtime_list
@@ -412,6 +415,12 @@ def sendreqsnfun(request):
 
     else:
         return JsonResponse({"result": "请求方法错误"})
+
+@csrf_exempt
+def get_timestamp(request):
+    timestamp = int( round( time.time() * 1000 ) )
+    print( int( round( time.time() * 1000 ) ) )  # 1381419600
+    return JsonResponse({"result": timestamp})
 
 
 @csrf_exempt
@@ -445,12 +454,13 @@ def get_case_info(request):
         return JsonResponse({"status": 10100, "message": "请求方法错误"})
 
 @csrf_exempt
-def get_select_data(request):
+def getselect_data(request):
     """
     获取 "项目>模块" 列表
     :param request:
     :return: 项目接口列表
     """
+    print("getselect_data")
     if request.method == "GET":
         project_list = Project.objects.all()
         data_list = []

@@ -59,6 +59,26 @@ def logout(request):
 	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")
 
+def register(request):
+    return render( request,"register.html" )
+
+def registerfun(request):
+    if request.method == "GET":
+        return render( request, "index.html" )
+    else:
+        username = request.POST.get( "username", "" )
+        password = request.POST.get( "password", "" )
+        if username == "" or password == "":
+            return render( request, "index.html", {"error": "用户名或密码为空"} )
+        user = auth.authenticate( username=username, password=password )
+        print( "user-->", user )
+        if user is None:
+            return render( request, "index.html", {
+                "error": "用户名或密码错误"} )
+        else:
+            auth.login( request, user )  # 记录用户的登录状态
+            return HttpResponseRedirect( "/project/" )
+    return render( request,"register.html" )
 
 def demo(request):
 	return render(request, "js_demo.html")

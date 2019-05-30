@@ -19,6 +19,7 @@ urlpatterns = [
 	path('/save_case', views.testcase_save),
 	path( '/get_case_info', views.get_case_info ),
 	path( '/sendreqs', views.sendreqsnfun ),
-	path('/get_select_data',views.get_select_data),
+	path('/getselect_data',views.getselect_data),
+	path( '/get_timestamp', views.get_timestamp ),
 
 ]

@@ -18,7 +18,9 @@ def testcase_manage(request):
     # 查询全部数据
     """ 用例列表"""
     case_list = TestCase.objects.all()
-    p = Paginator(case_list, 8)
+    print(type(case_list))
+
+    p = Paginator(case_list, 20)
 
     page = request.GET.get('page')
     try:

@@ -88,7 +88,8 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
 		'NAME': "apitestserver",
-		'HOST': "127.0.0.1",
+		# 'HOST': "127.0.0.1",
+		'HOST': "172.31.1.12",
 		'PORT': 3306,
 		'USER': "qa",
 		'PASSWORD': "qatest",

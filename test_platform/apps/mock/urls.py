@@ -10,7 +10,7 @@ from mock import views
 
 urlpatterns = [
 	# """mock"""
-	path( '/', views.mokcmanage ),
-	path('/sdkPullAds.do/', views.sdkPullAds),
+	path( '', views.mokcmanage ),
+	path('sdkPullAds.do/', views.sdkPullAds),
 
 ]

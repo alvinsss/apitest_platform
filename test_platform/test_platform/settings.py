@@ -84,20 +84,33 @@ WSGI_APPLICATION = 'test_platform.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+# DATABASES = {
+# 	'default': {
+# 		'ENGINE': 'django.db.backends.mysql',
+# 		'NAME': "apitestserver",
+# 		'HOST': "127.0.0.1",
+# 		# 'HOST': "172.31.1.12",
+# 		'PORT': 3306,
+# 		'USER': "qa",
+# 		'PASSWORD': "qatest",
+# 		# 'OPTIONS': {
+# 		#     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+# 		# },
+# 	}
+# }
+
+
+# MySQL
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': "apitestserver",
-		# 'HOST': "127.0.0.1",
-		'HOST': "172.31.1.12",
-		'PORT': 3306,
-		'USER': "qa",
-		'PASSWORD': "qatest",
-		# 'OPTIONS': {
-		#     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-		# },
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': BASE_DIR + '/my.cnf',
+        },
+    }
 }
+
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

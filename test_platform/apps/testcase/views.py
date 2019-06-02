@@ -17,11 +17,9 @@ import re
 def testcase_manage(request):
     # 查询全部数据
     """ 用例列表"""
-    case_list = TestCase.objects.all()
-    print(type(case_list))
-
+    # case_list = TestCase.objects.all()
+    case_list = TestCase.objects.filter(status="1")
     p = Paginator(case_list, 20)
-
     page = request.GET.get('page')
     try:
         contacts = p.page(page)
@@ -253,7 +251,8 @@ def edit_case(request, cid):
 
 def  delete_case(request,cid):
      case = TestCase.objects.get(id=cid)
-     case.delete()
+     case.status = False
+     case.save()
      return HttpResponseRedirect("/testcase")
 
 @csrf_exempt

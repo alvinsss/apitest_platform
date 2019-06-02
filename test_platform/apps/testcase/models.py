@@ -8,6 +8,7 @@ class TestCase(models.Model):
 	"""
 	module = models.ForeignKey(Module, on_delete=models.CASCADE)
 	name = models.CharField("名称", max_length=50, null=False)
+	status = models.BooleanField("状态", default=1)
 	url = models.TextField("URL", null=False)
 	# 1:GET, 2: POST, 3:DELETE, 4:PUT
 	method = models.IntegerField("请求方法", null=False)
@@ -20,7 +21,6 @@ class TestCase(models.Model):
 	assert_text = models.TextField("结果", null=False)
 	create_time = models.DateTimeField("创建时间", auto_now_add=True)
 	encryption = models.IntegerField("是否加密", null=False)
-
 
 	class Meta:
 		verbose_name = '用例管理'

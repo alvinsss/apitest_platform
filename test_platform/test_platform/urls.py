@@ -39,4 +39,10 @@ urlpatterns = [
 	# """任务管理"""
 	path( 'testtask/', include( 'testtask.urls' ) ),
 
+	# """工具管理"""
+	path( 'tools/', include( 'tools.urls' ) ),
+
+	# """locust管理"""
+	path( 'locustmanager/', include( 'locustmanager.urls' ) ),
+
 ]

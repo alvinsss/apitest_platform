@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',
     'mock',
-	'testtask'
+	'testtask',
+	'tools',
+	'locustmanager',
     # https://django-simple-captcha.readthedocs.io/en/latest/usage.html
 ]
 

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block base %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+				aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">接口测试平台</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">设置</a></li>
+				<li><a href="/logout/">退出</a></li>
+			</ul>
+			<form class="navbar-form navbar-right">
+				<input type="text" class="form-control" placeholder="Search...">
+			</form>
+		</div>
+	</div>
+</nav>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar">
+				<li>
+					<a href="/project/">
+						<i class="glyphicon glyphicon-th-large"></i>&nbsp&nbsp项目管理
+					</a>
+				</li>
+				<li>
+					<a href="/module/">
+						<i class="glyphicon glyphicon-th"></i>&nbsp&nbsp模块管理
+					</a>
+				</li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li>
+					<a href="/testcase/">
+						<i class="glyphicon glyphicon-list-alt"></i>&nbsp&nbsp用例管理
+					</a>
+				</li>
+				<li class="active">
+					<a href="/testtask/">
+						<i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理
+					</a>
+				</li>
+			</ul>
+			<ul class="nav nav-sidebar">
+				<li>
+					<a href="">
+						<i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+
+			<!--用例列表-->
+			{% if type == "list" %}
+			<h4 class="sub-header">任务列表
+				<button type="button" class="btn btn-sm btn-primary" style="float: right;"
+					onclick="location.href='/testtask/add_task/'">创建
+				</button>
+			</h4>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>名称</th>
+							<th>状态</th>
+							<th>创建时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for task in tasks %}
+						<tr>
+							<td>{{ task.id }}</td>
+							<td>{{ task.name }}</td>
+							{% if task.status == 0 %}
+							<td>未执行</td>
+							{% endif %}
+							
+							{% if task.status == 1 %}
+							<td>执行中</td>
+							{% endif %}
+							
+							{% if task.status == 2 %}
+							<td>已完成</td>
+							{% endif %}
+
+							<td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
+							<td>
+								
+								<a href="/testtask/edit_task/{{task.id}}/" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-edit"></span>
+								</a>
+							
+								<a href="/testtask/delete_task/{{task.id}}/"  style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-trash"></span>
+								</a>
+
+								<a href="#" onclick="RunTask('{{task.id}}')" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-play"></span>
+								</a>
+								
+								<a href="/testtask/task_result_list/{{task.id}}/" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-list-alt"></span>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% endif%}
+
+			{% if type == "add" %}
+				{% block taskadd %}
+				
+				<!-- 其他页面可以继承 task_list.html  -->
+				
+				{% endblock %}
+			{% endif %}
+			
+			{% if type == "edit" %}
+				{% block taskedit %}
+				
+				<!-- 其他页面可以继承 task_list.html  -->
+				
+				{% endblock %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

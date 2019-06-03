@@ -11,8 +11,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-
-from users.forms import LoginForm
+from users.forms import   RegisterForm
+from users.models import  UserProfile
+from django.views.generic.base import View
+from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
@@ -59,26 +61,27 @@ def logout(request):
 	# 删除数据库的的session记录
 	return HttpResponseRedirect("/index/")
 
-def register(request):
-    return render( request,"register.html" )
 
-def registerfun(request):
-    if request.method == "GET":
-        return render( request, "index.html" )
-    else:
-        username = request.POST.get( "username", "" )
-        password = request.POST.get( "password", "" )
-        if username == "" or password == "":
-            return render( request, "index.html", {"error": "用户名或密码为空"} )
-        user = auth.authenticate( username=username, password=password )
-        print( "user-->", user )
-        if user is None:
-            return render( request, "index.html", {
-                "error": "用户名或密码错误"} )
-        else:
-            auth.login( request, user )  # 记录用户的登录状态
-            return HttpResponseRedirect( "/project/" )
-    return render( request,"register.html" )
+# @csrf_exempt
+class RegisterView(View):
+	def get(self,request):
+		register_form = RegisterForm()
+		return render(request, 'register.html', {'register_form': register_form})
+
+	def post(self,request):
+		register_form = RegisterForm(request.POST)
+		if register_form.is_valid():
+			user_name = request.POST.get("username","")
+			user_password  = request.POST.get("password","")
+			user_profile = UserProfile()
+			user_profile.username=user_name
+			# user_profile.email   =user_name
+			user_profile.password=make_password(user_password)
+			user_profile.save()
+			print("save data!")
+			return render(request, 'index.html')
+		else:
+			return render(request, 'register.html', {'register_form': register_form})
 
 def demo(request):
 	return render(request, "js_demo.html")

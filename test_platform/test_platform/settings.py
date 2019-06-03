@@ -157,6 +157,7 @@ STATICFILES_DIRS = [
 
 # APPEND_SLASH = False
 #  UserProfile 覆盖了 django 内置的 user 表
+AUTH_USER_MODEL = 'users.UserProfile'
 
 
 # 验证码图片大小

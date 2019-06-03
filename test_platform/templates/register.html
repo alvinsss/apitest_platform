@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block base %}
+
+    <div style="height: 100%;width:100%;background-image: url(../static/img/loginPage.jpg)  ">
+        <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
+            <form id="email_register_form" class="form-signin" action="/register/" method="post" autocomplete="off" >
+                           <div class="form-group marb20 {% if register_form.errors.username %} errorput {% endif %} ">
+              <input type="text" id="username" name="username" value="{{ register_form.username.value }}" placeholder="请输入您的用户名"/>
+            </div>
+            <div class="form-group marb8 {% if register_form.errors.password %} errorput {% endif %} ">
+              <input type="password" id="id_password" name="password" value="{{ register_form.password.value }}" placeholder="请输入6-20位非中文字符密码"/>
+            </div>
+                <label>验&nbsp;证&nbsp;码</label>
+            <div class="form-group marb8 captcha1 {% if register_form.errors.captcha %} errorput {% endif %} ">
+              {{ register_form.captcha }}
+            </div>
+            <div class="error btns" id="jsEmailTips">
+              {% for key, error in register_form.errors.items %}
+                {{ error }}
+              {% endfor %}
+              {% if not register_form.errors.items %}{{ msg }}{% endif %}
+            </div>
+            <div class="auto-box marb8">
+            </div>
+            <input class="btn btn-green" id="jsEmailRegBtn" type="submit" value="注册"/>
+          {% csrf_token %}
+            </form>
+        </div> <!-- /container -->
+    </div>
+{#    <script src="{% static 'js/login.js' %}"></script>#}
+    <script>
+
+        	//注册刷新验证码点击事件
+            $('#email_register_form .captcha-refresh').click({'form_id':'email_register_form'},refresh_captcha);
+            $('#email_register_form .captcha').click({'form_id':'email_register_form'},refresh_captcha);
+            $('#changeCode').click({'form_id':'jsRefreshCode'},refresh_captcha);
+
+            //刷新验证码
+        function refresh_captcha(event){
+            $.get("/captcha/refresh/?"+Math.random(), function(result){
+                $('#'+event.data.form_id+' .captcha').attr("src",result.image_url);
+                $('#id_captcha_0').attr("value",result.key);
+            });
+            return false;
+        }
+    </script>
+
+
+{% endblock %}

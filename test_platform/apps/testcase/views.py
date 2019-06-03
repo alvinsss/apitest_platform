@@ -60,6 +60,7 @@ def testcase_debug(request):
         json_par = parameter.replace("\'", "\"")
         try:
             payload = json.loads(json_par)
+            print("payload",payload)
         except json.decoder.JSONDecodeError:
             return JsonResponse({"result": "参数类型错误"})
 

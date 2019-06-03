@@ -5,8 +5,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 import xadmin
-
-from users import views
+from django.views.static import serve
+from django.views.generic import  TemplateView
+from users.views import  RegisterView
+from users import  views
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -20,10 +22,12 @@ urlpatterns = [
 	path('', views.index),
 	path('logout/', views.logout),
 	path('accounts/login/', views.index),
-	path( 'register/', views.register ),
-    path( 'registerfun/', views.registerfun ),
+	# path( 'register/', views.register ),
+	url( r'^register/$', RegisterView.as_view(), name='register' ),
 	path('jsdemo/', views.demo),
 	path('jsqa/', views.jsqa),
+
+
 	# """项目管理"""
 	path('project/', include('project.urls')),
 	# """模块管理"""

@@ -6,7 +6,7 @@ class TestCase(models.Model):
 	"""
 	测试用例表
 	"""
-	module = models.ForeignKey(Module, on_delete=models.CASCADE)
+	module = models.ForeignKey( Module, on_delete=models.CASCADE )
 	name = models.CharField("名称", max_length=50, null=False)
 	status = models.BooleanField("状态", default=1)
 	url = models.TextField("URL", null=False)

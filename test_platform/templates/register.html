@@ -3,7 +3,7 @@
 
     <div style="height: 100%;width:100%;background-image: url(../static/img/loginPage.jpg)  ">
         <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
-            <form id="email_register_form" class="form-signin" action="/register/" method="post" autocomplete="off" >
+            <form id="username_register_form" class="form-signin" action="/register/" method="post" autocomplete="off" >
                            <div class="form-group marb20 {% if register_form.errors.username %} errorput {% endif %} ">
               <input type="text" id="username" name="username" value="{{ register_form.username.value }}" placeholder="请输入您的用户名"/>
             </div>
@@ -31,8 +31,8 @@
     <script>
 
         	//注册刷新验证码点击事件
-            $('#email_register_form .captcha-refresh').click({'form_id':'email_register_form'},refresh_captcha);
-            $('#email_register_form .captcha').click({'form_id':'email_register_form'},refresh_captcha);
+            $('#username_register_form .captcha-refresh').click({'form_id':'username_register_form'},refresh_captcha);
+            $('#username_register_form .captcha').click({'form_id':'username_register_form'},refresh_captcha);
             $('#changeCode').click({'form_id':'jsRefreshCode'},refresh_captcha);
 
             //刷新验证码

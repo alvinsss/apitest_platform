@@ -4,7 +4,7 @@
     <div style="height: 100%;width:100%;background-image: url(../static/img/loginPage.jpg)  ">
         <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
             <form class="form-signin" action="/index/" method="post">
-                <h2 class="form-signin-heading" style="text-align:center;color: #b9def0;">接口测试平台</h2>
+                <h2 class="form-signin-heading" style="text-align:center;color: blue; "><strong>接口测试平台</strong> </h2>
                 <label for="inputEmail" class="sr-only">账户:</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="账户" required
                        autofocus>
@@ -16,10 +16,9 @@
                 <div class="form-group marb8 captcha1 ">
                     <label style="color: #fbed50" id="refresh_captcha"> </label>
                     {{ form_errors.captcha }}
-                    <a href="/register">注册账户</a>
+                    <br>
+                    <a style="color:blue; font-size:22px; " href="/register"><strong>注册账户</strong> </a>
                 </div>
-                {#                <button type="button" onclick="refresh_captcha()">计算</button>#}
-                {#            <div style="color: red"> {{ msg }}</div>#}
                 <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
                     {% for key, error in form_errors.items %}
                         {{ error }}

@@ -63,6 +63,9 @@ def testcase_debug(request):
             print("payload",payload)
         except json.decoder.JSONDecodeError:
             return JsonResponse({"result": "参数类型错误"})
+        finally:
+            print("finally")
+            payload = json_par
 
         result_text = None
         if method == "get":

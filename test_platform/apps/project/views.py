@@ -19,7 +19,8 @@ from project.forms import ProjectForm
 @login_required
 def project_manage(request):
 	print("project_manage")
-	project_all = Project.objects.all()
+	# project_all = Project.objects.all()
+	project_all = Project.objects.filter(del_status=1)
 	return render(request, "project.html",
 	              {"projects": project_all
 		              , "type": "list"})
@@ -38,11 +39,12 @@ def add_project(request):
 		name = request.POST.get("name", "")
 		describe = request.POST.get("describe", "")
 		status = request.POST.get("status", "")
+		del_status ="1" # 1不删除，0删除
 		print(name, describe, status)
 		if name == "":
 			return render(request, "project.html",
 			              {"type": "add", "name_error": "项目名称不能为空！"})
-		Project.objects.create(name=name, describe=describe, status=status)
+		Project.objects.create(name=name, describe=describe, status=status,del_status=del_status)
 		return HttpResponseRedirect("/project/")
 
 
@@ -91,7 +93,9 @@ def delete_project(request, pid):
 			except Project.DoesNotExist:
 				return HttpResponseRedirect("/project")
 			else:
-				p.delete()
+				# p.delete()
+				p.del_status=0
+				p.save()
 				return HttpResponseRedirect("/project")
 	elif request.method == "POST":
 		return HttpResponseRedirect("/project/")
@@ -104,7 +108,8 @@ def get_project_list(request):
 	"""
 	print("get_project_list")
 	if request.method == "GET":
-		projects = Project.objects.all()
+		# projects = Project.objects.all()
+		projects = Project.objects.filter(del_status=1)
 		project_list = []
 		for pro in projects:
 			project_dict = {

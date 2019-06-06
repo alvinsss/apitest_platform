@@ -79,6 +79,7 @@
                         <thead>
                         <tr>
                             <th>id</th>
+                            <th>项目</th>
                             <th>模块</th>
                             <th>名称</th>
                             <th>URL</th>
@@ -91,6 +92,7 @@
                         {% for case in cases %}
                             <tr>
                                 <td>{{ case.id }}</td>
+                                <td>{{ case.module.project }}</td>
                                 <td>{{ case.module }}</td>
                                 <td style="max-width:150px ;overflow: hidden ">{{ case.name }}</td>
                                 <td style="max-width: 390px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ case.url }}</td>

@@ -216,8 +216,8 @@
                 parameter: parameter,
             },
             function (data, status) {
-                {#alert("返回的数据：" + data.result);#}
-                console.log("返回的结果", data.result);
+                console.log("返回的数据：" + data);
+                console.log("返回的result结果", data.result);
                 document.querySelector("#result").value = data.result;
             });
     };

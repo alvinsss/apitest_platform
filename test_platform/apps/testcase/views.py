@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from testcase.models import TestCase
 from project.models import Project
@@ -13,13 +14,13 @@ import  time
 import re
 
 
-
+@login_required
 def testcase_manage(request):
     # 查询全部数据
     """ 用例列表"""
     # case_list = TestCase.objects.all()
     case_list = TestCase.objects.filter(status="1")
-    p = Paginator(case_list, 20)
+    p = Paginator(case_list,15)
     page = request.GET.get('page')
     try:
         contacts = p.page(page)
@@ -29,9 +30,41 @@ def testcase_manage(request):
     except EmptyPage:
         # 如果页数超出查询范围，取最后一页
         contacts = p.page(p.num_pages)
+    print("contacts is:",contacts)
     return render(request, "case_list.html", {"cases": contacts})
     # return render(request, "case_list.html", {"type": "debug"})
 
+def _dict_generator(indict, pre=None):
+    pre = pre[:] if pre else []
+    if isinstance(indict, dict):
+        for key, value in indict.items():
+            if isinstance(value, dict):
+                if len(value) == 0:
+                    yield pre+[key, '{}']
+                else:
+                    for d in _dict_generator(value, pre + [key]):
+                        yield d
+            elif isinstance(value, list):
+                if len(value) == 0:
+                    yield pre+[key, '[]']
+                else:
+                    for v in value:
+                        for d in _dict_generator(v, pre + [key]):
+                            yield d
+            elif isinstance(value, tuple):
+                if len(value) == 0:
+                    yield pre+[key, '()']
+                else:
+                    for v in value:
+                        for d in _dict_generator(v, pre + [key]):
+                            yield d
+            else:
+                yield pre + [key, value]
+    else:
+        yield indict
+
+
+@login_required
 @csrf_exempt
 def testcase_debug(request):
     """
@@ -59,13 +92,15 @@ def testcase_debug(request):
 
         json_par = parameter.replace("\'", "\"")
         try:
-            payload = json.loads(json_par)
-            print("payload",payload)
+            payload = json.loads(json_par,strict=False)
+            # payload = json.loads(json_par)
         except json.decoder.JSONDecodeError:
             return JsonResponse({"result": "参数类型错误"})
-        finally:
-            print("finally")
-            payload = json_par
+        # finally:
+        #     print("finally")
+        #     payload = json_par
+
+
 
         result_text = None
         if method == "get":
@@ -89,8 +124,12 @@ def testcase_debug(request):
                 if header == "":
                     r = requests.post(url, json=payload)
                     result_text = r.text
+                    print("json",r.text)
+
                 else:
                     r = requests.post(url, json=payload, headers=header)
+                    print("url is:",url,"json is",payload,"header is",header)
+                    print("json has header ",r.text)
                     result_text = r.text
 
             # 只做POST的json格式的加密处理
@@ -117,6 +156,7 @@ def _str_toJson(str1):
 
 
 @csrf_exempt
+@login_required
 def testcase_assert(request):
     '''
     断言
@@ -147,6 +187,7 @@ def testcase_assert(request):
 
 
 @csrf_exempt
+@login_required
 def testcase_save(request):
     """
     用例保存或修改case
@@ -260,6 +301,7 @@ def  delete_case(request,cid):
      return HttpResponseRedirect("/testcase")
 
 @csrf_exempt
+@login_required
 def sendreqsnfun(request):
     """
     测试发送多次
@@ -464,10 +506,12 @@ def getselect_data(request):
     获取 "项目>模块" 列表
     :param request:
     :return: 项目接口列表
+    项目和任务控制状态，在模块和用例不控制状态
     """
     print("getselect_data")
     if request.method == "GET":
         project_list = Project.objects.all()
+        # project_list = Project.objects.filter(del_status=1)
         data_list = []
         for project in project_list:
             project_dict = {

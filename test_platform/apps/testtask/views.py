@@ -86,10 +86,11 @@ def get_case_tree(request):
 	获得用例树形结构
 	"""
 	if request.method == "GET":
-		# 过滤项目状态是关闭的
-		projects = Project.objects.filter(status=True)
+		# 过滤项目状态是关闭和是否删除标致
+		projects = Project.objects.filter(del_status=1,status=1)
 		data_list = []
 		for project in projects:
+			print("GET get_case_tree  select project is ",project)
 			project_dict = {
 				"name": project.name,
 				"isParent": True
@@ -134,9 +135,10 @@ def get_case_tree(request):
 			"desc": task.describe
 		}
 
-		projects = Project.objects.all()
+		projects = Project.objects.filter(del_status=1,status=1)
 		data_list = []
 		for project in projects:
+			print("POST get_case_tree  select project is ",project)
 			project_dict = {
 				"name": project.name,
 				"isParent": True

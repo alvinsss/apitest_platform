@@ -30,14 +30,20 @@ urlpatterns = [
 
 	# """项目管理"""
 	path('project/', include('project.urls')),
+
 	# """模块管理"""
 	path('module/', include('module.urls')),
+
 	# """用例管理，testcase是应用名称"""
 	path('testcase/', include('testcase.urls')),
-	# path('testcase/debug', views.jsqa),
-	path( 'malacca/', include( 'mock.urls' ) ),
+
 	# """任务管理"""
 	path( 'testtask/', include( 'testtask.urls' ) ),
+
+	# """mock Server"""
+	path( 'mock/', include( 'mock.urls' ) ),
+	# path('testcase/debug', views.jsqa),
+	# path( 'malacca/', include( 'mock.urls' ) ),
 
 	# """工具管理"""
 	path( 'tools/', include( 'tools.urls' ) ),

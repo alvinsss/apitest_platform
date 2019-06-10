@@ -12,9 +12,5 @@ def locustmanager(request):
 	"""
 	locust管理
 	"""
-	task_list = TestTask.objects.filter(del_status=False)
-
-	return render(request, "locust_list.html", {
-		"type": "list",
-		"tasks": task_list
-	})
+	pass
+	return render( request, "locust_list.html" )

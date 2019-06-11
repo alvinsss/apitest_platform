@@ -8,6 +8,7 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 import json
 import  os,time
 import platform
+import  sys
 
 @csrf_exempt
 @login_required
@@ -70,10 +71,16 @@ def save_locustfile(request):
         else:
             tmp_dir = os.path.join( settings.FILE_ROOT, str( userid ),
                                     str( time.strftime( "%Y-%m-%d_%H:%M:%S", time.localtime() ) ) )
+            # cmd_res = os.system("chattr +i /q/tools/python/wwwroot/test_platform/static/uploads/*")
+            # if cmd_res == 0:
+            #     print("exec os chattr is ok")
+            # else:
+            #     sys.exit(0);
         if not os.path.exists( tmp_dir ):
             print( tmp_dir + " not exists ,create dir is starting" )
             os.makedirs( tmp_dir )
             # os.system( r"touch {}".format( tmp_dir ) )  # 调用系统命令行来创建文件
+
         FileName = os.path.join( tmp_dir, uploadfile.name )
         try:
             with open( FileName, 'wb+' ) as f:

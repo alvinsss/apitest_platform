@@ -156,8 +156,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, "static"),
 ]
+FILE_ROOT = os.path.join(BASE_DIR,"static/uploads")#正确
 
-# APPEND_SLASH = False
+#文件上传
+
+
+APPEND_SLASH = False
 #  UserProfile 覆盖了 django 内置的 user 表
 AUTH_USER_MODEL = 'users.UserProfile'
 

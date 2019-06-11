@@ -156,9 +156,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, "static"),
 ]
-FILE_ROOT = os.path.join(BASE_DIR,"static/uploads")#正确
-
 #文件上传
+FILE_ROOT = os.path.join(BASE_DIR,"static/uploads")
+
+
 
 
 APPEND_SLASH = False

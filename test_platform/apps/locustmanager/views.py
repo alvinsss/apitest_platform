@@ -46,7 +46,7 @@ def save_locustfile(request):
         host = request.POST.get("host","")
         userid = request.user.id
         username = request.user
-        uploadfile =request.FILES.get("file_obj")    # 获取上传的文件，如果没有文件，则默认为None
+        uploadfile =request.FILES.get("file_obj",None)    # 获取上传的文件，如果没有文件，则默认为None
         slave_num =request.POST.get("slave_num","")
         print("module_id",module_id)
         print("encryption",encryption)
@@ -66,10 +66,10 @@ def save_locustfile(request):
         if (platform.system() == "Windows"):
             tmp_dirs = 'D:\static'
             tmp_dir = os.path.join( settings.FILE_ROOT, str( userid ),
-                                    str( time.strftime( "%Y-%m-%d_%H%M%S", time.gmtime() ) ) )
+                                    str( time.strftime( "%Y-%m-%d_%H%M%S", time.localtime() ) ) )
         else:
             tmp_dir = os.path.join( settings.FILE_ROOT, str( userid ),
-                                    str( time.strftime( "%Y-%m-%d_%H:%M:%S", time.gmtime() ) ) )
+                                    str( time.strftime( "%Y-%m-%d_%H:%M:%S", time.localtime() ) ) )
         if not os.path.exists( tmp_dir ):
             print( tmp_dir + " not exists ,create dir is starting" )
             os.makedirs( tmp_dir )
@@ -102,10 +102,10 @@ def uploadfile(request):
             if (platform.system() == "Windows"):
                 tmp_dirs = 'D:\static'
                 tmp_dir = os.path.join(tmp_dirs,str( userid ),
-                                    str( time.strftime( "%Y-%m-%d_%H%M%S", time.gmtime() ) ) )
+                                    str( time.strftime( "%Y-%m-%d_%H%M%S", time.localtime() ) ) )
             else :
                 tmp_dir = os.path.join( settings.FILE_ROOT, str( userid ),
-                                    str( time.strftime( "%Y-%m-%d_%H:%M:%S", time.gmtime() ) ) )
+                                    str( time.strftime( "%Y-%m-%d_%H:%M:%S", time.localtime() ) ) )
             print("tmp_dir",tmp_dir)
             if not os.path.exists(tmp_dir):
                 print(tmp_dir+" not exists ,create dir is starting")

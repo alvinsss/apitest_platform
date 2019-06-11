@@ -5,7 +5,7 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
     var cmbProject = document.getElementById("selectProject");
     var cmbModule = document.getElementById("selectModule");
     var dataList = [];
-    console.log("wtf", cmbProject);
+    // console.log("wtf", cmbProject);
 
     //设置默认选项
     function setDefaultOption(obj, id) {

@@ -71,6 +71,7 @@ def add_module(request):
 		              {"form": form, "type": "add"})
 	else:
 		form = ModuleForm(request.POST)
+		request.user.username
 		if form.is_valid():
 			project = form.cleaned_data['project']
 			name = form.cleaned_data['name']

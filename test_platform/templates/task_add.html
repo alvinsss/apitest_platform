@@ -49,7 +49,7 @@
 
 	$(document).ready(function () {
 		// 调用获取用例树
-		$.get("/testtask/get_case_tree", {}, function (resp) {
+		$.get("/testtask/get_case_tree/", {}, function (resp) {
 			if (resp.status === 10200) {
 				var zNodes = resp.data;
 				zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);

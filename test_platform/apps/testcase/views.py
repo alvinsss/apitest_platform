@@ -193,6 +193,7 @@ def testcase_save(request):
     用例保存或修改case
     """
     if request.method == "POST":
+        selectModule = request.POST.get("selectModule", "")
         url = request.POST.get("url", "")
         method = request.POST.get("method", "")
         header = request.POST.get("header", "")
@@ -205,6 +206,7 @@ def testcase_save(request):
         encryption = request.POST.get("encryption","")
         cid = request.POST.get("cid","")
 
+        print("selectModule", selectModule)
         print("url", url)
         print("method", method)
         print("header", header)

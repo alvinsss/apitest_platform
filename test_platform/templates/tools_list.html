@@ -15,6 +15,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
+                <li><a href="#">{{ request.user }}</a></li>
 				<li><a href="#">设置</a></li>
 				<li><a href="/logout/">退出</a></li>
 			</ul>
@@ -63,7 +64,7 @@
 						<i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具
 					</a>
 				</li>
-				<li><a href="/locustmanager">
+				<li><a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
 			</ul>

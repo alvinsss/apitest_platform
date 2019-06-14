@@ -36,10 +36,13 @@ def qatest(request):
 
 # 登录的首页
 def index(request):
+	print("index")
 	if request.method == "GET":
+		print( "index GET" )
 		return render(request, "index.html")
 
 	else:
+		print( "index POST" )
 		username = request.POST.get("username", "")
 		password = request.POST.get("password", "")
 		if username == "" or password == "":
@@ -50,6 +53,7 @@ def index(request):
 			return render(request, "index.html", {
 				"error": "用户名或密码错误"})
 		else:
+			print("已登录")
 			auth.login(request, user)  # 记录用户的登录状态
 			return HttpResponseRedirect("/project/")
 

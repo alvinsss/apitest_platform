@@ -11,6 +11,7 @@ urlpatterns = [
     path( 'add_locustfile/', views.add_locustfile ),
     path( 'save_locustfile/', views.save_locustfile ),
     path( 'edit_locustlist/<int:locustfid>/', views.edit_locustlist ),
+    path( 'get_locustlist_info', views.get_locustlist_info ),
     path( 'delete_locustlist/<int:locustfid>/', views.delete_locustlist ),
     path( 'upload_file/', views.uploadfile ),
 ]

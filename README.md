@@ -10,6 +10,9 @@
   templates:html文件<br>
   test_platform:django配置文件<br>
   utils:工具类<br>
+  my.cnf:mysql配置独立文件
+  nginx.conf 和 test_platform.xml 部署nginx和uwsgi配置文件
+  requiremenets.txt 项目依赖文件
   
 2、部署版本要求
 -----------

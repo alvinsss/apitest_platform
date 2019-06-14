@@ -112,14 +112,19 @@ DATABASES = {
     }
 }
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'devtest_platform.sqlite3'),
-#     }
-# }
-
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://your_host_ip:6379',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+             "PASSWORD": "yoursecret",
+        },
+    },
+}
+REDIS_TIMEOUT=7*24*60*60
+CUBES_REDIS_TIMEOUT=60*60
+NEVER_REDIS_TIMEOUT=365*24*60*60
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -157,7 +162,7 @@ STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, "static"),
 ]
 #文件上传
-FILE_ROOT = os.path.join(BASE_DIR,"static/uploads")
+FILE_ROOT = os.path.join("/export/server/pref/locust","uploads")
 
 
 

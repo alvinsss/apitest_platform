@@ -226,7 +226,6 @@ def testcase_save(request):
 
         if assert_type == "" or assert_text == "":
             return JsonResponse({"status": 10102, "message": "断言的类型或文本不能为空"})
-
         # ...
         if method == "get":
             method_number = 1

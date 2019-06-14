@@ -64,6 +64,7 @@ def logout(request):
 
 # @csrf_exempt
 class RegisterView(View):
+	print("RegisterView")
 	def get(self,request):
 		register_form = RegisterForm()
 		return render(request, 'register.html', {'register_form': register_form})

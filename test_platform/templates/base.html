@@ -16,15 +16,71 @@
     <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
     <script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
     <script src="{% static "js/holder.min.js" %}"></script>
-    <script src="{% static "js/myCase.js" %}"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+      <style  type="text/css">
+    body{
+
+        background: url(../static/img/loginPage.jpg);
+        background-position:center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 200px;
+    }
+
+    </style>
 
 </head>
 
 <body>
-{% block base %}
 
-{% endblock %}
+
+    <div style="height: 100%;width:100%;  ">
+        <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
+            <form id="username_register_form" class="form-signin" action="/register/" method="post" autocomplete="off" >
+                           <div class="form-group marb20 {% if register_form.errors.username %} errorput {% endif %} ">
+              <input type="text" id="username" name="username" value="{{ register_form.username.value }}"   placeholder="请输入您的用户名"/>
+            </div>
+            <div class="form-group marb8 {% if register_form.errors.password %} errorput {% endif %} ">
+              <input type="password" id="id_password" name="password" value="{{ register_form.password.value }}" placeholder="请输入6-20位非中文字符密码"/>
+            </div>
+                <label>验&nbsp;证&nbsp;码</label>
+            <div class="form-group marb8 captcha1 {% if register_form.errors.captcha %} errorput {% endif %} ">
+              {{ register_form.captcha }}
+            </div>
+            <div class="error btns" id="jsEmailTips">
+              {% for key, error in register_form.errors.items %}
+                {{ error }}
+              {% endfor %}
+              {% if not register_form.errors.items %}{{ msg }}{% endif %}
+            </div>
+            <div class="auto-box marb8">
+            </div>
+            <input  class="btn btn-blue" id="jsEmailRegBtn" type="submit" value="注册" style="font-size:22px;color: #00B83F"/>
+          {% csrf_token %}
+            </form>
+        </div> <!-- /container -->
+    </div>
+{#    <script src="{% static 'js/login.js' %}"></script>#}
+    <script>
+            $(" #username").val("");
+
+        	//注册刷新验证码点击事件
+            $('#username_register_form .captcha-refresh').click({'form_id':'username_register_form'},refresh_captcha);
+            $('#username_register_form .captcha').click({'form_id':'username_register_form'},refresh_captcha);
+            $('#changeCode').click({'form_id':'jsRefreshCode'},refresh_captcha);
+
+            //刷新验证码
+        function refresh_captcha(event){
+            $.get("/captcha/refresh/?"+Math.random(), function(result){
+                $('#'+event.data.form_id+' .captcha').attr("src",result.image_url);
+                $('#id_captcha_0').attr("value",result.key);
+            });
+            return false;
+        }
+    </script>
 
 <div class="select2-container--admin-autocomplete" role="main" style="float:right;width: 55%">
     <div class="page-header"></div>

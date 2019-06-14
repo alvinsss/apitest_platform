@@ -23,7 +23,7 @@ urlpatterns = [
 	path('logout/', views.logout),
 	path('accounts/login/', views.index),
 	# path( 'register/', views.register ),
-	url( r'^register/$', RegisterView.as_view(), name='register' ),
+	url( r'^register/', RegisterView.as_view(), name='register' ),
 	path('jsdemo/', views.demo),
 	path('jsqa/', views.jsqa),
 

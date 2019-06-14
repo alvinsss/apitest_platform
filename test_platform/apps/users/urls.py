@@ -10,5 +10,7 @@ urlpatterns = [
 	path('test/', views.qatest),
 	path('index/', views.index, name="index"),
 	path('logout/', views.logout),
+	# path( 'register/', views.register ),
+    # path( 'registerfun/', views.registerfun ),
     path('accounts/login/', views.index),
 ]

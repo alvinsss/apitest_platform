@@ -1,8 +1,44 @@
-{% extends "base.html" %}
-{% block base %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>接口测试平台</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico" >
+    <!-- Bootstrap core CSS -->
+    {% load static %}
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/dashboard.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/ie10-viewport-bug-workaround.css" %}">
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/ie10-viewport-bug-workaround.js" %}"></script>
+    <script src="{% static "js/ie-emulation-modes-warning.js" %}"></script>
+    <script src="{% static "js/holder.min.js" %}"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+      <style  type="text/css">
+    body{
 
-    <div style="height: 100%;width:100%;background-image: url(../static/img/loginPage.jpg)  ">
-        <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
+        background: url(../static/img/loginPage.jpg);
+        background-position:center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 200px;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <div style="height: 100%;width:100%;  ">
+        <div class="container" style="width: 500px;border-top-width: 450px;padding-top: 350px">
             <form id="username_register_form" class="form-signin" action="/register/" method="post" autocomplete="off" >
                            <div class="form-group marb20 {% if register_form.errors.username %} errorput {% endif %} ">
               <input type="text" id="username" name="username" value="{{ register_form.username.value }}"   placeholder="请输入您的用户名"/>
@@ -46,5 +82,11 @@
         }
     </script>
 
-
-{% endblock %}
+<div class="select2-container--admin-autocomplete" role="main" style="float:right;width: 55%;margin-top:500px">
+    <div class="page-header"></div>
+    <footer class="footer">
+         <p> &copy;Copyright 2019 , Author;BC_QA Team</p>
+    </footer>
+</div>
+</body>
+</html>

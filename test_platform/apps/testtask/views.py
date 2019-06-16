@@ -6,6 +6,7 @@ from module.models import  Module
 from testcase.models import TestCase
 from django.views.decorators.csrf import  csrf_exempt
 import json
+import os
 
 
 def testtask_manage(request):
@@ -36,6 +37,66 @@ def edit_task(request, tid):
 	return render(request, "task_edit.html", {
 		"type": "edit"
 	})
+
+def run_task(request):
+	'''
+	运行任务
+	:param request:
+	:return:
+	'''
+	if request.method == "POST":
+		tid = request.POST.get("task_id","")
+		if tid == "":
+			return JsonResponse( {"status": 10200, "message": "success", "data": "null"} )
+		else:
+			task = TestTask.objects.get(id=tid)
+			print(task.cases)
+			case_list = json.loads(task.cases)
+			test_datadic = {}
+			# test_list = list()
+			print("case_list",type(case_list))
+			print("case_list",(case_list))
+
+			for cid in case_list:
+				case = TestCase.objects.get(id=cid)
+				if case.method == 1:
+					method = "get"
+				elif case.method == 2:
+					method = "post"
+				else:
+					method = "null"
+
+				if case.parameter_type == 1:
+					parameter_type = "from"
+				else :
+					parameter_type = "json"
+
+				if case.assert_type == 1:
+					assert_type = "contains"
+				else :
+					assert_type = "json"
+				test_datadic[case.id]={
+					"url":case.url,
+					"method":method,
+					"header":case.header,
+					"parameter_type":case.parameter_type,
+					"parameter_body":case.parameter_body,
+					"assert_type":case.assert_type,
+					"assert_text":case.assert_text,
+				}
+				case_data = json.dumps(test_datadic)
+				import os
+				from test_platform import settings
+				print(settings.BASE_DIR)
+				dir_task_testdata = settings.BASE_DIR+"/apps/testtask/extend"
+				with open((dir_task_testdata,"test_data_list.json"),"w+") as  f:
+					f.write(json.loads(case_data))
+				run_task_cmd = "pytest"
+				os.system( run_task_cmd )
+			return JsonResponse( {"status": 10200, "message": "success", "data": "null"} )
+
+	else:
+			return JsonResponse( {"status": 10200, "message": "success", "data": "null"} )
 
 
 def delete_task(request, tid):

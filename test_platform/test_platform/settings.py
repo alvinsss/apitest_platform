@@ -25,8 +25,8 @@ sys.path.insert(1, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = '*@#fk*9ay6j)@6@asfxug-azgjvcguh+ue7q-03fa@3r*&faj_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = True
-# DEBUG = False
 
 
 ALLOWED_HOSTS = ['*',]
@@ -163,9 +163,7 @@ STATICFILES_DIRS = [
 ]
 #文件上传
 FILE_ROOT = os.path.join("/export/server/pref/locust","uploads")
-
-EXTEND_DIR = os.path.join(BASE_DIR, "apps\\testtask\\extend\\")
-
+EXTEND_DIR = os.path.join(BASE_DIR,"apps\\testtask\\extend\\")
 
 
 

@@ -36,7 +36,7 @@
    <div style="height: 100%;width:100%;">
         <div class="container" style="width: 500px;border-top-width: 400px;padding-top: 300px">
             <form class="form-signin" action="/index/" method="post">
-                <h2 class="form-signin-heading" style="text-align:center;color:blueviolet"><strong>接口测试平台</strong> </h2>
+                <h2 class="form-signin-heading" style="text-align:center;color: blue; "><strong>接口测试平台</strong> </h2>
                 <label for="inputEmail" class="sr-only">账户:</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="账户" required
                        autofocus>
@@ -49,7 +49,7 @@
                     <label style="color: #fbed50" id="refresh_captcha"> </label>
                     {{ form_errors.captcha }}
                     <br>
-                    <a style="color:blueviolet; font-size:12px; " href="/register/"><strong>注册账户</strong> </a>
+                    <a style="color:blue; font-size:22px; " href="/register/"><strong>注册账户</strong> </a>
                 </div>
                 <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
                     {% for key, error in form_errors.items %}

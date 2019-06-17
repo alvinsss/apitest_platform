@@ -164,6 +164,8 @@ STATICFILES_DIRS = [
 #文件上传
 FILE_ROOT = os.path.join("/export/server/pref/locust","uploads")
 
+EXTEND_DIR = os.path.join(BASE_DIR, "apps\\testtask\\extend\\")
+
 
 
 

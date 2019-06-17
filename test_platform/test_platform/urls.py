@@ -51,4 +51,6 @@ urlpatterns = [
 	# """locust管理"""
 	path( 'locustmanager/', include( 'locustmanager.urls' ) ),
 
+	# """unitest管理"""
+	path( 'unittest/', include( 'pyunitest.urls' ) ),
 ]

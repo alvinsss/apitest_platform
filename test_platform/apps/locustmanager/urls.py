@@ -15,4 +15,4 @@ urlpatterns = [
     path( 'delete_locustlist/<int:locustfid>/', views.delete_locustlist ),
     path( 'upload_file/', views.uploadfile ),
 ]
-static(settings.FILE_ROOT, document_root=settings.FILE_ROOT)# 这句话是用来指定和映射静态文件的路径
+static(settings.FILE_LOCUSTROOT, document_root=settings.FILE_LOCUSTROOT)# 这句话是用来指定和映射静态文件的路径

@@ -1,5 +1,3 @@
-
-
 //获取Locust信息
 var LocustInit = function () {
 

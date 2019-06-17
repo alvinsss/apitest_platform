@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 	'testtask',
 	'tools',
 	'locustmanager',
+    'pyunitest',
     # https://django-simple-captcha.readthedocs.io/en/latest/usage.html
 ]
 
@@ -162,7 +163,8 @@ STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, "static"),
 ]
 #文件上传
-FILE_ROOT = os.path.join("/export/server/pref/locust","uploads")
+FILE_LOCUSTROOT = os.path.join("/export/server/pref/locust","uploads")
+FILE_PYROOT = os.path.join("/export/server/pref/py_unittest","uploads")
 EXTEND_DIR = os.path.join(BASE_DIR,"apps\\testtask\\extend\\")
 
 

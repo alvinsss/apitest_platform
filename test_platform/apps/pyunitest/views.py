@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import  csrf_exempt
 from django.conf import settings
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-import os,time
+import os,time,re
 import platform
 import requests
 
@@ -72,40 +72,48 @@ def save_unittesttfile(request):
             # os.system( r"touch {}".format( tmp_dir ) )  # 调用系统命令行来创建文件
         # pyfid空即新建
         if pyfid == "":
+            print("create unittest upload file info")
             if not uploadfile:
                 return JsonResponse( {"status": 10200, "message": "上传文件不存！"} )
             if uploadfile.name.split( '.' )[-1] not in ['xlsx', 'py']:
                 return JsonResponse( {"status": 10200, "message": "上传文件类型错误！"} )
             FileName = os.path.join( tmp_dir, uploadfile.name )
-            print("FileName",FileName)
+            # 到分钟级别的创建目录，一般不会重复
+            # if os.path.exists(FileName):
+            #     os.remove(FileName)
+            # else:
+            #     print("需要上传的文件不存在，可以直接上传文件")
+            print("需要上传的文件名是-->",FileName)
+
             try:
                 with open( FileName, 'wb+' ) as f:
                     # 分块写入文件
                     for chunk in uploadfile.chunks():
                         f.write( chunk )
-                    print("filename write file!")
-                    UnittestScript.objects.create( userid=userid, scriptname=unittestscript_name,py_file=FileName,module_id=module_id,username=username )
+                    print(FileName+"write file is over !")
+                    UnittestScript.objects.create( userid=userid, scriptname=unittestscript_name,py_file=FileName,uploadfilename=uploadfile,module_id=module_id,username=username )
 
             except Exception as e:
                 print( e )
             cp_file = FileName
             python_script = "/export/server/pref/python_unittest/interface_apitestByunitest_jenkins/tests/"
             cmd = r'cp ' + cp_file + ' ' + python_script
-            print( "cmd", cmd )
+            print( "exec_cmd", cmd )
             exec_cmd = os.popen( cmd )
+            exec_cmd.close()
             return JsonResponse( {"status": 10200, "message": "创建成功！", "data": FileName} )
         else:
             if uploadfile == None:
-                print("修改，未修改上传文件",uploadfile)
+                print("修改，未修改上传文件",uploadfile,pyfid)
                 py_unittest = UnittestScript.objects.get(id=pyfid)
                 py_unittest.userid = userid
                 py_unittest.module_id = module_id
                 # UnittestScript.username = username
                 py_unittest.py_file = str(py_unittest.py_file)
                 py_unittest.save()
-                return JsonResponse( {"status": 10200, "message": "修改成功！", "data": UnittestScript.py_file} )
+                return JsonResponse( {"status": 10200, "message": "修改成功！", "data": py_unittest.py_file} )
             else:
-                print("修改上传文件",uploadfile)
+                print("修改上传文件",uploadfile,pyfid)
                 FileName = os.path.join( tmp_dir, uploadfile.name )
                 try:
                     with open( FileName, 'wb+' ) as f:
@@ -113,10 +121,12 @@ def save_unittesttfile(request):
                         for chunk in uploadfile.chunks():
                             f.write( chunk )
                         py_unittest = UnittestScript.objects.get( id=pyfid )
+                        py_unittest.scriptname = unittestscript_name
                         py_unittest.py_file = FileName
+                        py_unittest.uploadfilename=uploadfile
                         py_unittest.userid = userid
                         py_unittest.module_id = module_id
-                    # UnittestScript.username = username
+                    # py_unittest.username = username
                         py_unittest.save()
                 except Exception as e:
                     print( e )
@@ -125,6 +135,7 @@ def save_unittesttfile(request):
 
 @csrf_exempt
 def uploadfile(request):
+
     print("_-------------------up unittest file-----------------")
     if request.method == "POST":
         print(request.FILES)
@@ -159,6 +170,12 @@ def uploadfile(request):
 
 @csrf_exempt
 def delete_py_unittest(request,pyfid):
+    '''
+    进行逻辑删除，db和上传的文件目前没有处理，保存不动
+    :param request:
+    :param pyfid:
+    :return: HttpResponseRedirect 重定向
+    '''
     print("delete_py_unittest id",pyfid)
     if request.method == "GET":
         if pyfid:
@@ -179,6 +196,11 @@ def edit_py_unittest(request,pyfid):
 
 @csrf_exempt
 def get_unittestlist_info(request):
+    '''
+    修改页面获取数据返回给前端调用的地址
+    :param request:
+    :return: JsonResponse "status": 10200为成功，其它为失败
+    '''
     print("get_py_unittest_info")
     if request.method == "POST":
         pyfid = request.POST.get("pyfid", "")
@@ -201,8 +223,14 @@ def get_unittestlist_info(request):
     else:
         return JsonResponse({"status": 10100, "message": "请求方法错误"})
 
+
 @csrf_exempt
 def run_unittest_task(request):
+    '''
+    通过调用jenkins的方式执行unittest测试文件
+    :param request:
+    :return: JsonResponse
+    '''
     print("run_unittest_task")
     try:
         url="http://172.31.1.3:8084/jenkins/job/interface_apitestByunitest_jenkins/"
@@ -211,6 +239,7 @@ def run_unittest_task(request):
     except Exception as e:
         print(e)
     print("r.status_code",r.status_code)
+    # 这个接口成功就返回201
     if r.status_code == 201 :
         return  JsonResponse({"status":10200,"message":"请求成功,查看结果"+url})
     else:

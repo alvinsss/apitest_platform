@@ -126,19 +126,15 @@
     $('#btnEdit').click(function () {
             let local_url = document.location;
             let pyfid = local_url.pathname.split("/")[3];
-            var file_obj_tmp = document.getElementById("uploadfile").value;
-            if (file_obj_tmp == ""){
-                alert("请选择上传的文件")
-            }
-           var file_obj_tmp = document.getElementById("uploadfile").value;
-            if (file_obj_tmp == ""){
-                alert("请选择上传的文件")
-            }
-
+            {#var file_obj_tmp = document.getElementById("uploadfile").value;#}
+            {#if (file_obj_tmp == ""){#}
+            {#    alert("请选择上传的文件")#}
+            {#}#}
             var form_Data = new FormData()
             form_Data.append('module_id',$('select[id="selectModule"]').val());
             form_Data.append('unittestscript_name',$("#unittestscript_name").val());
             form_Data.append('file_obj',$("#uploadfile")[0].files[0]);
+            form_Data.append('pyfid',pyfid);
             if ('file_obj',$("#uploadfile")[0].files[0] == ""){
                 alert("上传文件不能空，请选择！")
             }

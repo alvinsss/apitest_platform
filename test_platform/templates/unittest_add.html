@@ -111,7 +111,7 @@
     <script src="{%static "js/jquery.min.js"%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "css/select2.min.css" %}">
     <script src="{%static "js/select2.min.js"%}"></script>
-        <script src="{%static "js/myCase.js"%}"></script>
+    <script src="{%static "js/myCase.js"%}"></script>
 
 
 <script type="text/javascript">
@@ -121,9 +121,6 @@
     // {## ajax处理form表单数据#}
     $('#btnsavepyfile').click(function () {
             var file_obj_tmp = document.getElementById("uploadfile").value;
-            if (file_obj_tmp == ""){
-                alert("请选择上传的文件")
-            }
             var form_Data = new FormData()
             form_Data.append('module_id',$('select[id="selectModule"]').val());
             form_Data.append('unittestscript_name',$("#unittestscript_name").val());

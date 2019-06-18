@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="1" failures="0" name="pytest" skips="0" tests="1" time="0.276"><testcase classname="" file="apps/testtask/extend/run_task_testcase.py" name="apps.testtask.extend.run_task_testcase" time="0"><error message="collection failure">import file mismatch:
+imported module &apos;run_task_testcase&apos; has this __file__ attribute:
+  D:\UserData\git\PycharmProjects\server_api\test_platform\apps\testtask\extend\run_task_testcase.py
+which is not the same as the test file we want to collect:
+  D:\UserData\git\PycharmProjects\apitest_platform\test_platform\apps\testtask\extend\run_task_testcase.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase></testsuite>

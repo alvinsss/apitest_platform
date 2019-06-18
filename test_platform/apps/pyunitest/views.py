@@ -39,7 +39,7 @@ def add_unittesttfile(request):
 @csrf_exempt
 def save_unittesttfile(request):
     '''
-    新建或修改保存根据 locustfid 确定
+    新建或修改保存根据 pyfid 确定
     :param request:
     :return:
     '''
@@ -50,12 +50,13 @@ def save_unittesttfile(request):
         userid = request.user.id
         username = request.user
         module_id = request.POST.get("module_id", "")
-        unittestcript_name = request.POST.get("unittestcript_name","")
+        unittestscript_name = request.POST.get("unittestscript_name","")
         uploadfile =request.FILES.get("file_obj",None)    # 获取上传的文件，如果没有文件，则默认为None
         pyfid = request.POST.get("pyfid","")
         print("module_id",module_id)
         print("userid",userid)
         print("username",username)
+        print("unittestscript_name",unittestscript_name)
         print("uploadfile",uploadfile)
         print("pyfid",pyfid)
         if (platform.system() == "Windows"):
@@ -83,7 +84,7 @@ def save_unittesttfile(request):
                     for chunk in uploadfile.chunks():
                         f.write( chunk )
                     print("filename write file!")
-                    UnittestScript.objects.create( userid=userid, scriptname=unittestcript_name,py_file=FileName,module_id=module_id,username=username )
+                    UnittestScript.objects.create( userid=userid, scriptname=unittestscript_name,py_file=FileName,module_id=module_id,username=username )
 
             except Exception as e:
                 print( e )
@@ -124,7 +125,7 @@ def save_unittesttfile(request):
 
 @csrf_exempt
 def uploadfile(request):
-    print("_-------------------uploadfile-----------------")
+    print("_-------------------up unittest file-----------------")
     if request.method == "POST":
         print(request.FILES)
         File = request.FILES.get("uploadfile",None)
@@ -203,6 +204,15 @@ def get_unittestlist_info(request):
 @csrf_exempt
 def run_unittest_task(request):
     print("run_unittest_task")
-    url="http://172.31.1.3:8084/jenkins/job/interface_apitestByunitest_jenkins/build?token=qatest"
-    r = requests.get(url)
-    return  JsonResponse({"status":10200,"message":"请求成功"})
+    try:
+        url="http://172.31.1.3:8084/jenkins/job/interface_apitestByunitest_jenkins/"
+        token="build?token=BIt9enzUbO4x8bYmLHBi"
+        r = requests.get(url+token)
+    except Exception as e:
+        print(e)
+    print("r.status_code",r.status_code)
+    if r.status_code == 201 :
+        return  JsonResponse({"status":10200,"message":"请求成功,查看结果"+url})
+    else:
+        return  JsonResponse({"status":10200,"message":"请求失败"})
+

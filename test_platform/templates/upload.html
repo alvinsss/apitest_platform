@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/testtask/">
+                    <a href="/testtask">
                         <i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理
                     </a>
                 </li>
@@ -62,48 +62,31 @@
                     <li><a href="/tools/">
                         <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
                     </li>
-                    <li  ><a href="/locustmanager/">
+                    <li><a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
-                    </li>
-                    <li class="active" ><a href="/unittest/">
-                        <i class="glyphicon glyphicon-random"></i>&nbsp&nbspunitest管理</a>
                     </li>
                 </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h4 class="sub-header">添加压测脚本</h4>
-             <form>
-<!-- {#                      <form enctype="multipart/form-data" action="/locustmanager/upload_file/" method="post">#}
-{#                        <input type="file" id="uploadfile"  name="uploadfile" />#}
-{#                        <br/>#}
-{#                         <input type="submit" value="上传文件"/> #}
-{#                         {% csrf_token %}#}
-{#                     </form>#} -->
 
-                    <label>项目：</label>
-                    <select class="form-control select2-selection--single" id="selectProject" style="width: 180px" >
-                        <option value="0">请选择</option>
-                    </select>
+                <form enctype="multipart/form-data"  method="post"  id="upload">
 
-                    <label>模块：</label>
-                        <select class="form-control select2-selection--single" id="selectModule" ,name="selectModule" style="width: 180px">
-                    </select>
+                    <div class="col-lg-12">
+                        <div class="col-lg-8">
+                            <input type="file" name="img" id="img" class="btn btn-default"/>
+                            <input type="text" name="companyF" id="companyF" value="{{ company_name }}" style="display: none;"/>
+                            <input type="text" name="coverFile" id="coverFile" value="False" style="display: none;"/>
+                        </div>
+                        <div class="col-lg-4" style="text-align: center;">
+                            <input type="button" class="btn btn-default" value="上传附件" onclick="transferBtn(this)" />
+                        </div>
+                        <div class="col-lg-4" style="text-align: center;">
+                            <input type="button" class="btn btn-default" value="下载文件" onclick="downloadFiles()" />
+                        </div>
 
-                    <div style="margin-top:10px " >
-                         <input type="file" id="uploadfile"  name="uploadfile" />
-                    </div>
-
-                    <div class="input-group" style="top:10px">
-                        <span class="input-group-addon">脚本名称</span>
-                        <input  style="width: 31%" id="unittestscript_name" name="unittestscript_name" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                    </div>
-                    <input  type="button"  value="保存上传" id="btnsavepyfile">
-<!-- {#            <input  type="button"  value="保存上传" id="btn2" onclick="saveFile()">#} -->
-                {% csrf_token %}
-        </form>
-
+                    {% csrf_token %}
+                </form>
 
     </div>
 
@@ -116,35 +99,56 @@
 
 <script type="text/javascript">
 
-  
-    SelectInit();
-    // {## ajax处理form表单数据#}
-    $('#btnsavepyfile').click(function () {
-            var file_obj_tmp = document.getElementById("uploadfile").value;
-            if (file_obj_tmp == ""){
-                alert("请选择上传的文件")
-            }
-            var form_Data = new FormData()
-            form_Data.append('module_id',$('select[id="selectModule"]').val());
-            form_Data.append('unittestscript_name',$("#unittestscript_name").val());
-            form_Data.append('file_obj',$("#uploadfile")[0].files[0]);
-            if ('file_obj',$("#uploadfile")[0].files[0] == ""){
-                alert("上传文件不能空，请选择！")
-            }
-            $.ajax({
-                url:'/unittest/save_unittesttfile/',
-                type:'post',
-                contentType:false,
-                processData:false,
-                data:form_Data,
-                success:function(data){
-                    console.log(data)
-                    window.alert(data.message);
-                }
-            })
-        }
-    )
 
+    SelectInit();
+
+    //保存locust脚本
+    function transferBtn(cur) {
+        var form = document.getElementById("upload"),
+        formData = new FormData(form);
+        $.ajax({
+            url:"http://127.0.0.1:8000/mock/uploadfile/",
+            type:"post",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function(data){
+            if(data == 'ok'){
+                alter("上传成功！");
+            }
+            if(data == 'exists'){
+                //询问框
+                alter('已有该文件，是否覆盖？', {
+                btn: ['确定', '取消'],
+            }, //按钮
+            function () {
+                coverFile();
+            },
+            function () {
+                alter('取消操作成功');
+            });
+            }
+      }
+ 
+    })
+    }
+    //覆盖文件的操作
+    function coverFile() {
+        var form = document.getElementById('upload');
+        $("#coverFile").val('True');
+        formData = new FormData(form);
+        $.ajax({
+           url:"{% url 'upload' %} ",
+           type:"post",
+           data:formData,
+           processData:false,
+           contentType:false,
+           success:function(data){
+            alter('覆盖文件成功');
+           }
+        })
+    }
+ 
 </script>
 
 {% endblock %}

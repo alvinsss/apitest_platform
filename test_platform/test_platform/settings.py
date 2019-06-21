@@ -166,8 +166,7 @@ STATICFILES_DIRS = [
 FILE_LOCUSTROOT = os.path.join("/export/server/pref/locust","uploads")
 FILE_PYROOT = os.path.join("/export/server/pref/py_unittest","uploads")
 EXTEND_DIR = os.path.join(BASE_DIR,"apps\\testtask\\extend\\")
-
-
+PYTHON_UNITTEST_JENKINS_DIR = "/export/server/pref/python_unittest/interface_apitestByunitest_jenkins/tests/"
 
 APPEND_SLASH = False
 #  UserProfile 覆盖了 django 内置的 user 表

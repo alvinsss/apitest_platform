@@ -96,7 +96,7 @@ def save_unittesttfile(request):
             except Exception as e:
                 print( e )
             cp_file = FileName
-            python_script = "/export/server/pref/python_unittest/interface_apitestByunitest_jenkins/tests/"
+            python_script =  settings.PYTHON_UNITTEST_JENKINS_DIR
             cmd = r'cp ' + cp_file + ' ' + python_script
             print( "exec_cmd", cmd )
             exec_cmd = os.popen( cmd )
@@ -131,7 +131,7 @@ def save_unittesttfile(request):
                 except Exception as e:
                     print( e )
                 return JsonResponse( {"status": 10200, "message": "修改成功！", "data": FileName} )
-        return render(request,"locust_add.html")
+        return render(request,"unittest_add.html")
 
 @csrf_exempt
 def uploadfile(request):

@@ -7,4 +7,5 @@ django-crispy-forms
 django-formtools==2.1
 requests
 pytest
-xmlrunner
+unittest-xml-reporting
+ddt

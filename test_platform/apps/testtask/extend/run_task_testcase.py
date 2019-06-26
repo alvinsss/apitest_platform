@@ -8,17 +8,6 @@ import json
 import unittest
 from ddt import ddt, data, file_data, unpack
 import requests
-# import xmlrunner
-from os.path import dirname, abspath
-
-BASE_DIR = dirname( dirname( dirname( abspath( __file__ ) ) ) )
-
-# xmlrunner
-BASE_PATH = BASE_DIR.replace( "\\", "/" )
-sys.path.append( BASE_PATH )
-print( "运行测试文件：", BASE_PATH )
-# 定义任务的目录
-TASK_PATH = BASE_PATH + "/resource/tasks/"
 
 
 @ddt
@@ -57,13 +46,6 @@ class InterfaceTest( unittest.TestCase ):
                                    json=parameter_dict )
                 # self.assertIn(assert_text, r.text)
 
-
-# 运行测试用例 xml
-# def run_cases():
-#     with open(TASK_PATH + 'results.xml', 'wb') as output:
-#         unittest.main(
-#             testRunner=xmlrunner.XMLTestRunner(output=output),
-#             failfast=False, buffer=False, catchbreak=False)
 
 # if __name__ == '__main__':
 #     unittest.main()

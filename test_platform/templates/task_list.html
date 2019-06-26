@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block base %}
-{% load static %}
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
@@ -16,7 +15,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-                <li><a href="#">{{ request.user }}</a></li>
+               <li><a href="#">{{request.user}}</a></li>
 				<li><a href="#">设置</a></li>
 				<li><a href="/logout/">退出</a></li>
 			</ul>
@@ -54,20 +53,25 @@
 					</a>
 				</li>
 			</ul>
-                <ul class="nav nav-sidebar">
-                    <li><a href="/mock/">
-                        <i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server</a>
-                    </li>
-                    <li><a href="/tools/">
-                        <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
-                    </li>
+			<ul class="nav nav-sidebar">
+				<li>
+					<a href="">
+						<i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具
+					</a>
+				</li>
+
                     <li><a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
                     <li><a href="/unittest/">
-                        <i class="glyphicon glyphicon-road"></i>&nbsp&nbspunitest管理</a>
+                        <i class="glyphicon glyphicon-road"></i>&nbsp&nbspunittest管理</a>
                     </li>
-                </ul>
+			</ul>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -98,22 +102,21 @@
 							{% if task.status == 0 %}
 							<td>未执行</td>
 							{% endif %}
-							
+
 							{% if task.status == 1 %}
 							<td>执行中</td>
 							{% endif %}
-							
+
 							{% if task.status == 2 %}
 							<td>已完成</td>
 							{% endif %}
 
 							<td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
 							<td>
-								
 								<a href="/testtask/edit_task/{{task.id}}/" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-edit"></span>
 								</a>
-							
+
 								<a href="/testtask/delete_task/{{task.id}}/"  style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-trash"></span>
 								</a>
@@ -121,8 +124,8 @@
 								<a href="#" onclick="RunTask('{{task.id}}')" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-play"></span>
 								</a>
-								
-								<a href="/testtask/task_result_list/{{task.id}}/" style="margin-right: 8px;">
+
+								<a href="/testtask/result/{{task.id}}/" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-list-alt"></span>
 								</a>
 							</td>
@@ -133,24 +136,62 @@
 			</div>
 			{% endif%}
 
+			<!--添加任务-->
 			{% if type == "add" %}
 				{% block taskadd %}
-				
-				<!-- 其他页面可以继承 task_list.html  -->
-				
 				{% endblock %}
 			{% endif %}
-			
+
+			<!--编辑任务-->
 			{% if type == "edit" %}
 				{% block taskedit %}
-				
-				<!-- 其他页面可以继承 task_list.html  -->
-				
 				{% endblock %}
 			{% endif %}
+
+			<!--查看结果-->
+			{% if type == "result" %}
+				{% block taskresult %}
+
+				{% endblock %}
+			{% endif %}
+
+        			<!--查看结果详情-->
+			{% if type == "resultdetail" %}
+				{% block resultdetail %}
+
+				{% endblock %}
+			{% endif %}
+
+
 		</div>
 	</div>
 </div>
+
+{% load static %}
 <script src="{%static "js/myTask.js"%}"> </script>
+{#    fixed Cannot read property 'init' of undefined  Zreee#}
+{#<script src="{%static "js/jquery.min.js"%}"></script>#}
+<script type="text/javascript">
+
+	//发送方法
+	function RunTask(tid) {
+		console.log("运行任务的id", tid);
+
+		$.post("/testtask/run_task/",
+		{
+			task_id: tid
+		},
+		function (resp) {
+		    if(resp.status == 10200){
+		        window.alert(resp.message);
+				window.location.reload();  // 刷新页面
+			}
+
+		});
+
+	};
+</script>
+
+
 
 {% endblock %}

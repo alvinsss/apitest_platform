@@ -7,11 +7,10 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from testcase.models import TestCase
 from project.models import Project
 from module.models import Module
-from utils import  baserequestdecode
+import baserequestdecode
 import requests
 import json
 import  time
-import re
 
 
 @login_required
@@ -100,8 +99,6 @@ def testcase_debug(request):
         # finally:
         #     print("finally")
         #     payload = json_par
-
-
 
         result_text = None
         if method == "get":

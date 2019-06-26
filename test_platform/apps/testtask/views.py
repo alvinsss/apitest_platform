@@ -4,6 +4,9 @@ from testtask.models import  TestTask
 from project.models import Project
 from module.models import  Module
 from testcase.models import TestCase
+from testtask.models import TestResult
+from testtask.extend.run_task_thread import TaskThread
+
 from django.views.decorators.csrf import  csrf_exempt
 import json
 import os
@@ -181,8 +184,8 @@ def get_case_tree(request):
 
 
 @csrf_exempt
-def run_task(request):
-    """ 运行任务 """
+def run_task_stand(request):
+    """ 运行任务 -廢棄 """
     if request.method == "POST":
         tid = request.POST.get( "task_id", "" )
         if tid == "":
@@ -234,4 +237,48 @@ def run_task(request):
         return JsonResponse( {"status": 10200, "message": "任务执行完成"} )
     else:
         return JsonResponse( {"status": 10200, "message": "failed"} )
+
+
+@csrf_exempt
+def run_task(request):
+	""" 运行任务 """
+	print("run_task----------------------->")
+	if request.method == "POST":
+		tid = request.POST.get("task_id", "")
+		if tid == "":
+			return JsonResponse({"status": 10200, "message": "task id is null"})
+
+		# 1、在执行线程之前，判断当前有没有任务在执行
+		tasks = TestTask.objects.all()
+		for t in tasks:
+			if t.status == 1:
+				return JsonResponse({"status": 10200, "message": "当前有任务正在执行！"})
+
+		# 2. 修改任务的状态为：1-执行中
+		task = TestTask.objects.get(id=tid)
+		task.status = 1
+		task.save()
+
+		# 通过多线程运行测试任务
+		TaskThread(tid).run()
+
+		return JsonResponse({"status": 10200, "message": "任务开始执行！"})
+
+	else:
+		return JsonResponse({"status": 10200, "message": "请求方法错误"})
+
+
+def result(request, tid):
+	print("result tid",tid)
+	result = TestResult.objects.filter(task_id=tid).order_by('-create_time')
+	print(result)
+	return render(request, "task_result.html", {"results": result, "type": "result"})
+
+
+def resultdetail(request,did):
+	print("resultdetail did is:",did)
+	resultdetail = TestResult.objects.filter(id=did)
+	print(resultdetail)
+	return render(request, "task_resultdetail.html", {"resultdetail": resultdetail, "type": "resultdetail"})
+
 

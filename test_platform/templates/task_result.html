@@ -1,0 +1,44 @@
+{% extends "task_list.html" %}
+{% block taskresult %}
+{% load static %}
+	<div>
+		<h4 class="sub-header">测试结果</h4>
+
+		<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>名称</th>
+							<th>失败</th>
+							<th>错误</th>
+							<th>跳过</th>
+							<th>用例</th>
+							<th>时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for r in results %}
+						<tr>
+							<td>{{ r.name }}</td>
+							<td>{{ r.error }}</td>
+							<td>{{ r.failure }}</td>
+							<td>{{ r.skipped }}</td>
+							<td>{{ r.tests }}</td>
+							<td>{{ r.run_time }}</td>
+							<td>
+								<a href="/testtask/resultdetail/{{r.id}}/" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-list-alt"></span>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+	</div>
+
+<script src="{%static "js/jquery.min.js"%}"> </script>
+
+{% endblock %}

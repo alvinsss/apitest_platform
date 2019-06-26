@@ -2,14 +2,14 @@ from django.shortcuts import render
 from django.http import JsonResponse ,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import  csrf_exempt
-from django.conf import settings
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 import os,time,re
 import platform
 import requests
-
 from module.models import Module
 from pyunitest.models import UnittestScript
+from test_platform import settings
+
 
 @csrf_exempt
 @login_required
@@ -44,6 +44,7 @@ def save_unittesttfile(request):
     :return:
     '''
     print("---------------save_unitest file -----------------------")
+
     if request.method == "GET":
         return render(request,"unittest_add.html")
     if request.method == "POST":    # 请求方法为POST时，进行处理
@@ -72,7 +73,7 @@ def save_unittesttfile(request):
             # os.system( r"touch {}".format( tmp_dir ) )  # 调用系统命令行来创建文件
         # pyfid空即新建
         if pyfid == "":
-            print("create unittest upload file info")
+            print("pyfid is null create unittest upload file info")
             if not uploadfile:
                 return JsonResponse( {"status": 10200, "message": "上传文件不存！"} )
             if uploadfile.name.split( '.' )[-1] not in ['xlsx', 'py']:
@@ -92,15 +93,15 @@ def save_unittesttfile(request):
                         f.write( chunk )
                     print(FileName+"write file is over !")
                     UnittestScript.objects.create( userid=userid, scriptname=unittestscript_name,py_file=FileName,uploadfilename=uploadfile,module_id=module_id,username=username )
-
+                cp_file = FileName
+                python_script = settings.PYTHON_UNITTEST_JENKINS_DIR
+                cmd = r'cp ' + cp_file + ' ' + python_script
+                print( "copy py into jenkins dir exec_cmd", cmd )
+                exec_cmd = os.popen( cmd )
+                exec_cmd.close()
             except Exception as e:
                 print( e )
-            cp_file = FileName
-            python_script =  settings.PYTHON_UNITTEST_JENKINS_DIR
-            cmd = r'cp ' + cp_file + ' ' + python_script
-            print( "exec_cmd", cmd )
-            exec_cmd = os.popen( cmd )
-            exec_cmd.close()
+
             return JsonResponse( {"status": 10200, "message": "创建成功！", "data": FileName} )
         else:
             if uploadfile == None:
@@ -128,6 +129,12 @@ def save_unittesttfile(request):
                         py_unittest.module_id = module_id
                     # py_unittest.username = username
                         py_unittest.save()
+                    cp_file = FileName
+                    python_script = settings.PYTHON_UNITTEST_JENKINS_DIR
+                    cmd = r'cp ' + cp_file + ' ' + python_script
+                    exec_cmd = os.popen( cmd )
+                    exec_cmd.close()
+                    print( "pyfid has values copy py into jenkins dir exec_cmd", cmd )
                 except Exception as e:
                     print( e )
                 return JsonResponse( {"status": 10200, "message": "修改成功！", "data": FileName} )

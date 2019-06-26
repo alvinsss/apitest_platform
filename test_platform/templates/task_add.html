@@ -28,7 +28,7 @@
 
 	</div>
 
-<script src="{%static "js/jquery.min.js"%}"> </script>
+<script src="{%static "js/myTask.js"%}"> </script>
 <script src="{%static "js/jquery.ztree.all.js"%}"> </script>
 <link rel="stylesheet" type="text/css" href="{% static "css/zTreeStyle.css" %}">
 <script type="text/javascript">
@@ -63,7 +63,7 @@
 		//接口的基本数据
 		let name = $("#name").val();
 		let desc = $('#description').val();
-		
+
 		if (name === "") {
 			window.alert("任务名称不能为空！");
 			return;
@@ -71,19 +71,19 @@
 
 		var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
 		var nodes = treeObj.getCheckedNodes(true);
-		
+
 		var cases =  new Array();
 		for (var i = 0; i < nodes.length; i++) {
 			if (nodes[i].isParent == false){
 				console.log("节点id:" + nodes[i].id);  //获取选中节点的值
 				cases.push(nodes[i].id);
 			}
-			
+
 		}
 
 		// 将列表转为字符串
 		casesStr = JSON.stringify(cases)
-		
+
 		$.post("/testtask/save_task/", {
 				task_id: 0,
 				name: name,
@@ -96,7 +96,6 @@
 				}
 			});
 	};
-
 </script>
 
 {% endblock %}

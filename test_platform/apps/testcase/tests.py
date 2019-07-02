@@ -5,5 +5,5 @@ import requests
 
 files = {'file': ('report.xls', open('apps.py', 'rb'), 'application/vnd.ms-excel', {'Expires': '0'})}
 data = {'key': 'value'}
-r = requests.post('http://httpbin.org/post', files=files)
+r = requests.post('http://httpbin.org/post', files=files,verify=False)
 print(r.text)

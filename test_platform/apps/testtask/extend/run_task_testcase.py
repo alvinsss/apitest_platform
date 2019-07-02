@@ -32,18 +32,18 @@ class InterfaceTest( unittest.TestCase ):
         if method == "get":
             if parameter_type == "from":
                 r = requests.get( url, headers=header_dict,
-                                  params=parameter_dict )
+                                  params=parameter_dict,verify=False )
                 # self.assertIn(assert_text, r.text)
 
         if method == "post":
             if parameter_type == "from":
                 r = requests.post( url, headers=header_dict,
-                                   data=parameter_dict )
+                                   data=parameter_dict ,verify=False)
                 # self.assertIn(assert_text, r.text)
 
             elif parameter_type == "json":
                 r = requests.post( url, headers=header_dict,
-                                   json=parameter_dict )
+                                   json=parameter_dict,verify=False )
                 # self.assertIn(assert_text, r.text)
 
 

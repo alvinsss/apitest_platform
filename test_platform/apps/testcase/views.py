@@ -104,29 +104,35 @@ def testcase_debug(request):
         result_text = None
         if method == "get":
             if header == "":
-                r = requests.get(url, params=payload)
+                requests.packages.urllib3.disable_warnings()
+                r = requests.get(url, params=payload,verify=False)
                 result_text = r.text
             else:
-                r = requests.get(url, params=payload, headers=header)
+                requests.packages.urllib3.disable_warnings()
+                r = requests.get(url, params=payload, headers=header,verify=False)
                 result_text = r.text
 
         if method == "post":
             if type_ == "form":
                 if header == "":
-                    r = requests.post(url, data=payload)
+                    requests.packages.urllib3.disable_warnings()
+                    r = requests.post(url, data=payload,verify=False)
                     result_text = r.text
                 else:
-                    r = requests.post(url, data=payload, headers=header)
+                    requests.packages.urllib3.disable_warnings()
+                    r = requests.post(url, data=payload, headers=header,verify=False)
                     result_text = r.text
 
             if type_ == "json":
                 if header == "":
-                    r = requests.post(url, json=payload)
+                    requests.packages.urllib3.disable_warnings()
+                    r = requests.post(url, json=payload,verify=False)
                     result_text = r.text
                     print("json",r.text)
 
                 else:
-                    r = requests.post(url, json=payload, headers=header)
+                    requests.packages.urllib3.disable_warnings()
+                    r = requests.post(url, json=payload, headers=header,verify=False)
                     print("url is:",url,"json is",payload,"header is",header)
                     print("json has header ",r.text)
                     result_text = r.text
@@ -341,7 +347,8 @@ def sendreqsnfun(request):
         result_text = None
         if method == "get":
             if header == "":
-                r = requests.get(url, params=payload)
+                requests.packages.urllib3.disable_warnings()
+                r = requests.get(url, params=payload,verify=False)
                 reqtime_list = []
                 reqtotal_counts = num
                 reqtotal_time = 0
@@ -363,7 +370,8 @@ def sendreqsnfun(request):
                 while num > 0:
                     num = num -1
                     start_time = time.clock()
-                    r = requests.get(url, params=payload, headers=header)
+                    requests.packages.urllib3.disable_warnings()
+                    r = requests.get(url, params=payload, headers=header,verify=False)
                     request_time = time.clock() - start_time
                     reqtotal_time = round(request_time,4) + reqtotal_time
                     reqtime_list.append(("第"+str((num+1))+"次请求"+str(round(request_time,4))))
@@ -382,7 +390,8 @@ def sendreqsnfun(request):
                     while num > 0:
                         num = num - 1
                         start_time = time.clock()
-                        r = requests.post( url, data=payload )
+                        requests.packages.urllib3.disable_warnings()
+                        r = requests.post( url, data=payload,verify=False )
                         request_time = time.clock() - start_time
                         reqtotal_time = round( request_time, 6 ) + reqtotal_time
                         reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
@@ -398,7 +407,8 @@ def sendreqsnfun(request):
                     while num > 0:
                         num = num - 1
                         start_time = time.clock()
-                        r = requests.post( url, data=payload, headers=header )
+                        requests.packages.urllib3.disable_warnings()
+                        r = requests.post( url, data=payload, headers=header,verify=False )
                         request_time = time.clock() - start_time
                         reqtotal_time = round( request_time, 6 ) + reqtotal_time
                         reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
@@ -415,7 +425,8 @@ def sendreqsnfun(request):
                     while num > 0:
                         num = num - 1
                         start_time = time.clock()
-                        r = requests.post( url, json=payload )
+                        requests.packages.urllib3.disable_warnings()
+                        r = requests.post( url, json=payload ,verify=False)
                         request_time = time.clock() - start_time
                         reqtotal_time = round( request_time, 6 ) + reqtotal_time
                         reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )
@@ -430,7 +441,8 @@ def sendreqsnfun(request):
                     while num > 0:
                         num = num - 1
                         start_time = time.clock()
-                        r = requests.post( url, json=payload, headers=header )
+                        requests.packages.urllib3.disable_warnings()
+                        r = requests.post( url, json=payload, headers=header,verify=False )
                         request_time = time.clock() - start_time
                         reqtotal_time = round( request_time, 6 ) + reqtotal_time
                         reqtime_list.append( ("第" + str( (num + 1) ) + "次请求" + str( round( request_time, 6 ) )) )

@@ -8,6 +8,7 @@ class Module(models.Model):
 	name = models.CharField("模块名称", max_length=50, null=False)
 	describe = models.TextField("描述", default="")
 	create_time = models.DateTimeField("创建时间", auto_now_add=True)
+	del_status = models.BooleanField("是否删除，1是不删除，0是删除",default=1)
 
 	class Meta:
 		verbose_name = '模块管理'

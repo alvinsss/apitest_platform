@@ -27,7 +27,7 @@ def module_manage(request):
 	"""
 	print("module_manage")
 	if request.method == "GET":
-		module_all = Module.objects.all()
+		module_all = Module.objects.filter(del_status=1)
 		print(type(module_all))
 		return render(request, "module.html", {"type": "list", "modules": module_all})
 
@@ -94,7 +94,9 @@ def delete_module(request, mid):
 		except Module.DoesNotExist:
 			return HttpResponseRedirect("/module/")
 		else:
-			module.delete()
+			module.del_status=0
+			module.save()
+			# module.delete()
 		return HttpResponseRedirect("/module/")
 	else:
 		return HttpResponseRedirect("/module/")

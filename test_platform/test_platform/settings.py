@@ -17,6 +17,9 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(1, os.path.join(BASE_DIR, 'exta_apps'))
 sys.path.insert(1, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(1, os.path.join(BASE_DIR, 'decodetools'))
+sys.path.insert(1, os.path.join(BASE_DIR, 'test_platform'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -165,8 +168,10 @@ STATICFILES_DIRS = [
 #文件上传
 FILE_LOCUSTROOT = os.path.join("/export/server/pref/locust","uploads")
 FILE_PYROOT = os.path.join("/export/server/pref/py_unittest","uploads")
-EXTEND_DIR = os.path.join(BASE_DIR,"apps\\testtask\\extend\\")
 PYTHON_UNITTEST_JENKINS_DIR = "/export/server/pref/python_unittest/interface_apitestByunitest_jenkins/tests/"
+#扩展目录 test_platform/apps/testtask/extend/
+EXTEND_DIR = os.path.join(BASE_DIR,"apps/testtask/extend/")
+
 
 APPEND_SLASH = False
 #  UserProfile 覆盖了 django 内置的 user 表

@@ -91,12 +91,12 @@ def delete_project(request, pid):
 			try:
 				p = Project.objects.get(id=pid)
 			except Project.DoesNotExist:
-				return HttpResponseRedirect("/project")
+				return HttpResponseRedirect("/project/")
 			else:
 				# p.delete()
 				p.del_status=0
 				p.save()
-				return HttpResponseRedirect("/project")
+				return HttpResponseRedirect("/project/")
 	elif request.method == "POST":
 		return HttpResponseRedirect("/project/")
 

@@ -92,12 +92,12 @@ def delete_module(request, mid):
 		try:
 			module = Module.objects.get(id=mid)
 		except Module.DoesNotExist:
-			return HttpResponseRedirect("/module")
+			return HttpResponseRedirect("/module/")
 		else:
 			module.delete()
-		return HttpResponseRedirect("/module")
+		return HttpResponseRedirect("/module/")
 	else:
-		return HttpResponseRedirect("/module")
+		return HttpResponseRedirect("/module/")
 
 
 @csrf_exempt

@@ -76,7 +76,7 @@ def save_unittesttfile(request):
             print("pyfid is null create unittest upload file info")
             if not uploadfile:
                 return JsonResponse( {"status": 10200, "message": "上传文件不存！"} )
-            if uploadfile.name.split( '.' )[-1] not in ['xlsx', 'py']:
+            if uploadfile.name.split( '.' )[-1] not in ['xlsx','py','json']:
                 return JsonResponse( {"status": 10200, "message": "上传文件类型错误！"} )
             FileName = os.path.join( tmp_dir, uploadfile.name )
             # 到分钟级别的创建目录，一般不会重复

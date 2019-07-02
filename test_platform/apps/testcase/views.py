@@ -7,11 +7,12 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from testcase.models import TestCase
 from project.models import Project
 from module.models import Module
-import baserequestdecode
 import requests
 import json
 import  time
-
+import sys
+import platform
+import baserequestdecode
 
 @login_required
 def testcase_manage(request):
@@ -297,7 +298,7 @@ def  delete_case(request,cid):
      case = TestCase.objects.get(id=cid)
      case.status = False
      case.save()
-     return HttpResponseRedirect("/testcase")
+     return HttpResponseRedirect("/testcase/")
 
 @csrf_exempt
 @login_required
@@ -462,11 +463,32 @@ def sendreqsnfun(request):
     else:
         return JsonResponse({"result": "请求方法错误"})
 
+
+# def get_timestamp(request):
+#     timestamp = int( round( time.time() * 1000 ) )
+#     print( int( round( time.time() * 1000 ) ) )  # 1381419600
+#     return JsonResponse({"result": timestamp})
+
 @csrf_exempt
-def get_timestamp(request):
-    timestamp = int( round( time.time() * 1000 ) )
-    print( int( round( time.time() * 1000 ) ) )  # 1381419600
-    return JsonResponse({"result": timestamp})
+def search_name(request):
+    """ 搜索用例名称 """
+    case_name = request.GET.get("caseName", "")
+
+    case_list = TestCase.objects.filter(name__contains=case_name).order_by('id')
+
+    p = Paginator(case_list, 3)
+
+    page = request.GET.get('page')
+    try:
+        contacts = p.page(page)
+    except PageNotAnInteger:
+        # 如果页数不是整型, 取第一页.
+        contacts = p.page(1)
+    except EmptyPage:
+        # 如果页数超出查询范围，取最后一页
+        contacts = p.page(p.num_pages)
+
+    return render(request, "case_list.html", {"cases": contacts, "name": case_name})
 
 
 @csrf_exempt

@@ -83,7 +83,7 @@ def save_locustfile(request):
         if locustfid == "":
             if not uploadfile:
                 return JsonResponse( {"status": 10200, "message": "上传文件不存！"} )
-            if uploadfile.name.split( '.' )[-1] not in ['xlsx', 'py']:
+            if uploadfile.name.split( '.' )[-1] not in ['py','json']:
                 return JsonResponse( {"status": 10200, "message": "上传文件类型错误！"} )
             FileName = os.path.join( tmp_dir, uploadfile.name )
             try:

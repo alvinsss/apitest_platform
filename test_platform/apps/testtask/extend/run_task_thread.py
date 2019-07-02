@@ -14,6 +14,7 @@ from testcase.models import TestCase
 
 class TaskThread:
 
+
     def __init__(self, task_id):
         self.tid = task_id
 
@@ -21,7 +22,7 @@ class TaskThread:
         print("------------运行 %s 任务下面的所有测试用例------------"%(self.tid))
 
         task = TestTask.objects.get(id=self.tid)
-        # 1. 任务对应case的列表
+        # 1. 任务对应case的列表-testtask->cases值
         case_list = json.loads(task.cases)
 
         # 2. 将用例数据写到 json文件
@@ -61,7 +62,9 @@ class TaskThread:
         from test_platform import settings
         EXTEND_DIR = settings.EXTEND_DIR
         print("------------run_cases------------",EXTEND_DIR)
-
+        # '''
+        # 多线程问题:同时修改 一个 json 数据文件  第一个线程 可能数据还没从 json 文件读取完，第二个线程就把json 数据重写了
+        # '''
         with(open(EXTEND_DIR + "test_data_list.json", "w")) as f:
             f.write(case_data)
 

@@ -552,7 +552,7 @@ def getselect_data(request):
                 "name": project.name
             }
 
-            module_list = Module.objects.filter(project_id=project.id)
+            module_list = Module.objects.filter(project_id=project.id,del_status=1)
             module_name = []
             for module in module_list:
                 module_name.append({

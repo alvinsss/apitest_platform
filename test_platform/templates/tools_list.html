@@ -1,155 +1,113 @@
 {% extends "base.html" %}
 {% block base %}
+{% load static %}
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-				aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">接口测试平台</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
-                <li><a href="#">{{ request.user }}</a></li>
-				<li><a href="#">设置</a></li>
-				<li><a href="/logout/">退出</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">接口测试平台</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">{{request.user}}</a></li>
+                    <li><a href="#">设置</a></li>
+                    <li><a href="/logout/">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
-			<ul class="nav nav-sidebar">
-				<li>
-					<a href="/project/">
-						<i class="glyphicon glyphicon-th-large"></i>&nbsp&nbsp项目管理
-					</a>
-				</li>
-				<li>
-					<a href="/module/">
-						<i class="glyphicon glyphicon-th"></i>&nbsp&nbsp模块管理
-					</a>
-				</li>
-			</ul>
-			<ul class="nav nav-sidebar">
-				<li>
-					<a href="/testcase/">
-						<i class="glyphicon glyphicon-list-alt"></i>&nbsp&nbsp用例管理
-					</a>
-				</li>
-				<li >
-					<a href="/testtask/">
-						<i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理
-					</a>
-				</li>
-			</ul>
-			<ul class="nav nav-sidebar">
-				<li>
-					<a href="/mock/">
-						<i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server
-					</a>
-				</li>
-				<li class="active">
-					<a href="/tools/">
-						<i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具
-					</a>
-				</li>
-				<li><a href="/locustmanager/">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="/project/">
+                            <i class="glyphicon glyphicon-th-large"></i>&nbsp&nbsp项目管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/module/">
+                            <i class="glyphicon glyphicon-th"></i>&nbsp&nbsp模块管理
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li >
+                        <a href="/testcase/">
+                            <i class="glyphicon glyphicon-list-alt"></i>&nbsp&nbsp用例管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/testtask/">
+                            <i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li><a href="/apk/">
+                        <i class="glyphicon glyphicon-screenshot"></i>&nbsp&nbspAPK 管理</a>
+                    </li>
+                    <li class="active" ><a href="/tools/">
+                        <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
+                    </li>
+                    <li  >
+                        <a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
-                <li><a href="/unittest/">
+                    <li  ><a href="/unittest/">
                         <i class="glyphicon glyphicon-road"></i>&nbsp&nbspunittest管理</a>
-                </li>
-			</ul>
-		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 
-			<!--工具列表-->
-			{% if type == "list" %}
-			<h4 class="sub-header">任务列表
-				<button type="button" class="btn btn-sm btn-primary" style="float: right;"
-					onclick="location.href='/testtask/add_task/'">创建
-				</button>
-			</h4>
-			<div class="table-responsive">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>名称</th>
-							<th>状态</th>
-							<th>创建时间</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for task in tasks %}
-						<tr>
-							<td>{{ task.id }}</td>
-							<td>{{ task.name }}</td>
-							{% if task.status == 0 %}
-							<td>未执行</td>
-							{% endif %}
-							
-							{% if task.status == 1 %}
-							<td>执行中</td>
-							{% endif %}
-							
-							{% if task.status == 2 %}
-							<td>已完成</td>
-							{% endif %}
+                <h4 class="sub-header">XXX
 
-							<td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
-							<td>
-								
-								<a href="/testtask/edit_task/{{task.id}}/" style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-edit"></span>
-								</a>
-							
-								<a href="/testtask/delete_task/{{task.id}}/"  style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-trash"></span>
-								</a>
+                </h4>
+                <div class="table-responsive">
 
-								<a href="#" onclick="RunTask('{{task.id}}')" style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-play"></span>
-								</a>
-								
-								<a href="/testtask/task_result_list/{{task.id}}/" style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-list-alt"></span>
-								</a>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			{% endif%}
+                </div>
 
-			{% if type == "add" %}
-				{% block taskadd %}
-				
-				<!-- 其他页面可以继承 task_list.html  -->
-				
-				{% endblock %}
-			{% endif %}
-			
-			{% if type == "edit" %}
-				{% block taskedit %}
-				
-				<!-- 其他页面可以继承 task_list.html  -->
-				
-				{% endblock %}
-			{% endif %}
-		</div>
-	</div>
-</div>
+{#                <!-- 分页器 -->#}
+{#                <div>#}
+{#                    <nav aria-label="Page navigation">#}
+{#                        <ul class="pagination">#}
+{#                            <li>#}
+{#                                {% if py_unittests.has_previous %}#}
+{#                                    <a href="?page={{ py_unittests.previous_page_number }}" aria-label="Previous">#}
+{#                                        <span aria-hidden="true">&laquo;</span>#}
+{#                                    </a>#}
+{#                                {% endif %}#}
+{#                            </li>#}
+{##}
+{#                            <li><a href="#">{{ py_unittests.number }}</a></li>#}
+{##}
+{#                            {% if py_unittests.has_next %}#}
+{#                                <li>#}
+{#                                    <a href="?page={{ py_unittests.next_page_number }}" aria-label="Next">#}
+{#                                        <span aria-hidden="true">&raquo;</span>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            {% endif %}#}
+{##}
+{#                            <li><a href="#">共：{{ py_unittests.paginator.num_pages }} 页</a></li>#}
+{##}
+{#                        </ul>#}
+{#                    </nav>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+        </div>
+    </div>
 
+<script src="{%static "js/myUnittest.js"%}"> </script>
 {% endblock %}

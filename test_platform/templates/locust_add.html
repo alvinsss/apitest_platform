@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+btn2{% extends "base.html" %}
 {% load staticfiles %}
 {% block base %}
 
@@ -53,8 +53,8 @@
                 </li>
             </ul>
                 <ul class="nav nav-sidebar">
-                    <li><a href="/mock/">
-                        <i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server</a>
+                    <li><a href="/apk/">
+                        <i class="glyphicon glyphicon-screenshot"></i>&nbsp&nbspAPK 管理</a>
                     </li>
                     <li><a href="/tools/">
                         <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
@@ -148,6 +148,7 @@
             form_Data.append('file_obj',$("#uploadfile")[0].files[0]);
             if ('file_obj',$("#uploadfile")[0].files[0] == ""){
                 alert("上传文件不能空，请选择！")
+                return;
             }
             $.ajax({
                 url:'/locustmanager/save_locustfile/',

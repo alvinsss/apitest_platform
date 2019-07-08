@@ -52,7 +52,7 @@
                     </li>
                 </ul>
                 <ul class="nav nav-sidebar">
-                    <li><a href="/apk/">
+                    <li class="active"  ><a href="/apk/">
                         <i class="glyphicon glyphicon-screenshot"></i>&nbsp&nbspAPK 管理</a>
                     </li>
                     <li><a href="/tools/">
@@ -62,7 +62,7 @@
                         <a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
-                    <li class="active" ><a href="/unittest/">
+                    <li ><a href="/unittest/">
                         <i class="glyphicon glyphicon-road"></i>&nbsp&nbspunittest管理</a>
                     </li>
                 </ul>
@@ -70,47 +70,35 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 
-                <h4 class="sub-header">unittest脚本管理
-                    <h5 >共享目录 172.31.1.12 的/export/server/pref/py_unittest/ </h5>
+                <h4 class="sub-header">apk测试结果
                     <button type="button" class="btn btn-sm btn-primary" style="float: right;"
-                            onclick="location.href='/unittest/add_unittesttfile/'">创建
+                            onclick="location.href='/apk/add_apk/'">创建
                     </button>
                 </h4>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>id</th>
-                            <th>所属用户</th>
                             <th>项目</th>
                             <th>模块</th>
-                            <th>脚本名称</th>
+                            <th>名称</th>
+                            <th>执行测试类型</th>
                             <th>存放路径</th>
                             <th>创建时间</th>
-                            <th>操作</th>
+                            <th>详情</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for py_unittest in py_unittests %}
+                        {% for result in results %}
                             <tr>
-                                <td>{{ py_unittest.id }}</td>
-                                <td>{{ py_unittest.username }}</td>
-                                <td>{{ py_unittest.module.project }}</td>
-                                <td>{{ py_unittest.module }}</td>
-                                <td>{{ py_unittest.scriptname }}</td>
-                                <td>{{ py_unittest.py_file }}</td>
-                                <td>{{ py_unittest.create_time | date:"Y-m-d H:i:s" }}</td>
-                                <td>
-                                    <a href="/unittest/edit_py_unittest/{{ py_unittest.id }}/">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                    <a href="/unittest/delete_py_unittest/{{ py_unittest.id }}/" style="margin-left: 10px;">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                   <a href="#" onclick="RunUnittest('{{py_unittest.id}}')" style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-play"></span>
-								  </a>
-                                </td>
+                                <td>{{ result.module.project }}</td>
+                                <td>{{ result.module }}</td>
+                                <td>{{ result.name_des }}</td>
+                                <td>{{ result.apk_testtype }}</td>
+                                <td>{{ result.pkfile_path }}</td>
+                                <td>{{ result.create_time | date:"Y-m-d H:i:s" }}</td>
+                                <td>{{ result.detail }}</td>
+
 
                             </tr>
                         {% endfor %}
@@ -123,24 +111,24 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li>
-                                {% if py_unittests.has_previous %}
-                                    <a href="?page={{ py_unittests.previous_page_number }}" aria-label="Previous">
+                                {% if results.has_previous %}
+                                    <a href="?page={{ results.previous_page_number }}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 {% endif %}
                             </li>
 
-                            <li><a href="#">{{ py_unittests.number }}</a></li>
+                            <li><a href="#">{{ results.number }}</a></li>
 
-                            {% if py_unittests.has_next %}
+                            {% if results.has_next %}
                                 <li>
-                                    <a href="?page={{ py_unittests.next_page_number }}" aria-label="Next">
+                                    <a href="?page={{ results.next_page_number }}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
                             {% endif %}
 
-                            <li><a href="#">共：{{ py_unittests.paginator.num_pages }} 页</a></li>
+                            <li><a href="#">共：{{ results.paginator.num_pages }} 页</a></li>
 
                         </ul>
                     </nav>
@@ -150,5 +138,5 @@
         </div>
     </div>
 
-<script src="{%static "js/myUnittest.js"%}"> </script>
+<script src="{%static "js/myAPK.js"%}"> </script>
 {% endblock %}

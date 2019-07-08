@@ -42,6 +42,9 @@ urlpatterns = [
 
 	# """mock Server"""
 	path( 'mock/', include( 'mock.urls' ) ),
+
+	# """apk管理"""
+	path( 'apk/', include( 'apk.urls' ) ),
 	# path('testcase/debug', views.jsqa),
 	# path( 'malacca/', include( 'mock.urls' ) ),
 

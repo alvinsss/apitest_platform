@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 	'tools',
 	'locustmanager',
     'pyunitest',
+	'apk',
     # https://django-simple-captcha.readthedocs.io/en/latest/usage.html
 ]
 
@@ -167,6 +168,7 @@ STATICFILES_DIRS = [
 ]
 #文件上传
 FILE_LOCUSTROOT = os.path.join("/export/server/pref/locust","uploads")
+FILE_APK = os.path.join("/export/server/pref/apk","uploads")
 FILE_PYROOT = os.path.join("/export/server/pref/py_unittest","uploads")
 PYTHON_UNITTEST_JENKINS_DIR = "/export/server/pref/python_unittest/interface_apitestByunitest_jenkins/tests/"
 #扩展目录 test_platform/apps/testtask/extend/

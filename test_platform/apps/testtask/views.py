@@ -296,8 +296,8 @@ def resultdetail(request,did):
     # :param did:
     # :return:
     # ''''''
-    print("resultdetail did is:",did)
-    resultdetail = TestResult.objects.filter(id=did)
+    print("resultdetail did is:",batch_id)
+    resultdetail = TestResult.objects.filter(batch_id_id=batch_id)
     print(resultdetail)
     return render(request, "task_resultdetail.html", {"resultdetail": resultdetail, "type": "resultdetail"})
 

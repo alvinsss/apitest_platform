@@ -44,8 +44,8 @@
                         <i class="glyphicon glyphicon-th-list"></i>&nbsp&nbsp任务管理</a></li>
                 </ul>
                 <ul class="nav nav-sidebar">
-                    <li><a href="/mock/">
-                        <i class="glyphicon glyphicon-log-in"></i>&nbsp&nbspmock Server</a>
+                    <li><a href="/apk/">
+                        <i class="glyphicon glyphicon-screenshot"></i>&nbsp&nbspAPK 管理</a>
                     </li>
                     <li><a href="/tools/">
                         <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
@@ -146,7 +146,7 @@
 
                 {% if type == "edit" %}
                     <h4 class="sub-header">编辑模块</h4>
-                    <form class="form-horizontal" method="post" action="/module/edit_module/{{ id }}/">
+                    <form class="form-horizontal" method="post" action="/module/edit_module/{{ id }}">
                         {{ form.as_p }}
                         {% csrf_token %}
                         <button class="btn btn-success">保存</button>

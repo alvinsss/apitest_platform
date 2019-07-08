@@ -52,7 +52,7 @@
                     </li>
                 </ul>
                 <ul class="nav nav-sidebar">
-                    <li><a href="/apk/">
+                    <li class="active"  ><a href="/apk/">
                         <i class="glyphicon glyphicon-screenshot"></i>&nbsp&nbspAPK 管理</a>
                     </li>
                     <li><a href="/tools/">
@@ -62,7 +62,7 @@
                         <a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
-                    <li class="active" ><a href="/unittest/">
+                    <li ><a href="/unittest/">
                         <i class="glyphicon glyphicon-road"></i>&nbsp&nbspunittest管理</a>
                     </li>
                 </ul>
@@ -70,10 +70,9 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 
-                <h4 class="sub-header">unittest脚本管理
-                    <h5 >共享目录 172.31.1.12 的/export/server/pref/py_unittest/ </h5>
+                <h4 class="sub-header">apk管理
                     <button type="button" class="btn btn-sm btn-primary" style="float: right;"
-                            onclick="location.href='/unittest/add_unittesttfile/'">创建
+                            onclick="location.href='/apk/add_apk/'">创建
                     </button>
                 </h4>
                 <div class="table-responsive">
@@ -84,30 +83,50 @@
                             <th>所属用户</th>
                             <th>项目</th>
                             <th>模块</th>
-                            <th>脚本名称</th>
+                            <th>名称</th>
+                            <th>状态</th>
+                            <th>结果</th>
+                            <th>测试类型</th>
                             <th>存放路径</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for py_unittest in py_unittests %}
+                        {% for apkfile in apkfiles %}
                             <tr>
-                                <td>{{ py_unittest.id }}</td>
-                                <td>{{ py_unittest.username }}</td>
-                                <td>{{ py_unittest.module.project }}</td>
-                                <td>{{ py_unittest.module }}</td>
-                                <td>{{ py_unittest.scriptname }}</td>
-                                <td>{{ py_unittest.py_file }}</td>
-                                <td>{{ py_unittest.create_time | date:"Y-m-d H:i:s" }}</td>
+                                <td>{{ apkfile.id }}</td>
+                                <td>{{ apkfile.username }}</td>
+                                <td>{{ apkfile.module.project }}</td>
+                                <td>{{ apkfile.module }}</td>
+                                <td>{{ apkfile.name_des }}</td>
+                                {% if apkfile.sum_status == 0 %}
+                                    <td>未执行</td>
+                                {% endif %}
+                                {% if apkfile.sum_status == 1 %}
+                                    <td>执行中</td>
+                                {% endif %}
+                                {% if apkfile.sum_status == 2 %}
+                                    <td>已完成</td>
+                                {% endif %}
+                                <td>{{ apkfile.sum_result }}</td>
+                                {% if apkfile.sum_result == 0 %}
+                                    <td>未执行</td>
+                                {% endif %}
+                                {% if apkfile.sum_result == 1 %}
+                                    <td>成功</td>
+                                {% endif %}
+                                {% if apkfile.sum_result == 2 %}
+                                    <td>失败</td>
+                                {% endif %}
+                                <td>{{ apkfile.apk_testtype }}</td>
+                                <td>{{ apkfile.upapkfile }}</td>
+                                <td>{{ apkfile.create_time | date:"Y-m-d H:i:s" }}</td>
                                 <td>
-                                    <a href="/unittest/edit_py_unittest/{{ py_unittest.id }}/">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                    <a href="/unittest/delete_py_unittest/{{ py_unittest.id }}/" style="margin-left: 10px;">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                   <a href="#" onclick="RunUnittest('{{py_unittest.id}}')" style="margin-right: 8px;">
+                                   <a href="/apk/result/{{apkfile.id}}/" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-th-large"></span>
+								   </a>
+                                   <a href="#" onclick="RunAPKtest('{{apkfile.id}}')" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-play"></span>
 								  </a>
                                 </td>
@@ -150,5 +169,5 @@
         </div>
     </div>
 
-<script src="{%static "js/myUnittest.js"%}"> </script>
+<script src="{%static "js/myAPK.js"%}"> </script>
 {% endblock %}

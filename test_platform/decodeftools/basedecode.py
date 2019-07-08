@@ -3,9 +3,11 @@
 # @Author  : alvin
 # @File    : basedecode.py
 # @Software: PyCharm
-import baserequestdecode
+
 import json
 import requests
+import sys
+import baserequestdecode
 
 def qatest():
     # 雄鸡接口请求
@@ -30,7 +32,7 @@ def sdkPullAds():
     ret = baserequestdecode.endepost(url, bodydata, postheaders=None, transBinData=False)
     t_s = json.dumps(ret)
     print("ret",type(ret),type(t_s))
-    rets=requests.post(url,bodydata)
+    rets=requests.post(url,bodydata,verify=False)
     print("rets.text is:",rets.text)
     print("ret.text is:",ret)
     print("t_s is:",t_s)
@@ -48,3 +50,7 @@ def qatest3():
 
 if __name__ == "__main__":
     qatest2()
+
+    # '''
+    # baserequestdecode 拷贝到$python_dir/Lib目录下
+    # '''

@@ -87,7 +87,7 @@ class InterfaceTest( unittest.TestCase ):
                 else:
                     self.assertEqual( assert_text, result_text)
             else:
-                raise NameError( "参数类型错误，请检查" )
+                raise NameError( "参数类型错误" )
 
 
 # 运行测试用例

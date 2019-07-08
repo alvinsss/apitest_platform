@@ -115,3 +115,8 @@ def save_uploadapkfile(request):
                     print( e )
                 return JsonResponse( {"status": 10200, "message": "修改成功！", "data": FileName} )
         return render(request,"apk_add.html")
+
+@csrf_exempt
+def run_apk_task(request,tid):
+    print("run_apk_task",tid)
+    pass

@@ -20,5 +20,4 @@ from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 def toolslists(request):
-    pass
     return  render(request,"tools_list.html")

@@ -6,23 +6,24 @@ from module.models import  Module
 from testcase.models import TestCase
 from testtask.models import TestResult
 from testtask.extend.run_task_thread import TaskThread
+from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import  csrf_exempt
 import json
 import os
 
+@login_required
 def testtask_manage(request):
     """
     任务管理
     """
     task_list = TestTask.objects.filter(del_status=False)
-
     return render(request, "task_list.html", {
         "type": "list",
         "tasks": task_list
     })
 
-
+@login_required
 def add_task(request):
     """
     返回创建任务页面
@@ -40,7 +41,7 @@ def edit_task(request, tid):
         "type": "edit"
     })
 
-
+@login_required
 def delete_task(request, tid):
     """
     删除任务 	TestTask.objects.get(id=tid).delete()
@@ -54,6 +55,7 @@ def delete_task(request, tid):
     return HttpResponseRedirect("/testtask/")
 
 @csrf_exempt
+@login_required
 def save_task(request):
     """
     创建/编辑任务
@@ -296,8 +298,8 @@ def resultdetail(request,did):
     # :param did:
     # :return:
     # ''''''
-    print("resultdetail did is:",batch_id)
-    resultdetail = TestResult.objects.filter(batch_id_id=batch_id)
+    print("resultdetail did is:",did)
+    resultdetail = TestResult.objects.filter(id=did)
     print(resultdetail)
     return render(request, "task_resultdetail.html", {"resultdetail": resultdetail, "type": "resultdetail"})
 

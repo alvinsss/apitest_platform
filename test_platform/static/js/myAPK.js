@@ -2,11 +2,10 @@
 var APKFileInit = function () {
 
     var url = document.location;
-    var pyfid =  url.pathname.split("/")[3];
-    // alert(locustfid)
-    $.post("/unittest/get_unittestlist_info/",
+    var tid =  url.pathname.split("/")[3];
+    $.post("/sdk/get_sdk_info/",
     {
-        pyfid: pyfid,
+        task_id: tid,
     },
     function (resp, status) {
 
@@ -20,9 +19,9 @@ var APKFileInit = function () {
     });
 
 }
-	//发送方法
+	//运行test方法
 	function RunAPKtest(tid) {
-		console.log("运行任务的id", tid);
+		console.log("运行任务的 run_apk_task id", tid);
 
 		$.post("/apk/run_apk_task/",
 		{
@@ -32,6 +31,18 @@ var APKFileInit = function () {
 			alert("提示：" + data.message);
 		});
 
+	};
+
+	//发送email方法
+    function RunAPKmail(tid) {
+		console.log("运行任务的 send_apk_mail id", tid);
+		$.post("/apk/send_apk_mail/",
+		{
+			task_id:tid,
+		},
+		function (data, status) {
+			alert("提示：" + data.message);
+		});
 	};
 
     function checkOrCancelAll(){

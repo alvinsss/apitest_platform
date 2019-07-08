@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<title>checkbox的全选和取消全选</title>
+<script type="text/javascript">
+//页面加载的时候,所有的复选框都是未选中的状态
+function checkOrCancelAll(){
+//1.获取checkbo的元素对象
+var chElt=document.getElementById("chElt");
+//2.获取选中状态
+var checkedElt=chElt.checked;
+console.log(checkedElt)
+//3.若checked=true,将所有的复选框选中,checked=false,将所有的复选框取消
+var allCheck=document.getElementsByName("interest");
+//4.循环遍历取出每一个复选框中的元素
+//var mySpan=document.getElementById("mySpan");
+if(checkedElt){
+//全选
+for(var i=0;i<allCheck.length;i++){
+//设置复选框的选中状态
+allCheck[i].checked=true;
+}
+//mySpan.innerHTML="取消全选";
+}else{
+//取消全选
+for(var i=0;i<allCheck.length;i++){
+allCheck[i].checked=false;
+}
+//mySpan.innerHTML="全选";
+}
+}
+</script>
+</head>
+<body>
+<div class="checkbox">
+    <label>
+        <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/><span id="mySpan">全选</span><br/>
+    </label>
+</div>
+<div class="checkbox">
+    <label>
+      <input type="checkbox" name="interest" value="study"/>学习
+    </label>
+    <label>
+      <input type="checkbox" name="interest" value="read"/>阅读
+    </label>
+ </div>
+
+
+
+
+<hr>
+<h2>bootstrap示例</h2>
+<form role="form">
+  <div class="form-group">
+    <label for="name">名称</label>
+    <input type="text" class="form-control" id="name" placeholder="请输入名称">
+  </div>
+  <div class="form-group">
+    <label for="inputfile">文件输入</label>
+    <input type="file" id="inputfile">
+    <p class="help-block">这里是块级帮助文本的实例。</p>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox">请打勾
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">提交</button>
+</form>
+
+</body>
+</html>

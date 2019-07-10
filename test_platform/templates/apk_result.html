@@ -80,9 +80,6 @@
                         <thead>
                         <tr>
                             <th>task_id</th>
-                            <th>所属用户</th>
-                            <th>项目</th>
-                            <th>模块</th>
                             <th>名称</th>
                             <th>状态</th>
                             <th>结果</th>
@@ -96,9 +93,6 @@
                         {% for result in results %}
                             <tr>
                                 <td>{{ result.batch_id_id }}</td>
-                                <td>{{ result.username }}</td>
-                                <td>{{ result.module.project }}</td>
-                                <td>{{ result.module }}</td>
                                 <td>{{ result.name_des }}</td>
                                 {% if result.run_status == 0 %}
                                     <td>未执行</td>

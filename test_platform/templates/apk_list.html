@@ -80,9 +80,6 @@
                         <thead>
                         <tr>
                             <th>taskid</th>
-                            <th>所属用户</th>
-                            <th>项目</th>
-                            <th>模块</th>
                             <th>名称</th>
                             <th>状态</th>
                             <th>结果</th>
@@ -96,9 +93,6 @@
                         {% for apkfile in apkfiles %}
                             <tr>
                                 <td>{{ apkfile.id }}</td>
-                                <td>{{ apkfile.username }}</td>
-                                <td>{{ apkfile.module.project }}</td>
-                                <td>{{ apkfile.module }}</td>
                                 <td>{{ apkfile.name_des }}</td>
                                 {% if apkfile.sum_status == 0 %}
                                     <td>未执行</td>

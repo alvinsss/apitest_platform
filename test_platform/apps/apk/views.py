@@ -73,6 +73,8 @@ def save_uploadapkfile(request):
 
     if request.method == "POST":
         module_id  = request.POST.get( "module_id", "" )
+        module_id  = "33"
+        print("module_id",module_id)
         name_des   = request.POST.get("name_des","")
         uploadfile = request.FILES.get("file_obj",None)    # 获取上传的文件，如果没有文件，则默认为None
         tfid       = request.POST.get("tfid","")
@@ -155,7 +157,7 @@ def save_uploadapkfile(request):
                         else:
                             for type_test in testtype_list:
                                 for files in apk_fileslist:
-                                    APK_RESULTS.objects.create( userid=userid,username=username,name_des=name_des,apk_testtype=type_test,upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
+                                    APK_RESULTS.objects.create( userid=userid,username=us,name_des=name_des,apk_testtype=type_test,upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
 
             except Exception as e:
                 print( e )

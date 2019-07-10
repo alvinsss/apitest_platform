@@ -90,7 +90,7 @@
 
                     <div class="checkbox" style="margin-top:20px ">
                         <label>
-                            <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>
+                            <input type="checkbox" id="chElt" onclick="CheckOrCancelAll();"/>
                             <span id="mySpan">全选</span>
                             <br/>
                         </label>
@@ -132,8 +132,6 @@
 
     SelectInit();
     //页面加载的时候,所有的复选框都是未选中的状态
-
-    checkOrCancelAll();
 
     // {## ajax处理form表单数据#}
     $('#btnuploadapkfile').click(function () {

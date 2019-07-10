@@ -32,7 +32,7 @@ def add_apk(request):
     return render(request,"apk_add.html")
 
 def result(request,apkid):
-    print("result",apkid)
+    print("URL values result",apkid)
     results = APK_RESULTS.objects.filter(batch_id_id=apkid)
     p= Paginator(results,15)
     page = request.GET.get('page')
@@ -47,7 +47,7 @@ def result(request,apkid):
 
 def detail_result(request,resultid):
     print("detail_apkresult",resultid)
-    results = APK_RESULTS.objects.filter(id=resultid)
+    results = APK_RESULTS.objects.filter(id=resultid).order_by("apk_testtype")
     print(results)
     return render(request,"apk_detail_result.html",{"results":results,"type":"apk_detail_result"})
 
@@ -107,11 +107,56 @@ def save_uploadapkfile(request):
                     for chunk in uploadfile.chunks():
                         f.write( chunk )
                     if  userid == None  :
-                        APK_UPLOADFILE.objects.create(module_id=module_id,userid="9999",username="AnonyUser",name_des=name_des,upapkfile=FileName,apk_testtype=apk_testtype )
+                        print("userid is nulll")
+                        APK_UPLOADFILE.objects.create(module_id=module_id,userid="9999",username="AnonyUser",name_des=name_des,upfilepath=FileName,apk_testtype=apk_testtype )
                     else:
-                        APK_UPLOADFILE.objects.create( userid=userid,module_id=module_id,username=username,name_des=name_des,upapkfile=FileName,apk_testtype=apk_testtype )
+                        print("userid is has values")
+                        APK_UPLOADFILE.objects.create( userid=userid,module_id=module_id,username=username,name_des=name_des,upfilepath=FileName,apk_testtype=apk_testtype )
 
                     print("APK_UPLOADFILE.objects.create!")
+                    #上传文件是zip的格式处理
+                    if uploadfile.name.split( '.' )[-1] in ['zip']:
+                        cmdinfo = 'unzip'+' '+FileName+' '+'-d'+' '+tmp_dir
+                        print("cmdinfo",cmdinfo)
+                        os.system(cmdinfo)
+                        time.sleep(10)
+                        print("upload files type is zip, start unzip file")
+                        apk_fileslist =_get_apkpath(tmp_dir)
+                        print("apk_fileslist",apk_fileslist)
+                        id_list_maxid = APK_UPLOADFILE.objects.values_list('id',flat=True).last()
+                        get_testtype = APK_UPLOADFILE.objects.get(id=id_list_maxid).apk_testtype
+                        testtype_list = get_testtype[2:-2].split(',')
+                        if  userid == None  :
+                            print("userid is nulll")
+                            for type_test in testtype_list:
+                                for files in apk_fileslist:
+                                    APK_RESULTS.objects.create( userid="9999",username="AnonyUser",name_des=name_des,apk_testtype=type_test,upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
+                        else:
+                            for type_test in testtype_list:
+                                for files in apk_fileslist:
+                                    APK_RESULTS.objects.create( userid=userid,username=username,name_des=name_des, apk_testtype=type_test,
+                                                                upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
+
+
+                    else:
+                        # values_list方法加个参数flat = True可以获取number的值列表。
+                        apk_fileslist =_get_apkpath(tmp_dir)
+                        print("upload files type is apk!")
+                        id_list_maxid = APK_UPLOADFILE.objects.values_list('id',flat=True).last()
+                        print("buildings_list",id_list_maxid)
+                        get_testtype = APK_UPLOADFILE.objects.get(id=id_list_maxid).apk_testtype
+                        testtype_list = get_testtype[2:-2].split(',')
+                        print("testtype_list",testtype_list)
+                        if  userid == None  :
+                            print("userid is nulll")
+                            for type_test in testtype_list:
+                                for files in apk_fileslist:
+                                    APK_RESULTS.objects.create( userid="9999",username="AnonyUser",name_des=name_des,apk_testtype=type_test,upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
+                        else:
+                            for type_test in testtype_list:
+                                for files in apk_fileslist:
+                                    APK_RESULTS.objects.create( userid=userid,username=username,name_des=name_des,apk_testtype=type_test,upfilepath=FileName,apkfile_path=files,batch_id_id=id_list_maxid,module_id=module_id )
+
             except Exception as e:
                 print( e )
             return JsonResponse( {"status": 10200, "message": "创建成功！", "data": FileName} )
@@ -144,6 +189,27 @@ def save_uploadapkfile(request):
         return render(request,"apk_add.html")
 
 @csrf_exempt
-def run_apk_task(request,tid):
-    print("run_apk_task",tid)
+def run_apk_task(request):
+    if request.method == "POST":
+        tid = request.POST.get("tid","")
+        print( "run_apk_task", tid )
+        if tid == "":
+            return JsonResponse({"status": 10102, "message": "id不能为空"})
+        task_info = APK_UPLOADFILE.objects.get(id=tid)
+        return JsonResponse( {"status": 10200, "message": "执行开始"} )
+
     pass
+
+
+def _get_apkpath(dirname):
+    filter = [".apk"]#需要获取的文件类型
+    result=[]
+    for maindir,subdir,file_name_list in os.walk(dirname):
+        for filename in file_name_list:
+            apath = os.path.join(maindir,filename)
+            print("apath",apath)
+            ext = os.path.splitext(apath)[1]# 获取文件后缀 [0]获取的是除了文件名以外的内容
+            print("ext",ext)
+            if ext in filter:
+                result.append(apath)
+    return result

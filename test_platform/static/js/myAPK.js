@@ -11,8 +11,7 @@ var APKFileInit = function () {
 
         console.log("返回的结果", resp.data);
         var result = resp.data;
-        document.querySelector("#unittestscript_name").value = result.unittestscript_name;
-        document.querySelector("#uploadfile_text").value = result.uploadfile;
+        document.querySelector("#name_des").value = result.name_des;
         // alert( result.uploadfile)
         // 初始化菜单
         SelectInit(result.project_id, result.module_id);
@@ -25,7 +24,7 @@ var APKFileInit = function () {
 
 		$.post("/apk/run_apk_task/",
 		{
-			task_id:tid,
+			tid:tid,
 		},
 		function (data, status) {
 			alert("提示：" + data.message);
@@ -45,30 +44,25 @@ var APKFileInit = function () {
 		});
 	};
 
-    function checkOrCancelAll(){
+    function CheckOrCancelAll(){
         //1.获取checkbo的元素对象
         var chElt=document.getElementById("chElt");
         //2.获取选中状态
         var checkedElt=chElt.checked;
-        checkedElt    = true;
         console.log("checkedElt",checkedElt)
         //3.若checked=true,将所有的复选框选中,checked=false,将所有的复选框取消
         var allCheck=document.getElementsByName("apk_testtype");
         //4.循环遍历取出每一个复选框中的元素
         if(checkedElt){
-            //全选
             for(var i=0;i<allCheck.length;i++){
             //设置复选框的选中状态
             allCheck[i].checked=true;
         }
-        //mySpan.innerHTML="取消全选";
+             //mySpan.innerHTML="取消全选";
         }else{
-            //取消全选
             for(var i=0;i<allCheck.length;i++){
             allCheck[i].checked=false;
               }
-        //mySpan.innerHTML="全选";
+              //mySpan.innerHTML="全选";
             }
     };
-    //初始化默认全选
-    CheckOrCancelAll()

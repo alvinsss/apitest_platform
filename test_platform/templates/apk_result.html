@@ -79,7 +79,7 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>批次id</th>
+                            <th>task_id</th>
                             <th>所属用户</th>
                             <th>项目</th>
                             <th>模块</th>
@@ -100,15 +100,42 @@
                                 <td>{{ result.module.project }}</td>
                                 <td>{{ result.module }}</td>
                                 <td>{{ result.name_des }}</td>
-                                <td>{{ result.run_status }}</td>
-                                <td>{{ result.run_result }}</td>
+                                {% if result.run_status == 0 %}
+                                    <td>未执行</td>
+                                {% endif %}
+                                {% if result.run_status == 1 %}
+                                    <td>执行中</td>
+                                {% endif %}
+                                {% if result.run_status == 2 %}
+                                    <td>已完成</td>
+                                {% endif %}
+                                {% if result.run_result == 0 %}
+                                    <td>未知</td>
+                                {% endif %}
+                                {% if result.run_result == 1 %}
+                                    <td>成功</td>
+                                {% endif %}
+                                {% if result.run_result == 2 %}
+                                    <td bgcolor="red" >失败</td>
+                                {% endif %}
                                 <td>{{ result.apk_testtype }}</td>
                                 <td>{{ result.pkfile_path }}</td>
                                 <td>{{ result.create_time | date:"Y-m-d H:i:s" }}</td>
                                 <td>
-                                    <a href="/apk/detail_result/{{ result.id }}/">
-                                        <i class="glyphicon glyphicon-list-alt"></i>
-                                    </a>
+
+                                    {% if result.run_result == 1 or result.run_result == 2 %}
+{#                                    <a href="/apk/detail_result/{{ result.id }}/">#}
+{#                                        <i class="glyphicon glyphicon-list-alt"></i>#}
+{#                                    </a>#}
+                                    <div style="margin-right: 8px;">
+									<button class="btn btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#myModal"
+                                            onclick="detail_result('{{ result.id }}')">详情
+                                    </button>
+								    </div>
+                                    {% endif %}
+
                                 </td>
 
                             </tr>
@@ -147,7 +174,49 @@
 
             </div>
         </div>
+            <!-- 查看日志的模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            详细日志
+                        </h4>
+                    </div>
+                    <div class="modal-body" id="log">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <!--<button type="button" class="btn btn-primary">-->
+                            <!--提交更改-->
+                        <!--</button>-->
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
     </div>
 
 <script src="{%static "js/myAPK.js"%}"> </script>
+<script type="text/javascript">
+
+        function detail_result(id) {
+        console.log("查看详情日志！", id);
+
+        $.post("/apk/get_detail_result/", {
+				result_id: id,
+			},
+			function (resp) {
+				if(resp.status == 10200){
+					console.log(resp.data);
+					document.querySelector("#log").innerText = resp.data;
+				}
+			});
+    }
+</script>
 {% endblock %}

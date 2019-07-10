@@ -14,7 +14,7 @@ class APK_UPLOADFILE(models.Model):
     create_time = models.DateTimeField("创建时间", auto_now_add=True)
     upapkfile = models.FileField(upload_to = "",storage = None )
     sum_status = models.IntegerField("运行状态", default=0)  # 未执行、执行中、执行完成、排队中
-    sum_result = models.CharField("运行结果", null=False,max_length=4)
+    sum_result = models.IntegerField("运行结果", default=0,null=False)
     del_status = models.IntegerField("是否删除",default=0)
     # locustfile = models.FileField( upload_to=user_directory_path, verbose_name="文件" )
 
@@ -39,7 +39,7 @@ class APK_RESULTS(models.Model):
     create_time = models.DateTimeField("创建时间", auto_now_add=True)
     pkfile_path = models.FileField(upload_to = "",storage = None )
     run_status = models.IntegerField("运行状态", default=0)  # 未执行、执行中、执行完成、排队中
-    run_result = models.CharField("运行结果", null=False,max_length=1000)
+    run_result = models.IntegerField("运行结果", default=0)
     del_status = models.IntegerField("是否删除",default=0)
     detail     = models.CharField("运行结果", null=False,max_length=1000)
 

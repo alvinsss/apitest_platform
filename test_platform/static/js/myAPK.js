@@ -50,11 +50,11 @@ var APKFileInit = function () {
         var chElt=document.getElementById("chElt");
         //2.获取选中状态
         var checkedElt=chElt.checked;
+        checkedElt    = true;
         console.log("checkedElt",checkedElt)
         //3.若checked=true,将所有的复选框选中,checked=false,将所有的复选框取消
         var allCheck=document.getElementsByName("apk_testtype");
         //4.循环遍历取出每一个复选框中的元素
-        //var mySpan=document.getElementById("mySpan");
         if(checkedElt){
             //全选
             for(var i=0;i<allCheck.length;i++){
@@ -69,4 +69,6 @@ var APKFileInit = function () {
               }
         //mySpan.innerHTML="全选";
             }
-    }
+    };
+    //初始化默认全选
+    CheckOrCancelAll()

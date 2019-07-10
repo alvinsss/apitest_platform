@@ -4,6 +4,7 @@ from apk.models import APK_UPLOADFILE
 from apk.models import APK_RESULTS
 from django.conf import settings
 from django.http import JsonResponse ,HttpResponseRedirect,HttpResponse
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.decorators.csrf import  csrf_exempt
 
 import platform
@@ -16,10 +17,14 @@ import time
 def apk_list(request):
     print("apk_list")
     apkfile_all = APK_UPLOADFILE.objects.filter(del_status=0)
-    print(apkfile_all)
-    return render(request, "apk_list.html",
-                  {"apkfiles": apkfile_all
-                      , "type": "list"})
+    p= Paginator(apkfile_all,15)
+    page = request.GET.get('page')
+    try:
+        apkfile_page = p.page(page)
+    except PageNotAnInteger:
+        apkfile_page = p.page(1)
+    print("apkfile_page:",apkfile_page)
+    return render(request, "apk_list.html",{"apkfiles": apkfile_page , "type": "list"})
 
 
 def add_apk(request):
@@ -29,14 +34,36 @@ def add_apk(request):
 def result(request,apkid):
     print("result",apkid)
     results = APK_RESULTS.objects.filter(batch_id_id=apkid)
-    print(results)
+    p= Paginator(results,15)
+    page = request.GET.get('page')
+    try:
+        results = p.page(page)
+    except PageNotAnInteger:
+        results = p.page(1)
+    print("results_page:",results)
     return render(request,"apk_result.html",{"results":results,"type":"result"})
+
+
 
 def detail_result(request,resultid):
     print("detail_apkresult",resultid)
     results = APK_RESULTS.objects.filter(id=resultid)
     print(results)
     return render(request,"apk_detail_result.html",{"results":results,"type":"apk_detail_result"})
+
+@csrf_exempt
+def get_detail_result(request):
+    print("get_detail_result result_id is:")
+    if request.method == "POST":
+        id = request.POST.get("result_id", "")
+        if id == "":
+            return JsonResponse({"status": 10102, "message": "id不能为空"})
+        else:
+            #get  JSON serializable, filter 返回非JSON
+            r = APK_RESULTS.objects.get( id=id )
+            print("--------->", r.detail,type(r.detail))
+    return JsonResponse( {"status": 10200, "message": "success", "data": r.detail} )
+
 
 @csrf_exempt
 def save_uploadapkfile(request):

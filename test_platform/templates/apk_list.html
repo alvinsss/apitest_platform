@@ -79,7 +79,7 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>id</th>
+                            <th>taskid</th>
                             <th>所属用户</th>
                             <th>项目</th>
                             <th>模块</th>
@@ -109,15 +109,14 @@
                                 {% if apkfile.sum_status == 2 %}
                                     <td>已完成</td>
                                 {% endif %}
-                                <td>{{ apkfile.sum_result }}</td>
                                 {% if apkfile.sum_result == 0 %}
-                                    <td>未执行</td>
+                                    <td>未知</td>
                                 {% endif %}
                                 {% if apkfile.sum_result == 1 %}
                                     <td>成功</td>
                                 {% endif %}
                                 {% if apkfile.sum_result == 2 %}
-                                    <td>失败</td>
+                                    <td  bgcolor="red" >失败</td>
                                 {% endif %}
                                 <td>{{ apkfile.apk_testtype }}</td>
                                 <td>{{ apkfile.upapkfile }}</td>
@@ -129,9 +128,11 @@
                                    <a href="#" onclick="RunAPKtest('{{apkfile.id}}')" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-play"></span>
 								  </a>
+                                {% if apkfile.sum_result == 1 or apkfile.sum_result == 2 %}
                                   <a href="#" onclick="RunAPKmail('{{apkfile.id}}')" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-envelope"></span>
 								  </a>
+                                {% endif %}
 
 
                                 </td>
@@ -147,24 +148,24 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li>
-                                {% if py_unittests.has_previous %}
-                                    <a href="?page={{ py_unittests.previous_page_number }}" aria-label="Previous">
+                                {% if apkfiles.has_previous %}
+                                    <a href="?page={{ apkfiles.previous_page_number }}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 {% endif %}
                             </li>
 
-                            <li><a href="#">{{ py_unittests.number }}</a></li>
+                            <li><a href="#">{{ apkfiles.number }}</a></li>
 
-                            {% if py_unittests.has_next %}
+                            {% if apkfiles.has_next %}
                                 <li>
-                                    <a href="?page={{ py_unittests.next_page_number }}" aria-label="Next">
+                                    <a href="?page={{ apkfiles.next_page_number }}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
                             {% endif %}
 
-                            <li><a href="#">共：{{ py_unittests.paginator.num_pages }} 页</a></li>
+                            <li><a href="#">共：{{ apkfiles.paginator.num_pages }} 页</a></li>
 
                         </ul>
                     </nav>

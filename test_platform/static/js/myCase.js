@@ -73,24 +73,6 @@ var SelectInit = function (defaultProjectId, defaultModuleId) {
 
 };
 
-/////////接口需要的数据格式////////////////////
-// {
-//     "id": 2,
-//     "name": "新项目BBB",
-//     "moduleList": [
-//        {
-//         "id": 4,
-//         "name": "模块AA"
-//        },
-//        {
-//         "id": 5,
-//         "name": "模块BB"
-//        }
-//     ]
-// },
-////////////////////////////////////////////
-
-
 //创建下拉选项 -->废弃
 function cmbAddOption(cmb, obj) {
     let option = document.createElement("option");
@@ -126,13 +108,7 @@ var ProjectInit = function (_cmbProject) {
             }
         });
     }
-
-    // 调用getCaseListInfo函数
     getProjectListInfo();
-
-    //ModuleInit(1);
-    
-
 };
 
 
@@ -255,14 +231,11 @@ var TestCaseInit = function () {
         //         //document.querySelectorAll(".filter-option-inner-inner")[0].innerText = optionName;
         //     }
         // }
-
-
         // ModuleInit("module_name", result.project_id);
         // //location.replace(location.href);
-
         // SelectModule(result.module_id);
     });
 
     //SelectModule(result.module_id);
-    
+
 }

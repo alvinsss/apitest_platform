@@ -84,11 +84,11 @@
                         <input  style="width: 31%" id="name_des" name="name_des" type="text" class="form-control">
                     </div>
 
-                    <div style="margin-top:10px " >
+                    <div style="margin-top:25px " >
                          <input type="file" id="uploadfile"  name="uploadfile" />
                     </div>
 
-                    <div class="checkbox">
+                    <div class="checkbox" style="margin-top:20px ">
                         <label>
                             <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>
                             <span id="mySpan">全选</span>
@@ -133,6 +133,7 @@
     SelectInit();
     //页面加载的时候,所有的复选框都是未选中的状态
 
+    checkOrCancelAll();
 
     // {## ajax处理form表单数据#}
     $('#btnuploadapkfile').click(function () {
@@ -156,9 +157,9 @@
                 return;
             }
 
-            if (testtypedata == "" || document.getElementsByName("name_des")){
+            if (testtypedata == ""){
                 alert("测试类型或名称描述必填项，请选择")
-                return;
+                {#return;#}
             }
             $.ajax({
                 url:'/apk/save_uploadapkfile/',

@@ -15,6 +15,7 @@ urlpatterns = [
 	path( 'save_uploadapkfile/', views.save_uploadapkfile ),
 	# path('edit_apk/<int:pid>/', views.edit_apk),
 	path('detail_result/<int:resultid>/', views.detail_result),
+	path( 'get_detail_result/', views.get_detail_result ),
 	path('result/<int:apkid>/', views.result),
 
 ]

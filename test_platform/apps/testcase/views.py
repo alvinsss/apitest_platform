@@ -141,6 +141,7 @@ def testcase_debug(request):
             if type_ == "json" and encryption == "1":
                 print("encryption=1,type_=json")
                 # header = _str_toJson( header )
+                print("json encryption == 1 ----> parameter",url,parameter)
                 r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
                 result_text = json.dumps(r)
                 print("result_text",result_text)

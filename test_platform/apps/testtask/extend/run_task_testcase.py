@@ -22,12 +22,14 @@ class InterfaceTest( unittest.TestCase ):
         else:
             hearder_str = header.replace( "\'", "\"" )
             header_dict = json.loads( hearder_str )
-
+        print("test_run_casess parameter_body ",parameter_body)
         if parameter_body == "{}":
             parameter_dict = {}
         else:
             parameter_str = parameter_body.replace( "\'", "\"" )
+            print( "test_run_casess parameter_str ", parameter_str )
             parameter_dict = json.loads( parameter_str )
+            print( "test_run_casess parameter_dict ", parameter_dict )
 
         if method == "get":
             if parameter_type == "from":

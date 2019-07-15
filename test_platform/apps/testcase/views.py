@@ -543,8 +543,8 @@ def getselect_data(request):
     """
     print("getselect_data")
     if request.method == "GET":
-        project_list = Project.objects.all()
-        # project_list = Project.objects.filter(del_status=1)
+        # project_list = Project.objects.all()
+        project_list = Project.objects.filter(del_status=1)
         data_list = []
         for project in project_list:
             project_dict = {

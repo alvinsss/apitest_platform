@@ -50,10 +50,12 @@ var APKFileInit = function () {
         //2.获取选中状态
         var checkedElt=chElt.checked;
         console.log("checkedElt",checkedElt)
+
         //3.若checked=true,将所有的复选框选中,checked=false,将所有的复选框取消
         var allCheck=document.getElementsByName("apk_testtype");
         //4.循环遍历取出每一个复选框中的元素
-        if(checkedElt){
+        if(!(checkedElt)){
+            chElt.checked = true;
             for(var i=0;i<allCheck.length;i++){
             //设置复选框的选中状态
             allCheck[i].checked=true;
@@ -66,3 +68,4 @@ var APKFileInit = function () {
               //mySpan.innerHTML="全选";
             }
     };
+

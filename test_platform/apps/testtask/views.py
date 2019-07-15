@@ -101,7 +101,7 @@ def get_case_tree(request):
                 "isParent": True
             }
 
-            modules = Module.objects.filter(project_id=project.id)
+            modules = Module.objects.filter(project_id=project.id,del_status=1)
             module_list = []
             for module in modules:
                 module_dict = {
@@ -109,7 +109,7 @@ def get_case_tree(request):
                     "isParent": True
                 }
                 # 过滤逻辑删除状态数据
-                cases = TestCase.objects.filter(module_id=module.id).filter(status=True)
+                cases = TestCase.objects.filter(module_id=module.id,status=1)
                 case_list = []
                 for case in cases:
                     case_dict = {
@@ -149,7 +149,7 @@ def get_case_tree(request):
                 "isParent": True
             }
 
-            modules = Module.objects.filter(project_id=project.id)
+            modules = Module.objects.filter(project_id=project.id,del_status=1)
             module_list = []
             for module in modules:
                 module_dict = {
@@ -157,7 +157,7 @@ def get_case_tree(request):
                     "isParent": True
                 }
 
-                cases = TestCase.objects.filter(module_id=module.id)
+                cases = TestCase.objects.filter(module_id=module.id,status=1)
                 case_list = []
                 for case in cases:
                     if case.id in casesList:

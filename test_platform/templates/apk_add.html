@@ -79,24 +79,27 @@
 {#                        <select class="form-control select2-selection--single" id="selectModule" ,name="selectModule" style="width: 180px">#}
 {#                    </select>#}
 
-                    <div class="input-group" style="top:10px">
+                    <div class="input-group" style="top:30px">
                         <span class="input-group-addon">名称描述</span>
                         <input  style="width: 31%" id="name_des" name="name_des" type="text" class="form-control">
                     </div>
 
-                    <div style="margin-top:25px " >
+                    <div style="margin-top:45px " >
                          <input type="file" id="uploadfile"  name="uploadfile" />
                     </div>
 
-                    <div class="checkbox" style="margin-top:20px ">
+                    <div class="checkbox" style="margin-top:20px; ">
                         <label>
                             <input type="checkbox" id="chElt" onclick="CheckOrCancelAll();"/>
-                            <span id="mySpan">全选</span>
+                            <span style="color:grey" id="mySpan">全选</span>
                             <br/>
                         </label>
                     </div>
 
                     <div class="checkbox">
+                        <label>
+                            <p>测试类型:</p>
+                        </label>
                         <label>
                           <input type="checkbox" name="apk_testtype" value="Apkinfo"/>apk info
                         </label>
@@ -113,7 +116,7 @@
 
                     <div class="form-group">
                     </div>
-                    <input  type="button"  value="保存上传" id="btnuploadapkfile">
+                    <input  type="button"  value="上传" id="btnuploadapkfile">
                 {% csrf_token %}
         </form>
 
@@ -132,7 +135,7 @@
 
     SelectInit();
     //页面加载的时候,所有的复选框都是未选中的状态
-
+    CheckOrCancelAll();
     // {## ajax处理form表单数据#}
     $('#btnuploadapkfile').click(function () {
             // var file_obj_tmp = document.getElementById("uploadfile").value;

@@ -73,7 +73,7 @@ def save_uploadapkfile(request):
 
     if request.method == "POST":
         module_id  = request.POST.get( "module_id", "" )
-        module_id  = "33"
+        module_id  = "36"
         print("module_id",module_id)
         name_des   = request.POST.get("name_des","")
         uploadfile = request.FILES.get("file_obj",None)    # 获取上传的文件，如果没有文件，则默认为None

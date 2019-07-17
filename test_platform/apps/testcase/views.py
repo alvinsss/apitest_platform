@@ -4,14 +4,13 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from django.db.models import Q,F
 from testcase.models import TestCase
 from project.models import Project
 from module.models import Module
 import requests
 import json
 import  time
-import sys
-import platform
 import baserequestdecode
 
 @login_required
@@ -20,7 +19,7 @@ def testcase_manage(request):
     """ 用例列表"""
     # case_list = TestCase.objects.all()
     print("testcase")
-    case_list = TestCase.objects.filter(status="1")
+    case_list = TestCase.objects.filter(status="1").order_by("-create_time")
     p = Paginator(case_list,15)
     page = request.GET.get('page')
     try:
@@ -486,11 +485,8 @@ def sendreqsnfun(request):
 def search_name(request):
     """ 搜索用例名称 """
     case_name = request.GET.get("caseName", "")
-
-    case_list = TestCase.objects.filter(name__contains=case_name).order_by('id')
-
+    case_list = TestCase.objects.filter(Q(name__contains=(case_name.strip()))|Q(url__contains=(case_name.strip()))).order_by('-create_time')
     p = Paginator(case_list, 3)
-
     page = request.GET.get('page')
     try:
         contacts = p.page(page)
@@ -500,7 +496,6 @@ def search_name(request):
     except EmptyPage:
         # 如果页数超出查询范围，取最后一页
         contacts = p.page(p.num_pages)
-
     return render(request, "case_list.html", {"cases": contacts, "name": case_name})
 
 

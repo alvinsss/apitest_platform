@@ -484,19 +484,22 @@ def sendreqsnfun(request):
 @csrf_exempt
 def search_name(request):
     """ 搜索用例名称 """
-    case_name = request.GET.get("caseName", "")
-    case_list = TestCase.objects.filter(Q(name__contains=(case_name.strip()))|Q(url__contains=(case_name.strip()))).order_by('-create_time')
-    p = Paginator(case_list, 3)
-    page = request.GET.get('page')
-    try:
-        contacts = p.page(page)
-    except PageNotAnInteger:
-        # 如果页数不是整型, 取第一页.
-        contacts = p.page(1)
-    except EmptyPage:
-        # 如果页数超出查询范围，取最后一页
-        contacts = p.page(p.num_pages)
-    return render(request, "case_list.html", {"cases": contacts, "name": case_name})
+    case_name = request.GET.get("caseName",None)
+    if len(case_name) == 0 :
+        return HttpResponseRedirect( "/testcase/" )
+    else:
+        case_list = TestCase.objects.filter(Q(name__contains=(case_name.strip()))|Q(url__contains=(case_name.strip()))).order_by('-create_time')
+        p = Paginator(case_list, 3)
+        page = request.GET.get('page')
+        try:
+            contacts = p.page(page)
+        except PageNotAnInteger:
+            # 如果页数不是整型, 取第一页.
+            contacts = p.page(1)
+        except EmptyPage:
+            # 如果页数超出查询范围，取最后一页
+            contacts = p.page(p.num_pages)
+        return render(request, "case_list.html", {"cases": contacts, "name": case_name})
 
 
 @csrf_exempt

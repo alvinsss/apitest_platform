@@ -136,11 +136,18 @@ def testcase_debug(request):
                     print("json has header ",r.text)
                     result_text = r.text
 
-            # 只做POST的json格式的加密处理
             if type_ == "json" and encryption == "1":
                 print("encryption=1,type_=json")
                 # header = _str_toJson( header )
                 print("json encryption == 1 ----> parameter",url,parameter)
+                r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
+                result_text = json.dumps(r)
+                print("result_text",result_text)
+
+            if type_ == "form" and encryption == "1":
+                print("encryption=1,type_=form")
+                # header = _str_toJson( header )
+                print("form encryption == 1 ----> parameter",url,parameter)
                 r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
                 result_text = json.dumps(r)
                 print("result_text",result_text)

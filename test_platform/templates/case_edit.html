@@ -52,10 +52,6 @@
                 </li>
             </ul>
                 <ul class="nav nav-sidebar">
-
-                    <li><a href="/tools/">
-                        <i class="glyphicon glyphicon-wrench"></i>&nbsp&nbsp测试工具</a>
-                    </li>
                     <li><a href="/locustmanager/">
                         <i class="glyphicon glyphicon-random"></i>&nbsp&nbsplocust管理</a>
                     </li>
@@ -168,6 +164,11 @@
                     <input type="radio" name="assert_type" id="mathches" value="mathches"> 匹配
                 </label>
             </div>
+
+             <div style="color: grey">
+                <p  >断言类型-包含，支持多个条件使用"|"分割数据，例如A|B，匹配不支持多条件断言</p>
+            </div>
+
             <div style="margin-top: 10px;">
                 <p>断言：</p>
                 <textarea id="assert" class="form-control" rows="5" name=textarea></textarea>

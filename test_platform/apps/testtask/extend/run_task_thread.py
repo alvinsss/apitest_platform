@@ -72,7 +72,7 @@ class TaskThread:
         run_cmd = "python  " + EXTEND_DIR + "run_task.py"
         print("运行的命令 run_cmd ", run_cmd)
         os.system(run_cmd)
-        sleep(3)
+        sleep(2)
 
         # 4. 读取result.xml文件，把这里面的结果放到表里面。
         print("------------保存测试结果------------")

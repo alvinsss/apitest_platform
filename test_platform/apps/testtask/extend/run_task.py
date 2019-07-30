@@ -43,8 +43,11 @@ class InterfaceTest( unittest.TestCase ):
             if parameter_type == "from" and encryption == 0:
                 requests.packages.urllib3.disable_warnings()
                 r = requests.get( url, headers=header_dict, params=parameter_dict ,verify=False)
+
                 if assert_type == "contains":
-                    self.assertIn( assert_text, r.text )
+                    assert_list = assert_text.split( '|' )
+                    for assert_str in assert_list:
+                        self.assertIn( assert_str, r.text )
                 else:
                     self.assertEqual( assert_text, r.text )
 
@@ -54,7 +57,9 @@ class InterfaceTest( unittest.TestCase ):
                 requests.packages.urllib3.disable_warnings()
                 r = requests.post( url, headers=header_dict, data=parameter_dict,verify=False )
                 if assert_type == "contains":
-                    self.assertIn( assert_text, r.text )
+                    assert_list = assert_text.split( '|' )
+                    for assert_str in assert_list:
+                        self.assertIn( assert_str, r.text )
                 else:
                     self.assertEqual( assert_text, r.text )
             elif parameter_type == "from" and encryption == 1:
@@ -62,18 +67,24 @@ class InterfaceTest( unittest.TestCase ):
                 r = baserequestdecode.endepost( url, bodydata=parameter_body, key=None, postheaders=None,
                                                       transBinData=False, body_type=None )
                 # result_text = json.dumps(r)
-                print( "parameter_type from and encryption == 1  result_text",r.text )
+                result_text = json.dumps( r )
+                print( "parameter_type from and encryption == 1  result_text",result_text )
                 if assert_type == "contains":
-                    self.assertIn( assert_text, r.text )
+                    assert_list = assert_text.split( '|' )
+                    for assert_str in assert_list:
+                        self.assertIn( assert_str, result_text )
                 else:
-                    self.assertEqual( assert_text, r.text )
+                    self.assertEqual( assert_text, result_text )
 
             elif parameter_type == "json" and encryption == 0:
                 # print( "run task of case post --->json 0 " )
                 requests.packages.urllib3.disable_warnings()
                 r = requests.post( url, headers=header_dict, json=parameter_dict,verify=False )
                 if assert_type == "contains":
-                    self.assertIn( assert_text, r.text )
+                    # self.assertIn( assert_text, r.text )
+                    assert_list = assert_text.split( '|' )
+                    for assert_str in assert_list:
+                        self.assertIn( assert_str, r.text )
                 else:
                     self.assertEqual( assert_text, r.text )
 
@@ -84,7 +95,10 @@ class InterfaceTest( unittest.TestCase ):
                 result_text = json.dumps(r)
                 print( "parameter_type josn and encryption == 1  result_text",result_text)
                 if assert_type == "contains":
-                    self.assertIn( assert_text, result_text )
+                    # self.assertIn( assert_text, result_text )
+                    assert_list = assert_text.split( '|' )
+                    for assert_str in assert_list:
+                        self.assertIn( assert_str, result_text )
                 else:
                     self.assertEqual( assert_text, result_text)
             else:

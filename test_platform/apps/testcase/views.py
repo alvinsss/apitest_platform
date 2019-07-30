@@ -183,9 +183,13 @@ def testcase_assert(request):
             return JsonResponse({"result": "断言的文本不能为空！"})
 
         if assert_type == "contains":
-            print("contains")
-            if assert_text not in result_text:
-                return JsonResponse({"result": "断言失败！"})
+            # 处理前端数据包含 | 表示并的关系，全部内容包含断言为真
+            assert_list = assert_text.split('|')
+            print("contains",assert_list)
+            for assert_text in assert_list:
+                # print("assert_text",assert_text)
+                if assert_text not in result_text:
+                    return JsonResponse({"result": "断言失败！"})
             else:
                 return JsonResponse({"result": "断言成功！"})
         elif assert_type == "mathches":

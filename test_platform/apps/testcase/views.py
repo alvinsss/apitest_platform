@@ -81,6 +81,7 @@ def testcase_debug(request):
         print("method", method)
         print("header", header)
         print("type_", type_)
+        print("type ---> parameter", type(parameter))
         print("parameter", parameter)
         print("encryption",encryption)
 
@@ -137,10 +138,13 @@ def testcase_debug(request):
                     result_text = r.text
 
             if type_ == "json" and encryption == "1":
-                print("encryption=1,type_=json")
+                print("testcase_debug encryption=1,type_=json")
                 # header = _str_toJson( header )
                 print("json encryption == 1 ----> parameter",url,parameter)
+                # r_decode = baserequestdecode.encode(url, parameter, transBinData=False, body_type=None)
+                # print("r_decode",r_decode)
                 r =baserequestdecode.endepost(url, parameter, key=None, postheaders=None, transBinData=False, body_type=None)
+                print("testcase_debug  r",r)
                 result_text = json.dumps(r)
                 print("result_text",result_text)
 
@@ -319,7 +323,7 @@ def  delete_case(request,cid):
 
 @csrf_exempt
 @login_required
-def sendreqsnfun(request):
+def sendreqsn(request):
     """
     测试发送多次
     """

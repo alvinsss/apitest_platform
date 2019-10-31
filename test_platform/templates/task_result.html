@@ -27,9 +27,17 @@
 							<td>{{ r.tests }}</td>
 							<td>{{ r.run_time }}</td>
 							<td>
-								<a href="/testtask/resultdetail/{{r.id}}/" style="margin-right: 8px;">
-									<span class="glyphicon glyphicon-list-alt"></span>
-								</a>
+{#								<a href="/testtask/resultdetail/{{r.id}}/" style="margin-right: 8px;">#}
+{#									<span class="glyphicon glyphicon-list-alt"></span>#}
+{#								</a>#}
+
+                                <div style="margin-right: 6px;">
+									<button class="btn btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#myModal"
+                                            onclick="detail_result('{{ r.id }}')">详情
+                                    </button>
+                                </div>
 							</td>
 						</tr>
 						{% endfor %}
@@ -37,8 +45,35 @@
 				</table>
 			</div>
 
+                <!-- 查看日志的模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            结果详细
+                        </h4>
+                    </div>
+                    <div class="dialog-content">
+                       <div class="modal-body" id="log">
+                       </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 	</div>
 
 <script src="{%static "js/jquery.min.js"%}"> </script>
+<script src="{%static "js/myTask.js"%}"> </script>
+
 
 {% endblock %}

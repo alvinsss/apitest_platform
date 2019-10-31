@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from project.models import Project
 from apk.models import APK_UPLOADFILE
 from apk.models import APK_RESULTS
 from django.conf import settings

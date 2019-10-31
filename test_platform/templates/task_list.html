@@ -79,6 +79,7 @@
 							<th>名称</th>
 							<th>状态</th>
 							<th>创建时间</th>
+                            <th>最近一次执行时间</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -99,7 +100,9 @@
 							<td>已完成</td>
 							{% endif %}
 
-							<td>{{ task.create_time | date:"Y-m-d H:i:s" }}</td>
+							<td>{{ task.create_time  | date:"Y-m-d H:i:s" }}</td>
+
+							<td>{{ task.lastrun_time | date:"Y-m-d H:i:s" }}</td>
 							<td>
 								<a href="/testtask/edit_task/{{task.id}}/" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-edit"></span>
@@ -116,6 +119,12 @@
 								<a href="/testtask/result/{{task.id}}/" style="margin-right: 8px;">
 									<span class="glyphicon glyphicon-th-large"></span>
 								</a>
+                               {% if task.status == 1  %}
+								<a href="#" onclick="ResetStatus('{{task.id}}')" style="margin-right: 8px;">
+									<span class="glyphicon glyphicon-registration-mark"></span>
+								</a>
+                               {% endif %}
+
 							</td>
 						</tr>
 						{% endfor %}
@@ -178,6 +187,23 @@
 		});
 
 	};
+
+		//重置状态
+	function ResetStatus(tid) {
+		console.log("ResetStatus运行任务的id", tid);
+		$.post("/testtask/reset_status/",
+		{
+			task_id: tid
+		},
+		function (resp) {
+		    if(resp.status == 10200){
+		        window.alert(resp.message);
+				window.location.reload();  // 刷新页面
+			}
+		});
+
+	};
+
 </script>
 
 

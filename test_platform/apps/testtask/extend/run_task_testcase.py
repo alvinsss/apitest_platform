@@ -3,7 +3,6 @@
 # @Author  : alvin
 # @File    : run_task_testcase.py
 # @Software: PyCharm
-import sys
 import json
 import unittest
 from ddt import ddt, data, file_data, unpack

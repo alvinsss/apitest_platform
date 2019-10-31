@@ -12,5 +12,7 @@ urlpatterns = [
 	path( 'run_task/', views.run_task ),
 	path( 'result/<int:tid>/', views.result ),
 	path( 'resultdetail/<int:did>/', views.resultdetail ),
+	path( 'get_detail_result/', views.get_detail_result ),
+	path( 'reset_status/', views.reset_status ),
 
 ]

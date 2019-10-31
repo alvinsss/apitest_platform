@@ -1,0 +1,15 @@
+拷贝之前
+pkill uwsgi && echo "" > test_platform.log
+pkill nginx
+rm -fr /q/tools/python/django_web/test_platform.zip
+rm -fr  /q/tools/python/django_web/test_platform/* > /dev/null 2>&1 && echo "qatest null"
+echo "upload files"
+
+拷贝之后，启动
+unzip test_platform.zip
+nginx -c /etc/nginx/nginx.conf && uwsgi -x /q/tools/python/django_web/test_platform.xml && echo "start django web test_platform is ok!"
+sleep 2
+chmod 777 /q/tools/python/django_web/test_platform/apps/testtask/extend/*
+uwsgi -x /q/tools/python_bvt/django_web/bc_qa_bvt.xml
+echo "start server is ok,let's look up log "
+tail -20f test_platform.log

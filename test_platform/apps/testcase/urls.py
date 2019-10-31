@@ -15,6 +15,7 @@ urlpatterns = [
 	path( 'edit_case/<int:cid>/', views.edit_case ),
 	path('delete_case/<int:cid>/', views.delete_case),
 	path( 'debug', views.testcase_debug ),
+	path('sendreqsn',views.sendreqsn),
 	path('assert', views.testcase_assert),
 	path('save_case', views.testcase_save),
 	path( 'get_case_info', views.get_case_info ),

@@ -9,6 +9,7 @@ from testtask.extend.run_task_thread import TaskThread
 from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import  csrf_exempt
+import time
 import json
 import os
 
@@ -40,6 +41,7 @@ def edit_task(request, tid):
     return render(request, "task_edit.html", {
         "type": "edit"
     })
+
 
 @login_required
 def delete_task(request, tid):
@@ -240,11 +242,22 @@ def run_task_stand(request):
     else:
         return JsonResponse( {"status": 10200, "message": "failed"} )
 
+@csrf_exempt
+def reset_status(request):
+    if request.method == "POST":
+        tid = request.POST.get("task_id", "")
+        if tid == "":
+            return JsonResponse({"status": 10200, "message": "task id is null"})
+    task = TestTask.objects.get( id=tid )
+    task.status = 2
+    task.save()
+    return JsonResponse( {"status": 10200, "message": "执行状态重置完成，可以点击执行按钮！"} )
+
 
 @csrf_exempt
 def run_task(request):
     """ 运行任务 """
-    print("run_task----------------------->")
+    print("-----------------run_task start --")
     if request.method == "POST":
         tid = request.POST.get("task_id", "")
         if tid == "":
@@ -252,12 +265,15 @@ def run_task(request):
 
         # 1、在执行线程之前，判断当前有没有任务在执行
         tasks = TestTask.objects.all()
+
         for t in tasks:
+            # print("run_task ：task_id:%d, task_status:%s"%(t.id,t.status))
             if t.status == 1:
                 return JsonResponse({"status": 10200, "message": "当前有任务正在执行！"})
 
         # 2. 修改任务的状态为：1-执行中
         task = TestTask.objects.get(id=tid)
+        task.lastrun_time = time.strftime('%Y-%m-%d %H:%M:%S')
         task.status = 1
         task.save()
 
@@ -303,4 +319,24 @@ def resultdetail(request,did):
     print(resultdetail)
     return render(request, "task_resultdetail.html", {"resultdetail": resultdetail, "type": "resultdetail"})
 
-
+@csrf_exempt
+def get_detail_result(request):
+    '''
+    后台直接返回带有html格式的字符串，包含<p>，前端以为要展示<p>，将其解析为<p>;页面不换行
+    解决办法后台将<p>替换为  \n并在前端添加样式style="white-space:pre-line";
+    :param request:
+    :return:
+    '''
+    if request.method == "POST":
+        id = request.POST.get("result_id", "")
+        if id == "":
+            return JsonResponse({"status": 10102, "message": "id不能为空"})
+        else:
+            #get  JSON serializable, filter 返回非JSON
+            r = TestResult.objects.get( id=id )
+            r = r.result.replace('<![CDATA[]]>','').replace('<system-out>','').replace('</system-out>','')\
+            .replace('<system-err>','').replace('</system-err>','').replace('&quot','').replace('<![CDATA','')\
+            .replace('</testsuite>','')
+            r = "".join( [s for s in r.splitlines(True) if s.strip()] )
+            print(r)
+        return JsonResponse( {"status": 10200, "message": "success", "data":r} )

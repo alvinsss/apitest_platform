@@ -166,7 +166,7 @@
             </div>
 
              <div style="color: grey">
-                <p  >断言类型-包含，支持多个条件使用"|"分割数据，例如A|B，匹配不支持多条件断言</p>
+                <p  >断言类型-包含，支持多个条件使用"|"分割数据，例如A|B ,断言类型-匹配不支持多条件断言</p>
             </div>
 
             <div style="margin-top: 10px;">
@@ -309,7 +309,7 @@
                 return re.test(s)
         }
         {#window.alert("parameter info :" + parameter);#}
-        $.post("/testcase/sendreqs",
+        $.post("/testcase/sendreqsn",
             {
                 url: url,
                 method: method,

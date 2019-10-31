@@ -10,6 +10,7 @@ class TestTask(models.Model):
     status = models.IntegerField("状态", default=0)  # 未执行、执行中、执行完成、排队中
     cases = models.TextField("关联用例", default="")
     create_time = models.DateTimeField("创建时间", auto_now_add=True)
+    lastrun_time = models.DateTimeField("最近一次运行时间", default=None)
     del_status = models.BooleanField("是否删除",default=False)
 
     class Meta:

@@ -15,5 +15,18 @@
 
 	};
 
+	function detail_result(id) {
+        console.log("查看详情日志！", id);
+        $.post("/testtask/get_detail_result/", {
+				result_id: id,
+			},
+			function (resp) {
+				if(resp.status == 10200){
+					console.log(resp.data);
+					// resp.data = resp.data.replace(/AssertionError/ig,"<span style='color: red;'>$&</span>");
+					document.querySelector("#log").innerText = resp.data;
+				}
+			});
+    }
 
 

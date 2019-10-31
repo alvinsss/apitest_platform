@@ -1,305 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-	<testsuite errors="0" failures="0" file=".py" name="InterfaceTest-20190730165438" skipped="0" tests="1" time="0.140" timestamp="2019-07-30T16:54:38">
-		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="26" name="test_run_cases_00001_38" time="0.140" timestamp="2019-07-30T16:54:38">
+	<testsuite errors="0" failures="1" file=".py" name="InterfaceTest-20190731132736" skipped="0" tests="8" time="0.911" timestamp="2019-07-31T13:27:37">
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00001_45" time="0.202" timestamp="2019-07-31T13:27:36">
 			<system-out>
-<![CDATA[test_run_cases parameter_body {
-  "adspaces": [
-    {
-      "adspace_id": "645",
-      "adspace_position": 0,
-      "adspace_type": 4,
-      "allowed_html": false,
-      "asset": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "height": 1794,
-      "impression_num": 1,
-      "impression_time": 8,
-      "interaction_type": [
-        2,
-        3,
-        7,
-        8,
-        9
-      ],
-      "keywords": "",
-      "open_type": 0,
-      "page_id": "",
-      "rec_type": 0,
-      "session_data": "",
-      "width": 1080
-    }
-  ],
-  "api_version": "1.0",
-  "app": {
-    "app_id": "68",
-    "app_key": "00fTrcl21mOrP4e45VXDXGaIt2Wyv3RM",
-    "app_keywords": "",
-    "app_name": "Demo",
-    "app_version": "1",
-    "category": "",
-    "channel_id": "",
-    "package_name": "com.poster.demo",
-    "pgnum": 18,
-    "newstype": "shehui"
-  },
-  "bid": "c88b655c6c9de20dd3009f36434dddvv",
-  "cache_hit_count": 20,
-  "device": {
-    "brand": "Meizu",
-    "channel": "no channel number",
-    "device_id": [
-      {
-        "device_id": "013679cbf1b7eee1",
-        "device_id_type": 3,
-        "hash_type": 0
-      },
-      {
-        "device_id": "460012051614800",
-        "device_id_type": 8,
-        "hash_type": 0
-      },
-      {
-        "device_id": "a4:44:d1:df:ed:51",
-        "device_id_type": 4,
-        "hash_type": 0
-      },
-      {
-        "device_id": "864105033413644",
-        "device_id_type": 10,
-        "hash_type": 0
-      },
-      {
-        "device_id": "733cac2d95c93f985c49d86a916fdsho",
-        "device_id_type": 1,
-        "hash_type": 0
-      },
-      {
-        "device_id": "fbd77301955b5a8c31a5a15c7b900b9e0b0ab95e",
-        "device_id_type": 9,
-        "hash_type": 0
-      }
-    ],
-    "device_type": 2,
-    "jailbreaked": false,
-    "language": "zh",
-    "model": "M5 Note",
-    "os_type": 2,
-    "os_version": "7.0",
-    "os_version_code": 24,
-    "screen_density": 3,
-    "screen_height": 1794,
-    "screen_orientation": 1,
-    "screen_width": 1080
-  },
-  "is_debug": false,
-  "need_cache_asset": true,
-  "network": {
-    "bt": "460,1,4336,7042315,-80",
-    "carrier_id": 70123,
-    "cellular_id": {
-      "CID": 7042315,
-      "LAC": 4336,
-      "MCC": "460",
-      "MNC": "01"
-    },
-    "ip": "172.21.50.225",
-    "is_abroad": 0,
-    "network_type": 1,
-    "real_carrier_id": "460012051614800",
-    "wifi_aps": [
-      {
-        "bssid": "dcda809fff40",
-        "is_connected": true,
-        "name": "Baice-AP",
-        "rssi": -53
-      },
-      {
-        "bssid": "dcda80a00191",
-        "is_connected": false,
-        "name": "Baice-AP-Guest",
-        "rssi": -49
-      },
-      {
-        "bssid": "f45c89a94125",
-        "is_connected": false,
-        "name": "AMac",
-        "rssi": -64
-      },
-      {
-        "bssid": "d076e7eaead4",
-        "is_connected": false,
-        "name": "jiayou",
-        "rssi": -69
-      },
-      {
-        "bssid": "089b4b9a2205",
-        "is_connected": false,
-        "name": "LYTR",
-        "rssi": -70
-      }
-    ]
-  },
-  "request_last_count": 20,
-  "sdk_type": "clover",
-  "sdk_version_code": "10200",
-  "ua": "Mozilla/5.0 (Linux; Android 7.0; M5 Note Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2074.203 Mobile Safari/537.36"
-}
-test_run_cases  parameter_dict {'adspaces': [{'adspace_id': '645', 'adspace_position': 0, 'adspace_type': 4, 'allowed_html': False, 'asset': [1, 2, 3, 4], 'height': 1794, 'impression_num': 1, 'impression_time': 8, 'interaction_type': [2, 3, 7, 8, 9], 'keywords': '', 'open_type': 0, 'page_id': '', 'rec_type': 0, 'session_data': '', 'width': 1080}], 'api_version': '1.0', 'app': {'app_id': '68', 'app_key': '00fTrcl21mOrP4e45VXDXGaIt2Wyv3RM', 'app_keywords': '', 'app_name': 'Demo', 'app_version': '1', 'category': '', 'channel_id': '', 'package_name': 'com.poster.demo', 'pgnum': 18, 'newstype': 'shehui'}, 'bid': 'c88b655c6c9de20dd3009f36434dddvv', 'cache_hit_count': 20, 'device': {'brand': 'Meizu', 'channel': 'no channel number', 'device_id': [{'device_id': '013679cbf1b7eee1', 'device_id_type': 3, 'hash_type': 0}, {'device_id': '460012051614800', 'device_id_type': 8, 'hash_type': 0}, {'device_id': 'a4:44:d1:df:ed:51', 'device_id_type': 4, 'hash_type': 0}, {'device_id': '864105033413644', 'device_id_type': 10, 'hash_type': 0}, {'device_id': '733cac2d95c93f985c49d86a916fdsho', 'device_id_type': 1, 'hash_type': 0}, {'device_id': 'fbd77301955b5a8c31a5a15c7b900b9e0b0ab95e', 'device_id_type': 9, 'hash_type': 0}], 'device_type': 2, 'jailbreaked': False, 'language': 'zh', 'model': 'M5 Note', 'os_type': 2, 'os_version': '7.0', 'os_version_code': 24, 'screen_density': 3, 'screen_height': 1794, 'screen_orientation': 1, 'screen_width': 1080}, 'is_debug': False, 'need_cache_asset': True, 'network': {'bt': '460,1,4336,7042315,-80', 'carrier_id': 70123, 'cellular_id': {'CID': 7042315, 'LAC': 4336, 'MCC': '460', 'MNC': '01'}, 'ip': '172.21.50.225', 'is_abroad': 0, 'network_type': 1, 'real_carrier_id': '460012051614800', 'wifi_aps': [{'bssid': 'dcda809fff40', 'is_connected': True, 'name': 'Baice-AP', 'rssi': -53}, {'bssid': 'dcda80a00191', 'is_connected': False, 'name': 'Baice-AP-Guest', 'rssi': -49}, {'bssid': 'f45c89a94125', 'is_connected': False, 'name': 'AMac', 'rssi': -64}, {'bssid': 'd076e7eaead4', 'is_connected': False, 'name': 'jiayou', 'rssi': -69}, {'bssid': '089b4b9a2205', 'is_connected': False, 'name': 'LYTR', 'rssi': -70}]}, 'request_last_count': 20, 'sdk_type': 'clover', 'sdk_version_code': '10200', 'ua': 'Mozilla/5.0 (Linux; Android 7.0; M5 Note Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2074.203 Mobile Safari/537.36'}
-from encryption == 1 ----> parameter_body {
-  "adspaces": [
-    {
-      "adspace_id": "645",
-      "adspace_position": 0,
-      "adspace_type": 4,
-      "allowed_html": false,
-      "asset": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "height": 1794,
-      "impression_num": 1,
-      "impression_time": 8,
-      "interaction_type": [
-        2,
-        3,
-        7,
-        8,
-        9
-      ],
-      "keywords": "",
-      "open_type": 0,
-      "page_id": "",
-      "rec_type": 0,
-      "session_data": "",
-      "width": 1080
-    }
-  ],
-  "api_version": "1.0",
-  "app": {
-    "app_id": "68",
-    "app_key": "00fTrcl21mOrP4e45VXDXGaIt2Wyv3RM",
-    "app_keywords": "",
-    "app_name": "Demo",
-    "app_version": "1",
-    "category": "",
-    "channel_id": "",
-    "package_name": "com.poster.demo",
-    "pgnum": 18,
-    "newstype": "shehui"
-  },
-  "bid": "c88b655c6c9de20dd3009f36434dddvv",
-  "cache_hit_count": 20,
-  "device": {
-    "brand": "Meizu",
-    "channel": "no channel number",
-    "device_id": [
-      {
-        "device_id": "013679cbf1b7eee1",
-        "device_id_type": 3,
-        "hash_type": 0
-      },
-      {
-        "device_id": "460012051614800",
-        "device_id_type": 8,
-        "hash_type": 0
-      },
-      {
-        "device_id": "a4:44:d1:df:ed:51",
-        "device_id_type": 4,
-        "hash_type": 0
-      },
-      {
-        "device_id": "864105033413644",
-        "device_id_type": 10,
-        "hash_type": 0
-      },
-      {
-        "device_id": "733cac2d95c93f985c49d86a916fdsho",
-        "device_id_type": 1,
-        "hash_type": 0
-      },
-      {
-        "device_id": "fbd77301955b5a8c31a5a15c7b900b9e0b0ab95e",
-        "device_id_type": 9,
-        "hash_type": 0
-      }
-    ],
-    "device_type": 2,
-    "jailbreaked": false,
-    "language": "zh",
-    "model": "M5 Note",
-    "os_type": 2,
-    "os_version": "7.0",
-    "os_version_code": 24,
-    "screen_density": 3,
-    "screen_height": 1794,
-    "screen_orientation": 1,
-    "screen_width": 1080
-  },
-  "is_debug": false,
-  "need_cache_asset": true,
-  "network": {
-    "bt": "460,1,4336,7042315,-80",
-    "carrier_id": 70123,
-    "cellular_id": {
-      "CID": 7042315,
-      "LAC": 4336,
-      "MCC": "460",
-      "MNC": "01"
-    },
-    "ip": "172.21.50.225",
-    "is_abroad": 0,
-    "network_type": 1,
-    "real_carrier_id": "460012051614800",
-    "wifi_aps": [
-      {
-        "bssid": "dcda809fff40",
-        "is_connected": true,
-        "name": "Baice-AP",
-        "rssi": -53
-      },
-      {
-        "bssid": "dcda80a00191",
-        "is_connected": false,
-        "name": "Baice-AP-Guest",
-        "rssi": -49
-      },
-      {
-        "bssid": "f45c89a94125",
-        "is_connected": false,
-        "name": "AMac",
-        "rssi": -64
-      },
-      {
-        "bssid": "d076e7eaead4",
-        "is_connected": false,
-        "name": "jiayou",
-        "rssi": -69
-      },
-      {
-        "bssid": "089b4b9a2205",
-        "is_connected": false,
-        "name": "LYTR",
-        "rssi": -70
-      }
-    ]
-  },
-  "request_last_count": 20,
-  "sdk_type": "clover",
-  "sdk_version_code": "10200",
-  "ua": "Mozilla/5.0 (Linux; Android 7.0; M5 Note Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2074.203 Mobile Safari/537.36"
-}
-encode endeurl is : http://qa.baice100.com:9009/ende
-endepost reqdata is : sIuocy7zgGEeEUR9G1teHuSwso33VMo8EpZs1BjUFX8RHDhGYXv7511JPcNdWXiFmxHWgkcC%2Fg4ccAlKr4Dpm0ZZSl5OMaVnQOtVdtWY009v7x%2FO6In8cGi2pxTvQ%2BWwgm0sZ24Eo90S%2F9bWC3IQizVCoV4KJ8HDrGptTIaFdRBqZH%2BS10uQlbJg9IviyfsM3RxyAmGIvJQHrZwhk61Pbkaxj4upfrPrDb3dsftjjghkZU%2Fqa78k%2BkSfYcgHuADn7nQOYLdTi7oMMKLh8PFqeQq%2FLg9cXe7FhTpHwxWsQ%2B0E40yLxP2S4JZHxP4d8VAY7bLrkpOuzLxQzJJ7PW14pXGc9VkWYW8lbskKE%2Fpiql2zJvu7pOvY8w6%2BG6D4R%2Fm%2BYAT%2FXgRGbfsv3Cz45ov7WkWaKcHaOuSoi3zUPEpuGB5GUOOwyt%2BKM6rwacrxOp4mZ%2BiK2zuWuRaqdbM8zhbadlKzZgEuIMOSDYMtrNAGXR5IsTDgGAcb3YRYWwXjBpLtzdIjEPLjq33K%2B0VEsmt6m3wBNMagsodHWVADdb%2FChRcjw7Zsi4bAEotgSpXZxUUbIYhK96JCCWFbLZpA%2B0oQugjUbjzGUehNYx0zhe1iFpw1nhq5wEHnY8AV2l4tCFNHnzFRV7Cs5txicOLLxQ4dCtPe0n5x%2BSAwOy9Fv7wdjFgEEEtXiWDGfmUaI9hAhdNq8x6jRhqoxps8CrzxpsW%2BZu33zOTe6htPANnowASQ%2FdDI1ilt%2BagOChT8bENie59S2w6gv90qjhXlSaqL8mgkSm0OWGTBgG%2BQXhB91QStd6%2FlUF%2Feodtg2wMl9dvwvnKLCa%2FBqHdPIGi%2FlTrhR1Uw7sxoaYEBNgMu615K5Omcg0nRSGzVEc1gCLABZiZ2K3tnvM5kaDXPTZtSmDSlsnzNMGUOHdIwz9aKp0iFOnx7r09IuYznpDAkcKaYBndKfmWxWS1hTQ%2BhpQ7IwjDlT4Nh%2FzM%2Fx%2FtjTAHenbES3R%2BRPS2Hmdr6iGgKEoX5bdX1oPI%2Fmt1KsDh0VrE9Y%2FhVHXS2BufTIcFenPEtyR84TMlOl4%2FtcPIcqg4Q14jP2%2F5oghYsJwV%2BBJrsexaPWR%2FJIyyAPtbSwc%2BNnC7YAu8tZ%2F%2BV7yBWg2v%2Bd19In1peqsz4W4a0OL67BDkyAxqGbgXVS9BI0X1xDdO3IqCYfcOS2TeJgtYsZInePVNEOgeNoKBQ98a%2FGulGYCQ9yt8wmucGS%2BcyUZt7n4GHqNAM25fFLacDeyQTcod5SaSQNUuNBF1i1Lm%2By9qrISJrLSrKc7EEo9yDbejsLNHbmreh4nUW6JKvXiwT4DFHrEVjD3zlXxnyMyAVFI43rN%2FltLhNMZrok15ypjMk%2FKXrE4rywUzVwZvbEWUqAobQcIdNmFPBRyvCqgTI
-parameter_type from and encryption == 1  result_text [{"ads": [{"adspace_id": "645", "creative": [{"is_ad": true, "adSpaceType": 2, "adSrc": 1, "adm": {"nativ": {"buttonTxt": "", "desc": "", "img": {"height": 1560, "md5": "9f95e79c7d54e41a81d20f822a856f16", "url": "http://d.xm.antuzhi.com/dsp.1561618026118upload_b50c4aad_0005_439d_98f3_c5a58585e594_00000053.jpg", "width": 1080, "type": 1}, "imgList": [{"height": 1560, "md5": "9f95e79c7d54e41a81d20f822a856f16", "url": "http://d.xm.antuzhi.com/dsp.1561618026118upload_b50c4aad_0005_439d_98f3_c5a58585e594_00000053.jpg", "width": 1080, "type": 1}], "source": "", "title": {"text": "\u5fae\u4fe1\u5c0f\u7a0b\u5e8f\u4e13\u5c5e"}}, "style": 10}, "adm_type": "3", "adspace_slot_seq": 0, "banner_id": "1153064650032570368", "brand": "", "event_track": [{"event_type": "0", "notify_url": "http://t.hyt.antuzhi.com/api/report.do?adChannel=&adId=1153064650032570368&adSpaceId=645&adSpaceType=2&adSrc=1&adTypeStr=9&adproxyId=0&appId=68&bid=c88b655c6c9de20dd3009f36434dddvv&brand=&channel_id=&cpc=0&detail_download_rate=0&detail_open_rate=0&deviceChannel=no+channel+number&deviceModel=M5+Note&down_x=__DOWN_X__&down_y=__DOWN_Y__&dspSpaceId=&etype=__EVENTTYPE__&geoId=&gtm=1564476878442&height=__HEIGHT__&idFromAdSrc=1153064650032570368&imei=733cac2d95c93f985c49d86a916fdsho&installPkgName=__INSTALL_PKGNAME__&network=1&nodeId=0&operators=70123&osType=2&osVersion=7.0&price=1&prov=1.0&rankScore=&recId=&rt=0&sdkVersionCode=10200&settleMode=1&settlementCompany=&sign=3b42e6e55beabe09c00eab688255376967f1d981bcd22b0bca220a123553fc5c&sip=114.240.50.154&uid=733cac2d95c93f985c49d86a916fdsho&up_x=__UP_X__&up_y=__UP_Y__&version=1&width=__WIDTH__", "plat": "UNKNOW", "url_type": 0}], "expiration_time": 1564478678, "expiration_period": 1800, "geoId": "", "idFromAdSrc": "1153064650032570368", "interaction_object": {"url": "", "url_type": 0, "intro_url": "", "deeplink": ""}, "interaction_type": "9", "open_type": 0, "price": 1, "settleMode": 1, "download_object": null, "video_object": null, "package_name": "", "ad_duration": 0, "rec_detail_color": "", "rec_type": 0, "app_upload_url": "", "show_ad_sponsor": false, "load_detail_page_background": false, "wx_activate_object": {"app_id": "wxb5417dd8679b9cd8", "mini_program_id": "gh_83bf0fd708d7", "activate_path": "pages/step/step?chl=meiti25&s=meiti25"}, "reward_video_object": null, "specs": {"install_silence": false, "open_silence": false, "app_detail_url": "", "app_detail_page_open": false, "app_detail_page_download": false, "auto_download_delay_time": 0, "show_download_progress": false, "pull_installer_minimum_time": 0, "pull_installer_no_page": false, "show_fake_installer": false, "show_guide_duration": 0, "pull_installer_again_time": 0, "net_4g_direct_download": false, "show_package_size": false, "display_progress_on_list": false, "pause_resume_on_list": false, "show_action_hint": false, "show_skip_delay_time": 0, "show_swplay": false, "swplay_app_id": "", "swplay_auto_play": false, "swplay_auto_play_delay_time": 0, "swplay_play_time": 0, "swplay_auto_download": false, "show_download_notification": false, "opening_action_hint": ""}}]}], "bid": "c88b655c6c9de20dd3009f36434dddvv", "error_code": 0, "error_msg": "mal:", "backup": 0, "backups": [], "third_tracking": null, "cache_assets": null}, 0.097477]
-]]>			</system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00002_48" time="0.099" timestamp="2019-07-31T13:27:36">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00003_68" time="0.098" timestamp="2019-07-31T13:27:36">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00004_70" time="0.109" timestamp="2019-07-31T13:27:36">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00005_71" time="0.095" timestamp="2019-07-31T13:27:36">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00007_73" time="0.115" timestamp="2019-07-31T13:27:36">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00008_74" time="0.099" timestamp="2019-07-31T13:27:37">
+			<system-out>
+<![CDATA[]]>			</system-out>
+			<system-err>
+<![CDATA[]]>			</system-err>
+		</testcase>
+		<testcase classname="InterfaceTest" file="apps\testtask\extend\run_task.py" line="24" name="test_run_cases_00006_72" time="0.095" timestamp="2019-07-31T13:27:36">
+			<failure message="'&quot;interaction_type&quot;: &quot;7&quot;' not found in '[{&quot;ads&quot;: [], &quot;bid&quot;: &quot;c88b655c6c9de20dd3009f36434dddvv&quot;, &quot;error_code&quot;: 0, &quot;error_msg&quot;: &quot;mal:&quot;, &quot;backup&quot;: 0, &quot;backups&quot;: [], &quot;third_tracking&quot;: null, &quot;cache_assets&quot;: null}, 0.042936]'" type="AssertionError">
+<![CDATA[Traceback (most recent call last):
+  File "D:\UserData\Program\Python36\lib\site-packages\ddt.py", line 146, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\UserData\git\PycharmProjects\apitest_platform\test_platform\apps/testtask/extend/run_task.py", line 99, in test_run_cases
+    self.assertIn( assert_str, result_text )
+AssertionError: '"interaction_type": "7"' not found in '[{"ads": [], "bid": "c88b655c6c9de20dd3009f36434dddvv", "error_code": 0, "error_msg": "mal:", "backup": 0, "backups": [], "third_tracking": null, "cache_assets": null}, 0.042936]'
+]]>			</failure>
+			<system-out>
+<![CDATA[]]>			</system-out>
 			<system-err>
 <![CDATA[]]>			</system-err>
 		</testcase>

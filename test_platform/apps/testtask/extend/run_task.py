@@ -8,9 +8,7 @@ import unittest
 from ddt import ddt, data, file_data, unpack
 import requests
 import xmlrunner
-import sys
 import baserequestdecode
-
 
 @ddt
 class InterfaceTest( unittest.TestCase ):
@@ -31,12 +29,12 @@ class InterfaceTest( unittest.TestCase ):
             header_dict = {}
         else:
             header_dict = json.loads( header.replace( "\'", "\"" ) )
-        print("test_run_cases parameter_body",parameter_body)
+        # print("test_run_cases parameter_body",parameter_body)
         if parameter_body == "{}":
             parameter_dict = {}
         else:
             parameter_dict = json.loads( parameter_body.replace( "\'", "\"" ) )
-            print("test_run_cases  parameter_dict",parameter_dict)
+            # print("test_run_cases  parameter_dict",parameter_dict)
 
         if method == "get":
             # print("run task of case get --->")
@@ -90,10 +88,10 @@ class InterfaceTest( unittest.TestCase ):
 
             elif parameter_type == "json" and encryption == 1:
 
-                print("json encryption == 1 ----> parameter_body",url,parameter_body)
+                # print("json encryption == 1 ----> parameter_body",url,parameter_body)
                 r =baserequestdecode.endepost(url, parameter_body, key=None, postheaders=None, transBinData=False, body_type=None)
                 result_text = json.dumps(r)
-                print( "parameter_type josn and encryption == 1  result_text",result_text)
+                # print( "parameter_type josn and encryption == 1  result_text",result_text)
                 if assert_type == "contains":
                     # self.assertIn( assert_text, result_text )
                     assert_list = assert_text.split( '|' )

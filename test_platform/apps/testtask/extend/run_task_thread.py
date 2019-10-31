@@ -19,13 +19,13 @@ class TaskThread:
         self.tid = task_id
 
     def run_cases(self):
-        print("------------运行 %s 任务下面的所有测试用例------------"%(self.tid))
 
+        print("------------run_cases 整理测试数据，task_id：%s 任务下面的所有测试用例------------"%(self.tid))
         task = TestTask.objects.get(id=self.tid)
         # 1. 任务对应case的列表-testtask->cases值
         case_list = json.loads(task.cases)
-
         # 2. 将用例数据写到 json文件
+        print("------------run_cases 将用例数据写到 json文件 --------------")
         test_data = {}
         for cid in case_list:
             case = TestCase.objects.get(id=cid)
@@ -58,39 +58,40 @@ class TaskThread:
             }
 
         case_data = json.dumps(test_data)
+        print("------------run_cases 将用例数据case_data写到 json文件完成，内容如下:  --------------\n",case_data)
 
         from test_platform import settings
         EXTEND_DIR = settings.EXTEND_DIR
-        print("------------run_cases------------",EXTEND_DIR)
         # '''
         # 多线程问题:同时修改 一个 json 数据文件  第一个线程 可能数据还没从 json 文件读取完，第二个线程就把json 数据重写了
         # '''
         with(open(EXTEND_DIR + "test_data_list.json", "w")) as f:
             f.write(case_data)
-
         # 3.执行运行测试用例的文件， 生成 result.xml 文件
         run_cmd = "python  " + EXTEND_DIR + "run_task.py"
-        print("运行的命令 run_cmd ", run_cmd)
+        print("------------run_cases--->运行的命令 run_cmd  执行ddt测试 ", run_cmd)
         os.system(run_cmd)
-        sleep(2)
+        sleep(3)
+        print("-----------run_cases sleep (2)------")
 
         # 4. 读取result.xml文件，把这里面的结果放到表里面。
-        print("------------保存测试结果------------")
+        print("-----------保存测试结果------------")
+        self._save_result()
 
-        self.save_result()
-        print("------------保存成功------------")
+        print("-----------保存成功------------")
         # 5. 修改任务的状态，执行完成
         task = TestTask.objects.get(id=self.tid)
         task.status = 2
         task.save()
 
-    def save_result(self):
+    def _save_result(self):
         # 打开xml文档
         from test_platform import settings
         EXTEND_DIR = settings.EXTEND_DIR
         print("------------save_result------------",EXTEND_DIR)
         dom = parse(EXTEND_DIR + 'results.xml')
         # 得到文档元素对象
+        print("------------save_result-------->得到文档元素对象")
         root = dom.documentElement
         # 获取(一组)标签
         testsuite = root.getElementsByTagName('testsuite')
@@ -101,12 +102,14 @@ class TaskThread:
         tests = testsuite[0].getAttribute("tests")
         run_time = testsuite[0].getAttribute("time")
 
-        print("------------errors类型------------", errors, type(errors))
-
+        # print("------------errors类型------------", errors, type(errors))
+        print("------------save_result-------->开始读取results.xml结果数据")
         f = open(EXTEND_DIR + "results.xml", "r", encoding="utf-8")
         result = f.read()
+        print("------------save_result-------->results.xml内容\n",result)
         f.close()
 
+        print("------------save_result-------->读取results.xml结果数据结束，开始保存结果到数据库中")
         TestResult.objects.create(
             task_id=self.tid,
             name=name,
@@ -138,10 +141,8 @@ class TaskThread:
         threads.append(t)
         print("run_tasks threads is running !")
 
-
         for t in threads:
             t.start()
-
 
 if __name__ == '__main__':
     print( "------------TaskThread开始------------" )
